@@ -17,6 +17,7 @@ import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
 import Welcome from '../Welcome/Welcome';
+import RegisterPage from '../RegisterPage/RegisterPage';
 
 import './App.css';
 
@@ -29,6 +30,8 @@ class App extends Component {
     return (
       <Router>
         <Route exact path="/" component={Welcome}/>
+        <Route exact path="/register" component={RegisterPage} />
+
       </Router>
   )}
 }
