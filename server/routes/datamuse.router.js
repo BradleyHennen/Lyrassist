@@ -4,8 +4,10 @@ const axios = require('axios');
 
 
 router.get('/', (req, res) => {
+    console.log('In Datamuse GET. Req.body:', req.body);
     
-    let endpoint = `https://api.datamuse.com/words?ml=ringing+in+the+ears&max=4`;
+    const query = req.body;
+    let endpoint = `https://api.datamuse.com/words?${query}max=10`;
 
     axios.get(endpoint)
     .then((response) => {

@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles, TextField } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
+// import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
+// import Grid from '@material-ui/core/Grid';
 
 const styles = theme => ({
  textField: {
@@ -91,7 +91,7 @@ class LoginPage extends Component {
           color="primary"
           onClick={() => {
             this.props.dispatch({ type: 'SET_TO_REGISTER_MODE' });
-            { this.props.history.push('./register') };
+            this.props.history.push('./register');
           }}
         >
           Register

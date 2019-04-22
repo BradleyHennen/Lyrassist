@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import LogOutButton from '../LogOutButton/LogOutButton';
 import Header from '../Header/Header';
+import Assistant from '../Assistant/Assistant';
+import AssistantResults from '../AssistantResults/AssistantResults';
 
 // this could also be written with destructuring parameters as:
 // const UserPage = ({ user }) => (
@@ -9,6 +10,8 @@ import Header from '../Header/Header';
 const Home = (props) => (
   <div>
     <Header props={props}/>
+    <Assistant />
+    <AssistantResults />
     <h1 id="welcome">
       Welcome, { props.user.username }!
     </h1>

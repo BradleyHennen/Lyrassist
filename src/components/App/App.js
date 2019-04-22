@@ -8,8 +8,6 @@ import {
 
 import {connect} from 'react-redux';
 
-import Footer from '../Footer/Footer';
-
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
 
 import Home from '../Home/Home';
