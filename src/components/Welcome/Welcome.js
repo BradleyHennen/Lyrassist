@@ -8,28 +8,23 @@ import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
     root: {
-        ...theme.mixins.gutters(),
         paddingTop: theme.spacing.unit * 2,
         paddingBottom: theme.spacing.unit * 2,
         marginRight: '4%',
         marginLeft: '4%',
-    },
-    header: {
-        textAlign: "center",
     },
     description: {
         textAlign: "center",
         width: "50%",
         height: "25%",
         marginTop: 20,
-
         marginLeft: "auto",
         marginRight: "auto",
         display: "block",
     },
     images: {
-        width: "25%",
-        height: "25%",
+        width: "40%",
+        height: "40%",
         marginLeft: "auto",
         marginRight: "auto",
         display: "block",
