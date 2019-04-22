@@ -7,13 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
-
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    marginRight: '4%',
-    marginLeft: '4%',
-    padding: theme.spacing.unit * 2,
+    textAlign: "center",
 
   },
   textField: {
@@ -21,7 +18,9 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
   },
   paper: {
-    
+    marginRight: '4%',
+    marginLeft: '4%',
+    padding: theme.spacing.unit * 2,
     textAlign: "center",
   }
 })
@@ -52,6 +51,7 @@ class RegisterPage extends Component {
           description: this.state.description,
         },
       });
+      this.props.history.push('/home');
     } else {
       this.props.dispatch({ type: 'REGISTRATION_INPUT_ERROR' });
     }
@@ -77,20 +77,21 @@ class RegisterPage extends Component {
         >
           <Paper className={classes.paper}>
             {this.props.errors.registrationMessage && (
-              <h2
+             <Typography
+                variant="h2"
                 className="alert"
                 role="alert"
               >
                 {this.props.errors.registrationMessage}
-              </h2>
+              </Typography>
             )}
 
             <form className={classes.container} noValidate autoComplete="off" onSubmit={this.registerUser}>
               <Typography variant="h2">Register User</Typography>
-              <Grid item xs={6}>
+              <Grid item xs={12}>
                 <TextField
                   required
-                  label="username"
+                  label="Username"
                   value={this.state.username}
                   className={classes.textField}
                   onChange={this.handleInputChangeFor('username')}
@@ -99,7 +100,7 @@ class RegisterPage extends Component {
                 <TextField
                   required
                   type="password"
-                  label="password"
+                  label="Password"
                   value={this.state.password}
                   className={classes.textField}
                   onChange={this.handleInputChangeFor('password')}
@@ -115,7 +116,7 @@ class RegisterPage extends Component {
                   margin="normal"
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12}>
                 <TextField
                   required
                   label="Email Address"
@@ -161,17 +162,21 @@ class RegisterPage extends Component {
                 Register
               </Button>
             </form>
-            <Grid item xs={12}>
+          </Paper>
+          <Grid item xs={12}>
+              <Typography variant="h2" >Already Registered?</Typography>
               <Button
                 type="button"
                 variant="contained"
                 color="primary"
-                onClick={() => { this.props.dispatch({ type: 'SET_TO_LOGIN_MODE' }) }}
+                onClick={() => { 
+                  this.props.dispatch({type: 'SET_TO_LOGIN_MODE'}); 
+                  this.props.history.push('/login'); 
+                }}
               >
                 Login
               </Button>
             </Grid>
-          </Paper>
         </Grid>
       </div>
     );

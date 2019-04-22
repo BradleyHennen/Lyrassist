@@ -14,10 +14,11 @@ import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
 
 import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
+import Home from '../Home/Home';
 import InfoPage from '../InfoPage/InfoPage';
 import Welcome from '../Welcome/Welcome';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import LoginPage from '../LoginPage/LoginPage';
 
 import './App.css';
 
@@ -29,9 +30,17 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Route exact path="/" component={Welcome}/>
-        <Route exact path="/register" component={RegisterPage} />
-
+        <Switch>
+          <Redirect exact from="/" to="/welcome" />
+          <Route exact path="/welcome" component={Welcome}/>
+          <Route exact path="/register" component={RegisterPage} />
+          <Route exact path="/login" component={LoginPage}/>
+          <ProtectedRoute
+            exact
+            path="/home"
+            component={Home}
+          />
+        </Switch>
       </Router>
   )}
 }
@@ -42,7 +51,7 @@ export default connect()(App);
 // <Nav />
 // <Switch>
 //   {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-//   <Redirect exact from="/" to="/home" />
+  // <Redirect exact from="/" to="/home" />
 //   {/* Visiting localhost:3000/about will show the about page.
 //   This is a route anyone can see, no login necessary */}
 //   <Route
