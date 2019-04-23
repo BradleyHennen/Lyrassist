@@ -6,7 +6,7 @@ const initalData = {
         4: {id: 4, header: 'Verse', content: 'It\'s a cool place, and they say it gets colder You\'re bundled up now, wait \'til you get older But the meteor men beg to differ Judging by the hole in the satellite picture The ice we skate is getting pretty thin The water\'s getting warm so you might as well swim My world\'s on fire, how \'bout yours? That\'s the way I like it and I\'ll never get bored'},
     },
     column: {
-        id: 1,
+        id: 'column',
         title: 'All Star by Smash Mouth',
         taskIds: [1, 2, 3, 4],
     },
