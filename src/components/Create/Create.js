@@ -18,7 +18,14 @@ const styles = theme => ({
 class Create extends Component {
     state = InitialData;
 
+    componentDidMount = () => {
+        this.props.dispatch({type: 'GET_LYRIC_INFO'});
+        this.props.dispatch({type: 'GET_LYRICS'});
+    }
+
     onDragEnd = result => {
+        console.log('onDragEnd', result);
+        
         const {destination, source, draggableId} = result;
 
         if(!destination) {
@@ -67,7 +74,8 @@ class Create extends Component {
                 <Button variant="contained" onClick={this.addLyricCard} color="primary">Add Lyric Card</Button>
                 <Button variant="contained" onClick={this.saveLyrics} color="primary">Add Lyric Card</Button>
                 <br/>
-
+                {JSON.stringify(this.props.reduxState.lyricInfo)}
+                {JSON.stringify(this.props.reduxState.lyrics)}
                 <DragDropContext onDragEnd={this.onDragEnd}>
                     {this.state.columnOrder.map((columnId) => {
                         const column = this.state.columns[columnId];

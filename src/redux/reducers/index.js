@@ -4,7 +4,8 @@ import loginMode from './loginModeReducer';
 import user from './userReducer';
 import datamuseData from './datamuseReducer';
 import queryList from './queryListReducer';
-import dragAndDrop from './dragAndDrop';
+import lyricInfo from './lyricInfoReducer';
+import lyrics from './lyricsReducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   user,
   datamuseData,
   queryList,
-  dragAndDrop // will have an id and username if someone is logged in
+  lyricInfo,
+  lyrics,
 });
 
 export default rootReducer;
