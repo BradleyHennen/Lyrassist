@@ -67,6 +67,7 @@ class Create extends Component {
                 <Button variant="contained" onClick={this.addLyricCard} color="primary">Add Lyric Card</Button>
                 <Button variant="contained" onClick={this.saveLyrics} color="primary">Add Lyric Card</Button>
                 <br/>
+
                 <DragDropContext onDragEnd={this.onDragEnd}>
                     {this.state.columnOrder.map((columnId) => {
                         const column = this.state.columns[columnId];
