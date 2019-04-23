@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Header from '../Header/Header';
 import Assistant from '../Assistant/Assistant';
 import AssistantResults from '../AssistantResults/AssistantResults';
+import Create from '../Create/Create';
 
 // this could also be written with destructuring parameters as:
 // const UserPage = ({ user }) => (
@@ -12,10 +13,11 @@ const Home = (props) => (
     <Header props={props}/>
     <Assistant />
     <AssistantResults />
-    <h1 id="welcome">
+    <Create />
+    {/* <h1 id="welcome">
       Welcome, { props.user.username }!
     </h1>
-    <p>Your ID is: {props.user.id}</p>
+    <p>Your ID is: {props.user.id}</p> */}
   </div>
 );
 
