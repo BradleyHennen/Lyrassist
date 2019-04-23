@@ -5,15 +5,13 @@ const initalData = {
         3: {id: 3, header: 'Chorus', content: 'Hey now, you\'re an all star Get your game on, go play Hey now, you\'re a rock star Get the show on, get paid And all that glitters is gold Only shooting stars break the mold'},
         4: {id: 4, header: 'Verse', content: 'It\'s a cool place, and they say it gets colder You\'re bundled up now, wait \'til you get older But the meteor men beg to differ Judging by the hole in the satellite picture The ice we skate is getting pretty thin The water\'s getting warm so you might as well swim My world\'s on fire, how \'bout yours? That\'s the way I like it and I\'ll never get bored'},
     },
-    columns: {
-        'column_1': {
-            id: 'column_1',
-            title: 'All Star by Smash Mouth',
-            taskIds: [1, 2, 3, 4],
-        },
+    column: {
+        id: 1,
+        title: 'All Star by Smash Mouth',
+        taskIds: [1, 2, 3, 4],
     },
     // Facilitate reordering ot the columns when there are more than one
-    columnOrder: ['column_1'],
+    // columnOrder: ['column_1'],
 }
 
 export default initalData;

@@ -36,6 +36,7 @@ class CreateLyricCards extends Component {
             <div className={classes.container}>
                 <div className={classes.container}>
                 <h3>{this.props.column.title}</h3>
+                {/* {JSON.stringify(this.props.tasks)} */}
                 <Droppable droppableId={this.props.column.id}>
                     {provided => (
                         <div
@@ -49,7 +50,6 @@ class CreateLyricCards extends Component {
                             {provided.placeholder}
                         </div>
                     )}
-
                 </Droppable>
                 </div>
             </div>

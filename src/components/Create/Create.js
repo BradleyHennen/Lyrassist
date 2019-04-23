@@ -23,39 +23,39 @@ class Create extends Component {
         this.props.dispatch({type: 'GET_LYRICS'});
     }
 
-    onDragEnd = result => {
-        console.log('onDragEnd', result);
+    // onDragEnd = result => {
+    //     console.log('onDragEnd', result);
         
-        const {destination, source, draggableId} = result;
+    //     const {destination, source, draggableId} = result;
 
-        if(!destination) {
-            return;
-        }
-        if(
-            destination.draggableId === source.droppableId &&
-            destination.index === source.index
-        ) {
-            return;
-        }
+    //     if(!destination) {
+    //         return;
+    //     }
+    //     if(
+    //         destination.draggableId === source.droppableId &&
+    //         destination.index === source.index
+    //     ) {
+    //         return;
+    //     }
 
-        const column = this.state.columns[source.droppableId];
-        const newTaskIds = Array.from(column.taskIds);
-        newTaskIds.splice(source.index, 1);
-        newTaskIds.splice(destination.index, 0, draggableId);
+    //     const column = this.state.columns[source.droppableId];
+    //     const newTaskIds = Array.from(column.taskIds);
+    //     newTaskIds.splice(source.index, 1);
+    //     newTaskIds.splice(destination.index, 0, draggableId);
 
-        const newColumn = {
-            ...column,
-            taskIds: newTaskIds,
-        };
-        const newState = {
-            ...this.state,
-            columns: {
-                ...this.state.columns,
-                [newColumn.id]: newColumn,
-            }
-        }
-        this.setState(newState);
-    }
+    //     const newColumn = {
+    //         ...column,
+    //         taskIds: newTaskIds,
+    //     };
+    //     const newState = {
+    //         ...this.state,
+    //         columns: {
+    //             ...this.state.columns,
+    //             [newColumn.id]: newColumn,
+    //         }
+    //     }
+    //     this.setState(newState);
+    // }
 
     addLyricCard = () => {
         return
@@ -67,6 +67,7 @@ class Create extends Component {
 
     render() {
         // const { classes } = this.props;
+        const tasks = this.state.column.taskIds.map(taskId => this.state.tasks[taskId]);
 
         return (
             <div>
@@ -74,15 +75,10 @@ class Create extends Component {
                 <Button variant="contained" onClick={this.addLyricCard} color="primary">Add Lyric Card</Button>
                 <Button variant="contained" onClick={this.saveLyrics} color="primary">Add Lyric Card</Button>
                 <br/>
-                {JSON.stringify(this.props.reduxState.lyricInfo)}
-                {JSON.stringify(this.props.reduxState.lyrics)}
+                {/* {JSON.stringify(this.props.reduxState.lyricInfo)}
+                {JSON.stringify(this.props.reduxState.lyrics)} */}
                 <DragDropContext onDragEnd={this.onDragEnd}>
-                    {this.state.columnOrder.map((columnId) => {
-                        const column = this.state.columns[columnId];
-                        const tasks = column.taskIds.map(taskId => this.state.tasks[taskId]);
-
-                        return <CreateLyricCards key={column.id} column={column} tasks={tasks} />
-                    })}
+                    <CreateLyricCards key={this.state.column.id} column={this.state.column} tasks={tasks} />
                 </DragDropContext>
             </div>
         );
