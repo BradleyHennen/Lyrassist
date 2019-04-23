@@ -27,7 +27,7 @@ class Assistant extends Component {
     }
 
     searchQuery = (event) => {
-        this.props.dispatch({type: 'GET_DATAMUSE', payload: this.state})
+        this.props.dispatch({type: 'GET_DATAMUSE', payload: this.state.query})
     }
 
     render() {

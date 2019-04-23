@@ -5,7 +5,7 @@ function* getDatamuse(action) {
     try {
         console.log('getDatamuse', action.payload);
 
-        const response = yield axios.get('/api/datamuse', action.payload);
+        const response = yield axios.get(`/api/datamuse/${action.payload}`);
         yield put({ type: 'SET_DATAMUSE', payload: response.data })
     }
     catch (error) {
