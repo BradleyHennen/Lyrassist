@@ -2,17 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 // import Grid from '@material-ui/core/Grid';
-import CreateLyricCards from '../CreateLyricCards/CreateLyricCards';
-import UserLyricInfo from '../UserLyricInfo/UserLyricInfo';
+
 
 
 const styles = theme => ({
@@ -35,8 +30,19 @@ class UserLyrics extends Component {
 
         return (
             <TableRow>
-                <TableCell></TableCell>
-
+                <TableCell>{this.props.info.title}</TableCell>
+                <TableCell align="right">{this.props.info.author}</TableCell>
+                <TableCell align="right">{this.props.info.date_created}</TableCell>
+                <TableCell align="right">{this.props.info.date_edited}</TableCell>
+                <TableCell align="right">
+                    <Button>Edit</Button>
+                </TableCell>
+                <TableCell align="right">
+                    <Button>Delete</Button>
+                </TableCell>
+                <TableCell align="right">
+                    <Button>Print</Button>
+                </TableCell>
             </TableRow>
         );
     }

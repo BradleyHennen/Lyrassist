@@ -2,8 +2,9 @@ import { takeLatest, put } from 'redux-saga/effects';
 import axios from 'axios';
 
 function* getLyrics(action) {
+    const lyricId = action.payload
     try {
-        const response = yield axios.get(`/api/lyric`);
+        const response = yield axios.get(`/api/lyric/${lyricId}`);
         yield put({ type: 'SET_LYRICS', payload: response.data })
     }
     catch (error) {

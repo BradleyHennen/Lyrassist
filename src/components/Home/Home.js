@@ -10,7 +10,7 @@ import Create from '../Create/Create';
 // and then instead of `props.user.username` you could use `user.username`
 const Home = (props) => (
   <div>
-    <Header props={props}/>
+    <Header/>
     <Assistant />
     <AssistantResults />
     <Create />

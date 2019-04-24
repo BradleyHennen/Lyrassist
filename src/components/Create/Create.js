@@ -16,11 +16,20 @@ const styles = theme => ({
 })
 
 class Create extends Component {
-    state = InitialData;
+    // state = InitialData;
+    // state = {
+    //     tasks: {
+
+    //     },
+    //     column:{
+    //         id: 'column',
+    //         title: 
+    //     }
+    // }
 
     componentDidMount = () => {
         this.props.dispatch({type: 'GET_LYRIC_INFO'});
-        this.props.dispatch({type: 'GET_LYRICS'});
+        this.props.dispatch({type: 'GET_LYRICS', payload: 1});
     }
 
     onDragEnd = result => {
@@ -72,7 +81,7 @@ class Create extends Component {
     }
 
     testLyricLoop = () => {
-        let array = this.props.reduxState.lyricInfo;
+        let array = this.props.reduxState.lyrics;
         for (let i = 0; i < array.length; i++) {
             console.log('loop', array[i]);
             
@@ -81,7 +90,7 @@ class Create extends Component {
 
     render() {
         // const { classes } = this.props;
-        const tasks = this.state.column.taskIds.map(taskId => this.state.tasks[taskId]);
+        // const tasks = this.state.column.taskIds.map(taskId => this.state.tasks[taskId]);
         // const test = this.props.reduxState.lyricInfo.lyric_order.map(taskId => 
         //     this.props.reduxState.lyrics.find((element) => {
         //         console.log('element', taskId);
@@ -91,7 +100,7 @@ class Create extends Component {
         // ));
 
         
-        this.testLyricLoop();
+        
 
         return (
             <div>
@@ -99,13 +108,15 @@ class Create extends Component {
                 <Button variant="contained" onClick={this.addLyricCard} color="primary">Add Lyric Card</Button>
                 <Button variant="contained" onClick={this.saveLyrics} color="primary">Add Lyric Card</Button>
                 <br/>
-                {JSON.stringify(this.props.reduxState.lyricInfo)}
-                {/* {JSON.stringify(this.props.reduxState.lyrics)} */}
-                <DragDropContext onDragEnd={this.onDragEnd}>
+                {/* {JSON.stringify(this.props.reduxState.lyricInfo)} */}
+                {JSON.stringify(this.props.reduxState.lyrics)}
+                {JSON.stringify(this.state)}
+                {this.testLyricLoop()}
+                {/* <DragDropContext onDragEnd={this.onDragEnd}>
                 
                     <CreateLyricCards key={this.state.column.id} column={this.state.column} tasks={tasks} />
 
-                </DragDropContext>
+                </DragDropContext> */}
             </div>
         );
     }

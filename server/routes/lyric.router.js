@@ -6,6 +6,11 @@ const userStrategy = require('../strategies/user.strategy');
 
 const router = express.Router();
 
+// router.get('/', rejectUnauthenticated, (req, res) => {
+//     // Send back user object from the session (previously queried from the database)
+//     res.send(req.user);
+//   });
+
 router.get('/info', (req, res) => {
     let sqlText = ('SELECT * FROM "lyric_info";')
     pool.query(sqlText)
@@ -18,9 +23,19 @@ router.get('/info', (req, res) => {
     })
 })
 
-router.get('/', (req, res) => {
-    let sqlText = ('SELECT * FROM "lyrics";')
-    pool.query(sqlText)
+router.get('/:id', (req, res) => {
+    console.log('req.params.id', req.params.id);
+    const lyricId = req.params.id;
+    console.log('req.user.id', req.user.id);
+    const userId = req.user.id;
+
+    let sqlText = (`SELECT "lyrics"."id" AS "lyrics_id", "lyrics"."lyrics", "lyrics"."song_label_id", "song_label"."label_name", "lyric_info"."title", "lyric_info"."lyric_order"
+                    FROM "lyrics"
+                    JOIN "lyric_info" ON "lyric_info"."id" = "lyrics"."lyric_id"
+                    JOIN "user" ON "user"."id" = "lyric_info"."user_id"
+                    JOIN "song_label" ON "song_label"."id" = "lyrics"."song_label_id"
+                    WHERE "lyric_info"."user_id" = $1 AND "lyric_info"."id" = $2;`)
+    pool.query(sqlText, [userId, lyricId])
     .then((results) => {
         res.send(results.rows);
     })
