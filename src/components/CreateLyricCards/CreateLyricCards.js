@@ -35,11 +35,25 @@ class CreateLyricCards extends Component {
         return (
             <div className={classes.container}>
                 <div className={classes.container}>
-                <h3>{this.props.column.title}</h3>
-                <Droppable droppableId={this.props.column.id}>
+                <Typography variant="h4">{this.props.column.title}</Typography>
+                {/* {JSON.stringify(this.props.column)} */}
+                {/* <Droppable droppableId={this.props.column.id}>
                     {provided => (
                         <div
                             className={classes.list}
+                            ref={provided.innerRef}
+                            {...provided.droppableProps}
+                        >
+                            {this.props.tasks.map((task, index) => 
+                                <CreateLyrics key={task.id} task={task} index={index} />
+                            )}
+                            {provided.placeholder}
+                        </div>
+                    )}
+                </Droppable> */}
+                <Droppable droppableId={this.props.column.id}>
+                    {provided => (
+                        <div
                             ref={provided.innerRef}
                             {...provided.droppableProps}
                         >

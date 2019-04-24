@@ -25,7 +25,8 @@ class CreateLyrics extends Component {
 
     render() {
         const { classes } = this.props;
-
+        console.log('this.props.task.id', this.props.task.id);
+        
         return (
             <Draggable draggableId={this.props.task.id} index={this.props.index}>
                 {provided => (

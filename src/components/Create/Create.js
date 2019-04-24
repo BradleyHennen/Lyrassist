@@ -18,6 +18,11 @@ const styles = theme => ({
 class Create extends Component {
     state = InitialData;
 
+    componentDidMount = () => {
+        this.props.dispatch({type: 'GET_LYRIC_INFO'});
+        this.props.dispatch({type: 'GET_LYRICS'});
+    }
+
     onDragEnd = result => {
         const {destination, source, draggableId} = result;
 
@@ -31,22 +36,30 @@ class Create extends Component {
             return;
         }
 
-        const column = this.state.columns[source.droppableId];
+        const column = this.state.column;
+        
         const newTaskIds = Array.from(column.taskIds);
+        
         newTaskIds.splice(source.index, 1);
         newTaskIds.splice(destination.index, 0, draggableId);
+        console.log('newTaskIds', newTaskIds);
+
 
         const newColumn = {
-            ...column,
+            ...this.state.column,
             taskIds: newTaskIds,
         };
+        console.log('newColumn', newColumn);
+        
         const newState = {
             ...this.state,
-            columns: {
-                ...this.state.columns,
-                [newColumn.id]: newColumn,
+            column: {
+                ...this.state.column,
+                taskIds: newColumn.taskIds,
             }
         }
+        console.log('newState', newState);
+        
         this.setState(newState);
     }
 
@@ -58,8 +71,27 @@ class Create extends Component {
         return
     }
 
+    testLyricLoop = () => {
+        let array = this.props.reduxState.lyricInfo;
+        for (let i = 0; i < array.length; i++) {
+            console.log('loop', array[i]);
+            
+        }
+    }
+
     render() {
         // const { classes } = this.props;
+        const tasks = this.state.column.taskIds.map(taskId => this.state.tasks[taskId]);
+        // const test = this.props.reduxState.lyricInfo.lyric_order.map(taskId => 
+        //     this.props.reduxState.lyrics.find((element) => {
+        //         console.log('element', taskId);
+                
+        //         return element;
+        //     }
+        // ));
+
+        
+        this.testLyricLoop();
 
         return (
             <div>
@@ -67,14 +99,12 @@ class Create extends Component {
                 <Button variant="contained" onClick={this.addLyricCard} color="primary">Add Lyric Card</Button>
                 <Button variant="contained" onClick={this.saveLyrics} color="primary">Add Lyric Card</Button>
                 <br/>
-
+                {JSON.stringify(this.props.reduxState.lyricInfo)}
+                {/* {JSON.stringify(this.props.reduxState.lyrics)} */}
                 <DragDropContext onDragEnd={this.onDragEnd}>
-                    {this.state.columnOrder.map((columnId) => {
-                        const column = this.state.columns[columnId];
-                        const tasks = column.taskIds.map(taskId => this.state.tasks[taskId]);
+                
+                    <CreateLyricCards key={this.state.column.id} column={this.state.column} tasks={tasks} />
 
-                        return <CreateLyricCards key={column.id} column={column} tasks={tasks} />
-                    })}
                 </DragDropContext>
             </div>
         );

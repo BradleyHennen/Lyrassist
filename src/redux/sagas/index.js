@@ -4,6 +4,8 @@ import registrationSaga from './registrationSaga';
 import userSaga from './userSaga';
 import getDatamuseAPI from './datamuseAPI';
 import getQueryList from './searchQuerySaga';
+import getLyricInfo from './lyricInfoSaga';
+import getLyrics from './lyricsSaga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -19,5 +21,7 @@ export default function* rootSaga() {
     userSaga(),
     getDatamuseAPI(),
     getQueryList(),
+    getLyricInfo(),
+    getLyrics(),
   ]);
 }
