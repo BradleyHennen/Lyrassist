@@ -43,7 +43,7 @@ const Header = (props) => {
                     <img className={classes.images} src="/images/LyrAssist_logo.svg" alt="lyrAssist Logo" />
 
                     <Typography variant="h6" color="inherit" className={classes.grow}>
-                        Welcome, {props.props.user.first_name} {props.props.user.last_name}!
+                        Welcome, {props.user.first_name} {props.user.last_name}!
                     </Typography>
                     <ProfileButton />
                     <LogOutButton />
@@ -58,6 +58,7 @@ const Header = (props) => {
 // const mapStateToProps = ({errors}) => ({ errors });
 const mapStateToProps = state => ({
     errors: state.errors,
+    user: state.user,
 });
 
 Header.propTypes = {

@@ -42,4 +42,9 @@ router.post('/logout', (req, res) => {
   res.sendStatus(200);
 });
 
+router.get('/userinfo/:id', (req, res) => {
+  const userId = req.params.id;
+  const sqlText = ``
+})
+
 module.exports = router;

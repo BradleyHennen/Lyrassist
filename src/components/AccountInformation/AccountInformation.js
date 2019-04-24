@@ -16,7 +16,6 @@ const AccountInformation = (props) => {
     const { classes } = props;
     return (
         <div>
-            {JSON.stringify(props.user)}
             <Typography variant="h3">Account Information</Typography>
             <Paper>
                 <Typography variant="h6">Your Story:</Typography>
@@ -36,12 +35,9 @@ const AccountInformation = (props) => {
     )
 }
 
-// Instead of taking everything from state, we just want the error messages.
-// if you wanted you could write this code like this:
-// const mapStateToProps = ({errors}) => ({ errors });
 const mapStateToProps = state => ({
     user: state.user,
-  });
+});
 
 AccountInformation.propTypes = {
     classes: PropTypes.object.isRequired,
