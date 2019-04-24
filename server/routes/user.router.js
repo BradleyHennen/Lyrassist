@@ -15,9 +15,9 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 // Handles POST request with new user data
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
-router.post('/register', (req, res, next) => { 
+router.post('/register', (req, res, next) => {
   console.log('req in post', req.body);
-   
+
   const username = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
 
@@ -42,9 +42,18 @@ router.post('/logout', (req, res) => {
   res.sendStatus(200);
 });
 
-router.get('/userinfo/:id', (req, res) => {
+router.get('/lyrics/:id', (req, res) => {
   const userId = req.params.id;
-  const sqlText = ``
+  const sqlText = `SELECT * FROM "lyric_info" WHERE "user_id" = $1;`;
+
+  pool.query(sqlText, [userId])
+    .then((results) => {
+      res.send(results.rows)
+    })
+    .catch((error) => {
+      console.log('Something went wrong getting users lyrics', error);
+      res.sendStatus(500);
+    })
 })
 
 module.exports = router;

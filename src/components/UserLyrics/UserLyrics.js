@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 // import Grid from '@material-ui/core/Grid';
 import CreateLyricCards from '../CreateLyricCards/CreateLyricCards';
+import UserLyricInfo from '../UserLyricInfo/UserLyricInfo';
 
 
 const styles = theme => ({
@@ -27,8 +28,12 @@ const styles = theme => ({
 
 class UserLyrics extends Component {
 
+    state = {
+        userId: this.props.user.id
+    }
+
     componentDidMount = () => {
-        this.props.dispatch({type: 'GET_USER_LYRICS', payload: this.props.user.id})
+        this.props.dispatch({type: 'GET_USER_LYRICS', payload: this.state.userId})
     }
 
     render() {
@@ -39,6 +44,7 @@ class UserLyrics extends Component {
             <Paper className={classes.root}>
                 <Typography variant="h3">Your Lyrics</Typography>
                 {JSON.stringify(this.props.user.id)}
+                {JSON.stringify(this.props.reduxState.userLyrics)}
                 <Table className={classes.table}>
                     <TableHead>
                         <TableRow>
@@ -52,7 +58,9 @@ class UserLyrics extends Component {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-
+                        {this.props.reduxState.userLyrics.map(info => {
+                            return <UserLyricInfo info={info}/>
+                        })}
                     </TableBody>
                 </Table>
             </Paper>
