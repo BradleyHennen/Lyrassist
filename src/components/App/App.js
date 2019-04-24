@@ -11,6 +11,7 @@ import {connect} from 'react-redux';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
 
 import Home from '../Home/Home';
+import UserProfile from '../UserProfile/UserProfile';
 import Welcome from '../Welcome/Welcome';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import LoginPage from '../LoginPage/LoginPage';
@@ -34,6 +35,11 @@ class App extends Component {
             exact
             path="/home"
             component={Home}
+          />
+          <ProtectedRoute
+            exact
+            path="/userprofile"
+            component={UserProfile}
           />
         </Switch>
       </Router>
