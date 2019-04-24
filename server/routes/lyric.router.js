@@ -34,9 +34,11 @@ router.get('/:id', (req, res) => {
                     JOIN "lyric_info" ON "lyric_info"."id" = "lyrics"."lyric_id"
                     JOIN "user" ON "user"."id" = "lyric_info"."user_id"
                     JOIN "song_label" ON "song_label"."id" = "lyrics"."song_label_id"
-                    WHERE "lyric_info"."user_id" = $1 AND "lyric_info"."id" = $2;`)
+                    WHERE "lyric_info"."user_id" = $1 AND "lyric_info"."id" = $2 AND "lyrics"."lyric_id" = $2;`)
     pool.query(sqlText, [userId, lyricId])
     .then((results) => {
+        console.log('Success getting specified lyrics from user id and lyric id');
+        
         res.send(results.rows);
     })
     .catch((error) => {

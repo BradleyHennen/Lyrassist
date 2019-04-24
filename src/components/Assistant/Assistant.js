@@ -43,42 +43,18 @@ class Assistant extends Component {
 
     searchQuery = (event) => {
         let updatedQuery = '';
-        if(this.state.queryId === 1) {
+        if (this.state.word === '') {
+            return
+        }
+        else if (this.state.queryId === 1) {
             updatedQuery = `rel_rhy=${this.state.word}`;
             console.log('updatedQuery', updatedQuery);
-        } else if(this.state.queryId === 2) {
+        }
+        else if (this.state.queryId === 2) {
             updatedQuery = `rel_ant=${this.state.word}`;
-        } 
+        }
         this.props.dispatch({ type: 'GET_DATAMUSE', payload: updatedQuery })
     }
-
-    // searchConditional = () => {
-    //     if(this.state.queryId === 1) {
-    //         return (
-    //             <TextField
-    //                     required
-    //                     label="Word"
-    //                     // className={classes.textField}
-    //                     value={this.state.word}
-    //                     onChange={this.handleChangeForQuery}
-    //                     margin="normal"
-    //             />
-    //         )
-    //     } else if (this.state.queryId === 2) {
-    //         return (
-    //             <TextField
-    //                     required
-    //                     label="Word"
-    //                     // className={classes.textField}
-    //                     value={this.state.word}
-    //                     onChange={this.handleChangeForQuery}
-    //                     margin="normal"
-    //             />
-    //         )
-    //     } else {
-    //         alert('error');
-    //     }
-    // }
 
     render() {
         const { classes } = this.props;

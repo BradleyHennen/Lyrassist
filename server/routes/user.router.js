@@ -43,8 +43,8 @@ router.post('/logout', (req, res) => {
   res.sendStatus(200);
 });
 
-router.get('/lyrics/:id', (req, res) => {
-  const userId = req.params.id;
+router.get('/lyrics', (req, res) => {
+  const userId = req.user.id;
   const sqlText = `SELECT * FROM "lyric_info" WHERE "user_id" = $1;`;
 
   pool.query(sqlText, [userId])
@@ -56,5 +56,30 @@ router.get('/lyrics/:id', (req, res) => {
       res.sendStatus(500);
     })
 })
+
+router.delete('/lyrics/delete/:id', rejectUnauthenticated, async (req, res) => {
+  const client = await pool.connect();
+  let id = req.params.id;
+  console.log('Delete params.id', id);
+  
+  try {
+      lyricQuery = `DELETE FROM "lyrics" WHERE "lyric_id" = $1;`;
+      lyricInfoQuery = `DELETE FROM "lyric_info" WHERE "id" = $1;`; 
+
+
+    await client.query('BEGIN')
+      await client.query(lyricQuery,[id] );
+      await client.query(lyricInfoQuery, [id]);
+
+      await client.query('COMMIT')
+      res.sendStatus(201);
+  } catch (error) {
+      await client.query('ROLLBACK')
+      console.log('Error deleting lyrics', error);
+      res.sendStatus(500);
+  } finally {
+      client.release()
+  }
+});
 
 module.exports = router;

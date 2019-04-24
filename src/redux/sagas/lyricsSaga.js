@@ -3,6 +3,8 @@ import axios from 'axios';
 
 function* getLyrics(action) {
     const lyricId = action.payload
+    console.log('lyricId', lyricId);
+    
     try {
         const response = yield axios.get(`/api/lyric/${lyricId}`);
         yield put({ type: 'SET_LYRICS', payload: response.data })

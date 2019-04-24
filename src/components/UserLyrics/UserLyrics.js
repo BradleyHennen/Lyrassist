@@ -28,12 +28,8 @@ const styles = theme => ({
 
 class UserLyrics extends Component {
 
-    state = {
-        userId: this.props.user.id
-    }
-
     componentDidMount = () => {
-        this.props.dispatch({type: 'GET_USER_LYRICS', payload: this.state.userId})
+        this.props.dispatch({type: 'GET_USER_LYRICS'})
     }
 
     render() {
@@ -43,7 +39,7 @@ class UserLyrics extends Component {
         return (
             <Paper className={classes.root}>
                 <Typography variant="h3">Your Lyrics</Typography>
-                {JSON.stringify(this.props.user.id)}
+                {/* {JSON.stringify(this.props.user.id)} */}
                 {JSON.stringify(this.props.reduxState.userLyrics)}
                 <Table className={classes.table}>
                     <TableHead>

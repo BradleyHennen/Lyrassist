@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from "react-router";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
 import TableCell from '@material-ui/core/TableCell';
@@ -23,6 +24,15 @@ const styles = theme => ({
 
 class UserLyrics extends Component {
 
+    handleClickDelete = () => {
+        this.props.dispatch({ type: 'DELETE_LYRICS', payload: this.props.info.id })
+    }
+
+    handleClickEdit = () => {
+        this.props.dispatch({ type: 'GET_LYRICS', payload: this.props.info.id });
+        this.props.history.push('/home');
+    }
+
 
     render() {
         const { classes } = this.props;
@@ -35,10 +45,22 @@ class UserLyrics extends Component {
                 <TableCell align="right">{this.props.info.date_created}</TableCell>
                 <TableCell align="right">{this.props.info.date_edited}</TableCell>
                 <TableCell align="right">
-                    <Button>Edit</Button>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={this.handleClickEdit}
+                    >
+                        Edit
+                    </Button>
                 </TableCell>
                 <TableCell align="right">
-                    <Button>Delete</Button>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={this.handleClickDelete}
+                    >
+                        Delete
+                    </Button>
                 </TableCell>
                 <TableCell align="right">
                     <Button>Print</Button>
@@ -56,4 +78,4 @@ UserLyrics.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps)(withStyles(styles)(UserLyrics));
+export default withRouter(connect(mapStateToProps)(withStyles(styles)(UserLyrics)));

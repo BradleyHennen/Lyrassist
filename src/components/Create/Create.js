@@ -29,7 +29,6 @@ class Create extends Component {
 
     componentDidMount = () => {
         this.props.dispatch({type: 'GET_LYRIC_INFO'});
-        this.props.dispatch({type: 'GET_LYRICS', payload: 1});
     }
 
     onDragEnd = result => {
@@ -73,7 +72,7 @@ class Create extends Component {
     }
 
     addLyricCard = () => {
-        return
+        return 
     }
 
     saveLyrics = () => {
@@ -106,11 +105,11 @@ class Create extends Component {
             <div>
                 <Typography variant="h1">Lyrics</Typography>
                 <Button variant="contained" onClick={this.addLyricCard} color="primary">Add Lyric Card</Button>
-                <Button variant="contained" onClick={this.saveLyrics} color="primary">Add Lyric Card</Button>
+                <Button variant="contained" onClick={this.saveLyrics} color="primary">Save</Button>
                 <br/>
                 {/* {JSON.stringify(this.props.reduxState.lyricInfo)} */}
                 {JSON.stringify(this.props.reduxState.lyrics)}
-                {JSON.stringify(this.state)}
+                {/* {JSON.stringify(this.state)} */}
                 {this.testLyricLoop()}
                 {/* <DragDropContext onDragEnd={this.onDragEnd}>
                 
