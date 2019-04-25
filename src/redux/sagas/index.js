@@ -9,6 +9,7 @@ import getLyrics from './lyricsSaga';
 import getUserLyrics from './userLyricsSaga';
 import deleteLyrics from './deleteLyricsSaga';
 import getSongPartList from './songPartList';
+import deleteLyricCard from './deleteLyricCardSaga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -29,5 +30,6 @@ export default function* rootSaga() {
     getLyrics(),
     getUserLyrics(),
     deleteLyrics(),
+    deleteLyricCard(),
   ]);
 }

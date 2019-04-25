@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import qs from 'query-string';
+import { withRouter } from "react-router";
 import { withStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 // import Grid from '@material-ui/core/Grid';
 import CreateLyricCards from '../CreateLyricCards/CreateLyricCards';
-
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Dialog from '@material-ui/core/Dialog';
@@ -37,14 +38,14 @@ class Create extends Component {
     }
 
     componentDidMount = () => {
-        this.props.dispatch({ type: 'GET_LYRIC_INFO' });
+        // this.props.dispatch({ type: 'GET_LYRIC_INFO' });
         this.props.dispatch({ type: 'GET_SONG_PART_LIST' });
-    }
-
-    getQueryVariable() {
-        const urlParams = new URLSearchParams(window.location.hash);
-        const myParam = urlParams.get('id');
-        return myParam;
+        const searchObject = qs.parse(this.props.location.search);
+        console.log('search Object', searchObject.songId);
+        this.setState({
+            songId: searchObject.songId,
+        })
+        this.props.dispatch({ type: 'GET_LYRICS', payload: searchObject.songId }); 
     }
 
     onDragEnd = result => {
@@ -119,8 +120,6 @@ class Create extends Component {
             <div>
                 <Typography variant="h1">Lyrics</Typography>
                 {JSON.stringify(this.props.reduxState.lyrics)}
-                {JSON.stringify(window.location)}
-                {JSON.stringify(this.getQueryVariable())}
                 <Button variant="contained" onClick={this.handleClickOpen} color="primary">Add Lyric Card</Button>
                 <Dialog
                     open={this.state.open}
@@ -167,7 +166,7 @@ class Create extends Component {
                     {this.props.reduxState.lyrics.map(lyricData => {
                         return (
 
-                            <CreateLyricCards lyricData={lyricData} />
+                            <CreateLyricCards lyricData={lyricData} songId={this.state.songId}/>
 
                         )
                     })}
@@ -185,4 +184,4 @@ Create.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps)(withStyles(styles)(Create));
+export default withRouter(connect(mapStateToProps)(withStyles(styles)(Create)));

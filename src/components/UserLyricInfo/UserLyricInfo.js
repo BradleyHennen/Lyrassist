@@ -31,7 +31,7 @@ class UserLyrics extends Component {
 
     handleClickEdit = () => {
         this.props.dispatch({ type: 'GET_LYRICS', payload: this.props.info.id });
-        this.props.history.push(`/home?id=${this.props.info.id}`);
+        this.props.history.push(`/home?songId=${this.props.info.id}`);
     }
 
 
