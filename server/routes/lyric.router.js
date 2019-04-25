@@ -6,10 +6,6 @@ const userStrategy = require('../strategies/user.strategy');
 
 const router = express.Router();
 
-// router.get('/', rejectUnauthenticated, (req, res) => {
-//     // Send back user object from the session (previously queried from the database)
-//     res.send(req.user);
-//   });
 
 router.get('/info', (req, res) => {
     let sqlText = ('SELECT * FROM "lyric_info";')

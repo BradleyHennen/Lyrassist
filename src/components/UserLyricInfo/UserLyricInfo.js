@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import { withRouter } from "react-router";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
@@ -30,8 +31,9 @@ class UserLyrics extends Component {
 
     handleClickEdit = () => {
         this.props.dispatch({ type: 'GET_LYRICS', payload: this.props.info.id });
-        this.props.history.push('/home');
+        this.props.history.push(`/home?id=${this.props.info.id}`);
     }
+
 
 
     render() {

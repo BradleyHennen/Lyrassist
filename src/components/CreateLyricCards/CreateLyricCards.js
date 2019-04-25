@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core';
 // import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-// import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button';
 // import Grid from '@material-ui/core/Grid';
 import CreateLyrics from '../CreateLyrics/CreateLyrics';
 
@@ -33,40 +33,12 @@ class CreateLyricCards extends Component {
         const { classes } = this.props;
 
         return (
-            <div className={classes.container}>
-                <div className={classes.container}>
-                <Typography variant="h4">{this.props.column.title}</Typography>
-                {/* {JSON.stringify(this.props.column)} */}
-                {/* <Droppable droppableId={this.props.column.id}>
-                    {provided => (
-                        <div
-                            className={classes.list}
-                            ref={provided.innerRef}
-                            {...provided.droppableProps}
-                        >
-                            {this.props.tasks.map((task, index) => 
-                                <CreateLyrics key={task.id} task={task} index={index} />
-                            )}
-                            {provided.placeholder}
-                        </div>
-                    )}
-                </Droppable> */}
-                <Droppable droppableId={this.props.column.id}>
-                    {provided => (
-                        <div
-                            ref={provided.innerRef}
-                            {...provided.droppableProps}
-                        >
-                            {this.props.tasks.map((task, index) => 
-                                <CreateLyrics key={task.id} task={task} index={index} />
-                            )}
-                            {provided.placeholder}
-                        </div>
-                    )}
-
-                </Droppable>
-                </div>
-            </div>
+            <Paper className={classes.container}>
+                <Typography variant="h5">{this.props.lyricData.label_name}</Typography>
+                <Typography variant="body1">{this.props.lyricData.lyrics}</Typography>
+                <Button variant="contained" color="primary">Delete</Button>
+                <Button variant="contained" color="primary">Edit</Button>
+            </Paper>
         );
     }
 }

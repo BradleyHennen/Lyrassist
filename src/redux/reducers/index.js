@@ -6,7 +6,8 @@ import datamuseData from './datamuseReducer';
 import queryList from './queryListReducer';
 import lyricInfo from './lyricInfoReducer';
 import lyrics from './lyricsReducer';
-import userLyrics from './userLyricsReducer'
+import userLyrics from './userLyricsReducer';
+import songPartList from './songPartListReducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   lyricInfo,
   lyrics,
   userLyrics,
+  songPartList,
 });
 
 export default rootReducer;

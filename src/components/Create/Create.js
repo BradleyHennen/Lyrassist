@@ -1,43 +1,59 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
-// import Paper from '@material-ui/core/Paper';
+import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 // import Grid from '@material-ui/core/Grid';
 import CreateLyricCards from '../CreateLyricCards/CreateLyricCards';
 
-import { DragDropContext } from 'react-beautiful-dnd';
-import InitialData from './initial-data';
+import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const styles = theme => ({
-
+    textField: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        width: 200,
+    },
+    menu: {
+        width: 200,
+    },
 })
 
 class Create extends Component {
-    // state = InitialData;
-    // state = {
-    //     tasks: {
 
-    //     },
-    //     column:{
-    //         id: 'column',
-    //         title: 
-    //     }
-    // }
+    state = {
+        open: false,
+        songPartId: 1,
+        songId: null,
+    }
 
     componentDidMount = () => {
-        this.props.dispatch({type: 'GET_LYRIC_INFO'});
+        this.props.dispatch({ type: 'GET_LYRIC_INFO' });
+        this.props.dispatch({ type: 'GET_SONG_PART_LIST' });
+    }
+
+    getQueryVariable() {
+        const urlParams = new URLSearchParams(window.location.hash);
+        const myParam = urlParams.get('id');
+        return myParam;
     }
 
     onDragEnd = result => {
-        const {destination, source, draggableId} = result;
+        const { destination, source, draggableId } = result;
 
-        if(!destination) {
+        if (!destination) {
             return;
         }
-        if(
+        if (
             destination.draggableId === source.droppableId &&
             destination.index === source.index
         ) {
@@ -45,9 +61,9 @@ class Create extends Component {
         }
 
         const column = this.state.column;
-        
+
         const newTaskIds = Array.from(column.taskIds);
-        
+
         newTaskIds.splice(source.index, 1);
         newTaskIds.splice(destination.index, 0, draggableId);
         console.log('newTaskIds', newTaskIds);
@@ -58,7 +74,7 @@ class Create extends Component {
             taskIds: newTaskIds,
         };
         console.log('newColumn', newColumn);
-        
+
         const newState = {
             ...this.state,
             column: {
@@ -67,55 +83,95 @@ class Create extends Component {
             }
         }
         console.log('newState', newState);
-        
+
         this.setState(newState);
     }
 
-    addLyricCard = () => {
-        return 
+    addLyricCard = (songPart) => {
+        return;
+
     }
+
+    handleInputChangeFor = propertyName => (event) => {
+        this.setState({
+            [propertyName]: event.target.value,
+        });
+    }
+
+    handleClickOpen = () => {
+        this.setState({ open: true });
+    };
+
+    handleClose = (event) => {
+        this.setState({ open: false });
+    };
 
     saveLyrics = () => {
         return
     }
 
-    testLyricLoop = () => {
-        let array = this.props.reduxState.lyrics;
-        for (let i = 0; i < array.length; i++) {
-            console.log('loop', array[i]);
-            
-        }
-    }
 
     render() {
-        // const { classes } = this.props;
+        const { classes } = this.props;
         // const tasks = this.state.column.taskIds.map(taskId => this.state.tasks[taskId]);
-        // const test = this.props.reduxState.lyricInfo.lyric_order.map(taskId => 
-        //     this.props.reduxState.lyrics.find((element) => {
-        //         console.log('element', taskId);
-                
-        //         return element;
-        //     }
-        // ));
-
-        
-        
 
         return (
             <div>
                 <Typography variant="h1">Lyrics</Typography>
-                <Button variant="contained" onClick={this.addLyricCard} color="primary">Add Lyric Card</Button>
-                <Button variant="contained" onClick={this.saveLyrics} color="primary">Save</Button>
-                <br/>
-                {/* {JSON.stringify(this.props.reduxState.lyricInfo)} */}
                 {JSON.stringify(this.props.reduxState.lyrics)}
-                {/* {JSON.stringify(this.state)} */}
-                {this.testLyricLoop()}
-                {/* <DragDropContext onDragEnd={this.onDragEnd}>
-                
-                    <CreateLyricCards key={this.state.column.id} column={this.state.column} tasks={tasks} />
+                {JSON.stringify(window.location)}
+                {JSON.stringify(this.getQueryVariable())}
+                <Button variant="contained" onClick={this.handleClickOpen} color="primary">Add Lyric Card</Button>
+                <Dialog
+                    open={this.state.open}
+                    onClose={this.handleClose}
+                >
+                    <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Select A Song Part You Want To Add
+                            </DialogContentText>
+                        <TextField
+                            select
+                            fullWidth
+                            autoFocus
+                            margin="dense"
+                            label="What To Search"
+                            className={classes.textField}
+                            value={this.state.songPartId}
+                            onChange={this.handleInputChangeFor('songPartId')}
+                            SelectProps={{
+                                MenuProps: {
+                                    className: classes.menu,
+                                },
+                            }}
+                            margin="normal"
+                        >
+                            {this.props.reduxState.songPartList.map(option => (
+                                <MenuItem key={option.id} value={option.id}>
+                                    {option.label_name}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleClose} color="primary">
+                            Add
+                            </Button>
+                    </DialogActions>
+                </Dialog>
+                <Button variant="contained" onClick={this.saveLyrics} color="primary">Save</Button>
+                <br />
+                <Paper>
+                    <Typography variant="h3">{}</Typography>
+                    {this.props.reduxState.lyrics.map(lyricData => {
+                        return (
 
-                </DragDropContext> */}
+                            <CreateLyricCards lyricData={lyricData} />
+
+                        )
+                    })}
+                </Paper>
             </div>
         );
     }

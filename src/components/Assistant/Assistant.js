@@ -26,7 +26,7 @@ class Assistant extends Component {
     };
 
     componentDidMount = () => {
-        this.props.dispatch({ type: 'GET_QUERY_LIST' })
+        this.props.dispatch({ type: 'GET_QUERY_LIST' });
     }
 
     handleInputChangeFor = propertyName => (event) => {

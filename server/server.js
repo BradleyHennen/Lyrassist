@@ -11,7 +11,7 @@ const passport = require('./strategies/user.strategy');
 // Route includes
 const userRouter = require('./routes/user.router');
 const datamuseRouter = require('./routes/datamuse.router');
-const querylistRouter = require('./routes/searchQuery.router');
+const querylistRouter = require('./routes/selector.router');
 const lyricRouter = require('./routes/lyric.router');
 
 // Body parser middleware
@@ -28,7 +28,7 @@ app.use(passport.session());
 /* Routes */
 app.use('/api/user', userRouter);
 app.use('/api/datamuse', datamuseRouter);
-app.use('/api/querylist', querylistRouter);
+app.use('/api/selector', querylistRouter);
 app.use('/api/lyric', lyricRouter);
 
 // Serve static files

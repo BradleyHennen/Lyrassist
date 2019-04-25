@@ -30,6 +30,7 @@ class UserLyrics extends Component {
 
     componentDidMount = () => {
         this.props.dispatch({type: 'GET_USER_LYRICS'})
+        
     }
 
     render() {
