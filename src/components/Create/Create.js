@@ -35,7 +35,7 @@ class Create extends Component {
         open: false,
         songPartId: 1,
         songId: null,
-        title: this.props.reduxState.lyricInfo.title,
+        title: this.props.lyricInfo.title,
     }
 
     componentDidMount = () => {
@@ -45,8 +45,9 @@ class Create extends Component {
         this.setState({
             songId: searchObject.songId,
         })
-        this.props.dispatch({type: 'GET_LYRIC_INFO', payload: searchObject.songId})
         this.props.dispatch({ type: 'GET_LYRICS', payload: searchObject.songId });
+        this.props.dispatch({type: 'GET_LYRIC_INFO', payload: searchObject.songId});
+
     }
 
     onDragEnd = result => {
@@ -120,12 +121,13 @@ class Create extends Component {
     render() {
         const { classes } = this.props;
         // const tasks = this.state.column.taskIds.map(taskId => this.state.tasks[taskId]);
-
+        console.log('this.state.title', this.state.title);
+        
         return (
             <div>
                 <Typography variant="h1">Lyrics</Typography>
-                <Typography variant="h3">{this.props.reduxState.lyricInfo.title}</Typography>
-                {JSON.stringify(this.props.reduxState.lyricInfo)}
+                <Typography variant="h3">{this.state.title}</Typography>
+                {JSON.stringify(this.props.lyricInfo.title)}
                 {JSON.stringify(this.state)}
                 <Button variant="contained" onClick={this.handleClickOpen} color="primary">Add Lyric Card</Button>
                 <Dialog

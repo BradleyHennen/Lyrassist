@@ -1,4 +1,4 @@
-const lyricInfo = (state = {}, action) => {
+const lyricInfo = (state = [], action) => {
     if (action.type === 'SET_LYRIC_INFO') {
         return action.payload;
     }
