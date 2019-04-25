@@ -49,6 +49,13 @@ class CreateLyricCards extends Component {
     handleSave = () => {
         this.setState({
             editLyrics: false,
+        });
+        this.props.dispatch({type: 'SAVE_LYRIC_CARD'})
+    }
+
+    handleChangeForLyrics = (event) => {
+        this.setState({
+            lyrics: event.target.value
         })
     }
 
@@ -57,7 +64,7 @@ class CreateLyricCards extends Component {
            return (
                <Paper>
                     <Typography variant="h5">{this.props.lyricData.label_name}</Typography>
-                    <Typography variant="body1">{this.props.lyricData.lyrics}</Typography>
+                    <Typography variant="body1">{this.state.lyrics}</Typography>
                     <Button variant="contained" color="primary" onClick={this.handleEdit}>Edit</Button>
                 </Paper>
            )
@@ -68,6 +75,8 @@ class CreateLyricCards extends Component {
                     <Typography variant="h5">{this.props.lyricData.label_name}</Typography>
                     <TextField 
                         label="Edit"
+                        multiline
+                        rows="4"
                         value={this.state.lyrics}
                         onChange={this.handleChangeForLyrics}
                         margin="normal"
