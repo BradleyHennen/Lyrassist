@@ -29,7 +29,7 @@ const AccountInformation = (props) => {
                 <Typography variant="h6">Email:</Typography>
                 <Typography variant="body1">{props.user.email}</Typography>
                 <Typography variant="h6">Password:</Typography>
-                <Button variant="contained" color="primary">Change Password</Button>
+                <Button disabled variant="contained" color="primary">Change Password</Button>
             </Paper>
         </div>
     )

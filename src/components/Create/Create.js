@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import qs from 'query-string';
 import { withRouter } from "react-router";
 import { withStyles } from '@material-ui/core';
+import moment from 'moment'
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -17,8 +18,12 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { format } from 'path';
 
 const styles = theme => ({
+    root: {
+        textAlign: "center",
+    },
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
@@ -34,7 +39,7 @@ class Create extends Component {
     state = {
         open: false,
         songPartId: 1,
-        songId: null,
+        songId: 0,
         title: this.props.lyricInfo.title,
     }
 
@@ -117,18 +122,21 @@ class Create extends Component {
         this.props.history.push('/userprofile')
     }
 
-
     render() {
         const { classes } = this.props;
         // const tasks = this.state.column.taskIds.map(taskId => this.state.tasks[taskId]);
-        console.log('this.state.title', this.state.title);
+        console.log('moment time', moment(this.props.reduxState.lyricInfo.date_created).format("MMM Do YY"));
         
         return (
             <div>
-                <Typography variant="h1">Lyrics</Typography>
-                <Typography variant="h3">{this.state.title}</Typography>
-                {JSON.stringify(this.props.lyricInfo.title)}
-                {JSON.stringify(this.state)}
+                <Paper className={classes.root}>
+                    <Typography variant="h2">Lyrics</Typography>
+                    <Typography variant="h5">{this.props.reduxState.lyricInfo.title}</Typography>
+                    <Typography variant="h5">{this.props.reduxState.lyricInfo.author}</Typography>
+                    <Typography variant="h5">{moment(this.props.reduxState.lyricInfo.date_created).format("MMM Do YY")}</Typography>
+                </Paper>
+                {/* {JSON.stringify(this.props.lyricInfo)} */}
+                {/* {JSON.stringify(this.state)} */}
                 <Button variant="contained" onClick={this.handleClickOpen} color="primary">Add Lyric Card</Button>
                 <Dialog
                     open={this.state.open}
@@ -173,7 +181,7 @@ class Create extends Component {
                 <div>
                     {this.props.reduxState.lyrics.map(lyricData => {
                         return (
-                            <CreateLyricCards className="lyricCards" lyricData={lyricData} songId={this.state.songId} />
+                            <CreateLyricCards key={lyricData.lyrics_id} className="lyricCards" lyricData={lyricData} songId={this.state.songId} />
                         )
                     })}
                 </div>

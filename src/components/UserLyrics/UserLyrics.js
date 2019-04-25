@@ -33,6 +33,10 @@ class UserLyrics extends Component {
         
     }
 
+    createNewSong = () => {
+        
+    }
+
     render() {
         const { classes } = this.props;
 
@@ -40,8 +44,9 @@ class UserLyrics extends Component {
         return (
             <Paper className={classes.root}>
                 <Typography variant="h3">Your Lyrics</Typography>
+                <Button variant="contained" color="primary" onClick={this.createNewSong}>Create New Song</Button>
                 {/* {JSON.stringify(this.props.user.id)} */}
-                {JSON.stringify(this.props.reduxState.userLyrics)}
+                {/* {JSON.stringify(this.props.reduxState.userLyrics)} */}
                 <Table className={classes.table}>
                     <TableHead>
                         <TableRow>

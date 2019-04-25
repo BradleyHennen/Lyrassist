@@ -7,8 +7,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 // import Grid from '@material-ui/core/Grid';
-import CreateLyrics from '../CreateLyrics/CreateLyrics';
-import { Droppable } from 'react-beautiful-dnd';
+// import CreateLyrics from '../CreateLyrics/CreateLyrics';
+// import { Droppable } from 'react-beautiful-dnd';
 
 
 
@@ -21,8 +21,9 @@ const styles = theme => ({
     },
     list: {
         padding: 8,
-    }
-})
+    },
+
+});
 
 class CreateLyricCards extends Component {
 
@@ -84,7 +85,7 @@ class CreateLyricCards extends Component {
             return (
                 <Paper>
                     <Typography variant="h5">{this.state.updatedLyrics.label_name}</Typography>
-                    <Typography variant="body1">{this.state.updatedLyrics.lyrics}</Typography>
+                    <Typography  variant="body1">{this.state.updatedLyrics.lyrics}</Typography>
                     <Button variant="contained" color="primary" onClick={this.handleEdit}>Edit</Button>
                 </Paper>
             )
