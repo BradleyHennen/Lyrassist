@@ -1,1 +1,11 @@
+.menu {
+    width: 200px;
+}
 
+.textField {
+    width: 200px;
+}
+
+.textFieldMultiline {
+    width: 400px;
+}

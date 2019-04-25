@@ -103,8 +103,11 @@ class Create extends Component {
         this.setState({ open: true });
     };
 
-    handleClose = (event) => {
-        this.setState({ open: false });
+    handleAddClose = (event) => {
+        this.setState({ 
+            open: false 
+        });
+        
     };
 
     saveLyrics = () => {
@@ -119,7 +122,7 @@ class Create extends Component {
         return (
             <div>
                 <Typography variant="h1">Lyrics</Typography>
-                {JSON.stringify(this.props.reduxState.lyrics)}
+                {/* {JSON.stringify(this.props.reduxState.lyrics)} */}
                 <Button variant="contained" onClick={this.handleClickOpen} color="primary">Add Lyric Card</Button>
                 <Dialog
                     open={this.state.open}
@@ -135,7 +138,7 @@ class Create extends Component {
                             fullWidth
                             autoFocus
                             margin="dense"
-                            label="What To Search"
+                            label="Song Part"
                             className={classes.textField}
                             value={this.state.songPartId}
                             onChange={this.handleInputChangeFor('songPartId')}
@@ -154,7 +157,7 @@ class Create extends Component {
                         </TextField>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleClose} color="primary">
+                        <Button onClick={this.handleAddClose} color="primary">
                             Add
                             </Button>
                     </DialogActions>

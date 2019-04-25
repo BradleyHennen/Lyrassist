@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles, TextField } from '@material-ui/core';
-// import MenuItem from '@material-ui/core/MenuItem';
+import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 // import Grid from '@material-ui/core/Grid';
 import CreateLyrics from '../CreateLyrics/CreateLyrics';
-
 import { Droppable } from 'react-beautiful-dnd';
-// import Task from './task.jsx';
 
 
 
@@ -28,15 +26,23 @@ const styles = theme => ({
 
 class CreateLyricCards extends Component {
 
-    state= {
+    state = {
         editLyrics: false,
-        lyrics: this.props.lyricData.lyrics,
+        updatedLyrics: {
+            lyric_id: this.props.lyricData.lyrics_id,
+            song_label_id: this.props.lyricData.song_label_id,
+            label_name: this.props.lyricData.label_name,
+            lyrics: this.props.lyricData.lyrics,
+        }
+    }
+
+    componentDidMount = () => {
+        this.props.dispatch({ type: 'GET_SONG_PART_LIST' });
+        this.props.dispatch({ type: 'GET_LYRICS', payload: this.props.songId });
     }
 
     handleDelete = () => {
-        this.props.dispatch({type: 'DELETE_LYRIC_CARD', payload: this.props.lyricData.lyrics_id})
-        console.log('songId params', this.props.songId);
-        
+        this.props.dispatch({ type: 'DELETE_LYRIC_CARD', payload: this.props.lyricData.lyrics_id })
         this.props.dispatch({ type: 'GET_LYRICS', payload: this.props.songId });
     }
 
@@ -50,38 +56,65 @@ class CreateLyricCards extends Component {
         this.setState({
             editLyrics: false,
         });
-        this.props.dispatch({type: 'SAVE_LYRIC_CARD'})
+        this.props.dispatch({ type: 'UPDATE_LYRIC_CARD', payload: this.state.updatedLyrics });
+        this.props.dispatch({ type: 'GET_LYRICS', payload: this.props.songId });
     }
 
-    handleChangeForLyrics = (event) => {
+    handleChangeForLyrics = propertyName => (event) => {
         this.setState({
-            lyrics: event.target.value
+            updatedLyrics: {
+                ...this.state.updatedLyrics,
+                [propertyName]: event.target.value
+            }
         })
     }
 
     renderCards = () => {
-        if(this.state.editLyrics === false) {
-           return (
-               <Paper>
-                    <Typography variant="h5">{this.props.lyricData.label_name}</Typography>
-                    <Typography variant="body1">{this.state.lyrics}</Typography>
+        if (this.state.editLyrics === false) {
+            return (
+                <Paper>
+                    <Typography variant="h5">{this.state.updatedLyrics.label_name}</Typography>
+                    <Typography variant="body1">{this.state.updatedLyrics.lyrics}</Typography>
                     <Button variant="contained" color="primary" onClick={this.handleEdit}>Edit</Button>
                 </Paper>
-           )
-        } 
+            )
+        }
         else {
             return (
                 <Paper>
-                    <Typography variant="h5">{this.props.lyricData.label_name}</Typography>
-                    <TextField 
-                        label="Edit"
-                        multiline
-                        rows="4"
-                        value={this.state.lyrics}
-                        onChange={this.handleChangeForLyrics}
-                        margin="normal"
-                    >
-                    </TextField>
+                    <form>
+                        <TextField
+                            select
+                            autoFocus
+                            margin="dense"
+                            label="Change Song Part"
+                            className="textField"
+                            value={this.state.updatedLyrics.song_label_id}
+                            onChange={this.handleChangeForLyrics('song_label_id')}
+                            SelectProps={{
+                                MenuProps: {
+                                    className: "menu",
+                                },
+                            }}
+                            margin="normal"
+                        >
+                            {this.props.reduxState.songPartList.map(option => (
+                                <MenuItem key={option.id} value={option.id}>
+                                    {option.label_name}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                        <TextField
+                            label="Edit Lyrics"
+                            multiline
+                            rows="4"
+                            className="textFieldMultiline"
+                            value={this.state.updatedLyrics.lyrics}
+                            onChange={this.handleChangeForLyrics('lyrics')}
+                            margin="normal"
+                        >
+                        </TextField>
+                    </form>
                     <Button variant="contained" color="primary" onClick={this.handleDelete}>Delete</Button>
                     <Button variant="contained" color="primary" onClick={this.handleSave}>Save</Button>
                 </Paper>
@@ -94,7 +127,7 @@ class CreateLyricCards extends Component {
 
         return (
             <div className={classes.container}>
-                {this.renderCards()} 
+                {this.renderCards()}
             </div>
         );
     }
