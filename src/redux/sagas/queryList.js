@@ -4,8 +4,6 @@ import axios from 'axios';
 function* getQueryList(action) {
     try {
         const response = yield axios.get(`/api/selector/querylist`);
-        console.log('getQueryList: ', response.data);
-        
         yield put({ type: 'SET_QUERY_LIST', payload: response.data })
     }
     catch (error) {

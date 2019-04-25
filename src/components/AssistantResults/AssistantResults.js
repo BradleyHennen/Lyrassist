@@ -32,7 +32,6 @@ class AssistantResults extends Component {
         const { classes } = this.props;
         return (
             <Paper className={classes.root}>
-            {JSON.stringify(this.props.reduxState.datamuseData)}
             <Table className={classes.table}>
               <TableHead>
                 <TableRow>

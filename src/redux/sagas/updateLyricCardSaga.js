@@ -3,8 +3,12 @@ import axios from 'axios';
 
 function* updateLyricCard(action) {
     console.log('update lyric card: ', action.payload);
+    let songId = Number(action.payload.songId);
+    console.log('update lyric card songId: ', songId);
+
     try {
-        const response = yield axios.put(`/api/lyric`, action.payload);
+        yield axios.put(`/api/lyric`, action.payload);
+        yield put({ type: 'GET_LYRICS', payload: songId});
     }
     catch (error) {
         console.log(`Couldn't update lyric card`);

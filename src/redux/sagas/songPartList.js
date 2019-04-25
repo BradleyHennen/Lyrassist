@@ -3,9 +3,7 @@ import axios from 'axios';
 
 function* getSongPartList(action) {
     try {
-        const response = yield axios.get(`/api/selector/songpart`);
-        console.log('getSongPartList: ', response.data);
-        
+        const response = yield axios.get(`/api/selector/songpart`);        
         yield put({ type: 'SET_SONG_PART_LIST', payload: response.data })
     }
     catch (error) {

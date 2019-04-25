@@ -9,3 +9,9 @@
 .textFieldMultiline {
     width: 400px;
 }
+
+.lyricCards {
+    margin-left: auto;
+    margin-right: auto;
+    color: blue;
+}

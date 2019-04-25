@@ -3,10 +3,12 @@ import axios from 'axios';
 
 function* deleteLyricCard(action) {
     try {
-        let lyricCardId = action.payload
-        console.log('LyricCardId', lyricCardId);
-        
-        yield axios.delete(`/api/lyric/${lyricCardId}`);
+        console.log('action.payload in delete', action.payload);
+
+        let lyricId = action.payload.lyricId;
+        let songId = action.payload.songId;
+        yield axios.delete(`/api/lyric/${lyricId}`);
+        yield put({ type: 'GET_LYRICS', payload: songId});
     }
     catch (error) {
         console.log(`Couldn't delete lyricCard`);

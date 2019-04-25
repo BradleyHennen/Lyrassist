@@ -7,11 +7,12 @@ const userStrategy = require('../strategies/user.strategy');
 const router = express.Router();
 
 
-router.get('/info', (req, res) => {
-    let sqlText = ('SELECT * FROM "lyric_info";')
-    pool.query(sqlText)
+router.get('/info/:id', (req, res) => {
+    let songId = req.params.id
+    let sqlText = ('SELECT * FROM "lyric_info" WHERE "id" = $1;')
+    pool.query(sqlText, [songId])
     .then((results) => {
-        res.send(results.rows);
+        res.send(results.rows[0]);
     })
     .catch((error) => {
         console.log('Something went wrong getting lyric info', error);

@@ -42,6 +42,7 @@ class Assistant extends Component {
     }
 
     searchQuery = (event) => {
+        event.preventDefault();
         let updatedQuery = '';
         if (this.state.word === '') {
             return
@@ -61,8 +62,7 @@ class Assistant extends Component {
 
         return (
             <div>
-                {JSON.stringify(this.state.querys)}
-                <form onSubmit={this.searchQuery}>
+                <form onSubmit={this.searchQuery} noValidate autoComplete="off">
                     <TextField
                         select
                         label="What To Search"

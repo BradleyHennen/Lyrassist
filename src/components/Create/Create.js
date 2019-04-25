@@ -35,17 +35,18 @@ class Create extends Component {
         open: false,
         songPartId: 1,
         songId: null,
+        title: this.props.reduxState.lyricInfo.title,
     }
 
     componentDidMount = () => {
-        // this.props.dispatch({ type: 'GET_LYRIC_INFO' });
         this.props.dispatch({ type: 'GET_SONG_PART_LIST' });
         const searchObject = qs.parse(this.props.location.search);
         console.log('search Object', searchObject.songId);
         this.setState({
             songId: searchObject.songId,
         })
-        this.props.dispatch({ type: 'GET_LYRICS', payload: searchObject.songId }); 
+        this.props.dispatch({type: 'GET_LYRIC_INFO', payload: searchObject.songId})
+        this.props.dispatch({ type: 'GET_LYRICS', payload: searchObject.songId });
     }
 
     onDragEnd = result => {
@@ -88,30 +89,31 @@ class Create extends Component {
         this.setState(newState);
     }
 
-    addLyricCard = (songPart) => {
-        return;
-
-    }
-
     handleInputChangeFor = propertyName => (event) => {
         this.setState({
             [propertyName]: event.target.value,
         });
     }
 
-    handleClickOpen = () => {
+    handleClickOpen = (event) => {
+        event.preventDefault();
         this.setState({ open: true });
     };
 
-    handleAddClose = (event) => {
-        this.setState({ 
-            open: false 
+    handleAddLyricCard = (event) => {
+        event.preventDefault();
+        this.setState({
+            open: false
         });
-        
+        const newCard = {
+            songLabelId: this.state.songPartId,
+            lyricId: this.state.songId,
+        }
+        this.props.dispatch({ type: 'ADD_LYRIC_CARD', payload: newCard });
     };
 
     saveLyrics = () => {
-        return
+        this.props.history.push('/userprofile')
     }
 
 
@@ -122,7 +124,9 @@ class Create extends Component {
         return (
             <div>
                 <Typography variant="h1">Lyrics</Typography>
-                {/* {JSON.stringify(this.props.reduxState.lyrics)} */}
+                <Typography variant="h3">{this.props.reduxState.lyricInfo.title}</Typography>
+                {JSON.stringify(this.props.reduxState.lyricInfo)}
+                {JSON.stringify(this.state)}
                 <Button variant="contained" onClick={this.handleClickOpen} color="primary">Add Lyric Card</Button>
                 <Dialog
                     open={this.state.open}
@@ -157,23 +161,20 @@ class Create extends Component {
                         </TextField>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleAddClose} color="primary">
+                        <Button onClick={this.handleAddLyricCard} color="primary">
                             Add
                             </Button>
                     </DialogActions>
                 </Dialog>
-                <Button variant="contained" onClick={this.saveLyrics} color="primary">Save</Button>
+                <Button variant="contained" onClick={this.saveLyrics} color="primary">Save & Exit</Button>
                 <br />
-                <Paper>
-                    <Typography variant="h3">{}</Typography>
+                <div>
                     {this.props.reduxState.lyrics.map(lyricData => {
                         return (
-
-                            <CreateLyricCards lyricData={lyricData} songId={this.state.songId}/>
-
+                            <CreateLyricCards className="lyricCards" lyricData={lyricData} songId={this.state.songId} />
                         )
                     })}
-                </Paper>
+                </div>
             </div>
         );
     }

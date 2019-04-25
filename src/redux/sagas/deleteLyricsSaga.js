@@ -3,6 +3,7 @@ import axios from 'axios';
 
 function* deleteLyrics(action) {
     try {
+        
         let lyricsId = action.payload
         yield axios.delete(`/api/user/lyrics/delete/${lyricsId}`);
         yield put({ type: 'GET_USER_LYRICS'})

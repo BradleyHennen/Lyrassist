@@ -25,12 +25,15 @@ const styles = theme => ({
 
 class UserLyrics extends Component {
 
-    handleClickDelete = () => {
+    handleClickDelete = (event) => {
+        event.preventDefault();
         this.props.dispatch({ type: 'DELETE_LYRICS', payload: this.props.info.id })
     }
 
-    handleClickEdit = () => {
+    handleClickEdit = (event) => {
+        event.preventDefault();
         this.props.dispatch({ type: 'GET_LYRICS', payload: this.props.info.id });
+        this.props.dispatch({ type: 'GET_LYRIC_INFO', payload: this.props.info.id });
         this.props.history.push(`/home?songId=${this.props.info.id}`);
     }
 

@@ -2,7 +2,6 @@ import { takeLatest, put } from 'redux-saga/effects';
 import axios from 'axios';
 
 function* getUserLyrics() {
-    console.log("user id action.payload:")
     try {
         const response = yield axios.get(`/api/user/lyrics/`);
         yield put({ type: 'SET_USER_LYRICS', payload: response.data })

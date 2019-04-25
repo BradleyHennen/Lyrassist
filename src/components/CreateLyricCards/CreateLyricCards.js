@@ -33,6 +33,7 @@ class CreateLyricCards extends Component {
             song_label_id: this.props.lyricData.song_label_id,
             label_name: this.props.lyricData.label_name,
             lyrics: this.props.lyricData.lyrics,
+            songId: this.props.songId,
         }
     }
 
@@ -41,23 +42,32 @@ class CreateLyricCards extends Component {
         this.props.dispatch({ type: 'GET_LYRICS', payload: this.props.songId });
     }
 
-    handleDelete = () => {
-        this.props.dispatch({ type: 'DELETE_LYRIC_CARD', payload: this.props.lyricData.lyrics_id })
-        this.props.dispatch({ type: 'GET_LYRICS', payload: this.props.songId });
+    handleDelete = (event) => {
+        event.preventDefault();
+        this.setState({
+            editLyrics: false,
+        });
+
+        const deleteCard = {
+            songId: this.props.songId,
+            lyricId: this.props.lyricData.lyrics_id,
+        }
+        this.props.dispatch({ type: 'DELETE_LYRIC_CARD', payload: deleteCard })
     }
 
-    handleEdit = () => {
+    handleEdit = (event) => {
+        event.preventDefault();        
         this.setState({
             editLyrics: true,
         })
     }
 
-    handleSave = () => {
+    handleSave = (event) => {
+        event.preventDefault();
         this.setState({
             editLyrics: false,
         });
         this.props.dispatch({ type: 'UPDATE_LYRIC_CARD', payload: this.state.updatedLyrics });
-        this.props.dispatch({ type: 'GET_LYRICS', payload: this.props.songId });
     }
 
     handleChangeForLyrics = propertyName => (event) => {
@@ -82,7 +92,7 @@ class CreateLyricCards extends Component {
         else {
             return (
                 <Paper>
-                    <form>
+                    <form noValidate autoComplete="off">
                         <TextField
                             select
                             autoFocus
@@ -114,9 +124,10 @@ class CreateLyricCards extends Component {
                             margin="normal"
                         >
                         </TextField>
+                    
+                        <Button variant="contained" color="primary" onClick={this.handleDelete}>Delete</Button>
+                        <Button variant="contained" color="primary" onClick={this.handleSave}>Save</Button>
                     </form>
-                    <Button variant="contained" color="primary" onClick={this.handleDelete}>Delete</Button>
-                    <Button variant="contained" color="primary" onClick={this.handleSave}>Save</Button>
                 </Paper>
             )
         }
@@ -126,7 +137,7 @@ class CreateLyricCards extends Component {
         const { classes } = this.props;
 
         return (
-            <div className={classes.container}>
+            <div>
                 {this.renderCards()}
             </div>
         );
