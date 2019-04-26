@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import qs from 'query-string';
 import { withRouter } from "react-router";
@@ -18,7 +17,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { format } from 'path';
+
 
 const styles = theme => ({
     root: {
@@ -44,7 +43,7 @@ const styles = theme => ({
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
     },
-})
+});
 
 class Create extends Component {
 
@@ -65,47 +64,7 @@ class Create extends Component {
         this.props.dispatch({ type: 'GET_LYRICS', payload: searchObject.songId });
         this.props.dispatch({type: 'GET_LYRIC_INFO', payload: searchObject.songId});
 
-    }
-
-    onDragEnd = result => {
-        const { destination, source, draggableId } = result;
-
-        if (!destination) {
-            return;
-        }
-        if (
-            destination.draggableId === source.droppableId &&
-            destination.index === source.index
-        ) {
-            return;
-        }
-
-        const column = this.state.column;
-
-        const newTaskIds = Array.from(column.taskIds);
-
-        newTaskIds.splice(source.index, 1);
-        newTaskIds.splice(destination.index, 0, draggableId);
-        console.log('newTaskIds', newTaskIds);
-
-
-        const newColumn = {
-            ...this.state.column,
-            taskIds: newTaskIds,
-        };
-        console.log('newColumn', newColumn);
-
-        const newState = {
-            ...this.state,
-            column: {
-                ...this.state.column,
-                taskIds: newColumn.taskIds,
-            }
-        }
-        console.log('newState', newState);
-
-        this.setState(newState);
-    }
+    };
 
     handleInputChangeFor = propertyName => (event) => {
         this.setState({
@@ -144,9 +103,9 @@ class Create extends Component {
                 <Grid item xs={12}>
                 <Typography variant="h2" align="center">Lyrics</Typography>
                 <Paper className={classes.paper}>  
-                    <Typography inline={true} variant="h5">Title: </Typography>
+                    <Typography inline={true} variant="h6" color="primary">Title: </Typography>
                     <Typography inline={true} variant="h6">{this.props.reduxState.lyricInfo.title}&nbsp;&nbsp;&nbsp;&nbsp;</Typography>
-                    <Typography inline={true} variant="h5">Author: </Typography>
+                    <Typography inline={true} variant="h6" color="primary">Author: </Typography>
                     <Typography inline={true} variant="h6">{this.props.reduxState.lyricInfo.author}</Typography>
                     <br/>
                     <Button className={classes.button} variant="contained" onClick={this.handleClickOpen} color="primary">Add Lyric Card</Button>

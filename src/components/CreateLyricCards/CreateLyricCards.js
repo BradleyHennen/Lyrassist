@@ -19,8 +19,7 @@ const styles = theme => ({
     },
     paper: {
         padding: theme.spacing.unit * 2,
-        margin: "auto",
-
+        marginTop: 10,
     },
     menu: {
         width: 200,
