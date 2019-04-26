@@ -6,21 +6,24 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-// import Grid from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid';
 // import CreateLyrics from '../CreateLyrics/CreateLyrics';
 // import { Droppable } from 'react-beautiful-dnd';
 
 
 
 const styles = theme => ({
-    container: {
-        margin: "20px, auto",
-        border: "1px solid black",
-        borderRadius: 10,
-        width: "50%",
+    textField: {
+        width: 200,
+        marginRight: theme.spacing.unit,
     },
-    list: {
-        padding: 8,
+    paper: {
+        padding: theme.spacing.unit * 2,
+        margin: "auto",
+
+    },
+    menu: {
+        width: 200,
     },
 
 });
@@ -80,66 +83,60 @@ class CreateLyricCards extends Component {
         })
     }
 
-    renderCards = () => {
-        if (this.state.editLyrics === false) {
-            return (
-                <Paper>
-                    <Typography variant="h5">{this.state.updatedLyrics.label_name}</Typography>
-                    <Typography  variant="body1">{this.state.updatedLyrics.lyrics}</Typography>
-                    <Button variant="contained" color="primary" onClick={this.handleEdit}>Edit</Button>
-                </Paper>
-            )
-        }
-        else {
-            return (
-                <Paper>
-                    <form noValidate autoComplete="off">
-                        <TextField
-                            select
-                            autoFocus
-                            margin="dense"
-                            label="Change Song Part"
-                            className="textField"
-                            value={this.state.updatedLyrics.song_label_id}
-                            onChange={this.handleChangeForLyrics('song_label_id')}
-                            SelectProps={{
-                                MenuProps: {
-                                    className: "menu",
-                                },
-                            }}
-                            margin="normal"
-                        >
-                            {this.props.reduxState.songPartList.map(option => (
-                                <MenuItem key={option.id} value={option.id}>
-                                    {option.label_name}
-                                </MenuItem>
-                            ))}
-                        </TextField>
-                        <TextField
-                            label="Edit Lyrics"
-                            multiline
-                            rows="4"
-                            className="textFieldMultiline"
-                            value={this.state.updatedLyrics.lyrics}
-                            onChange={this.handleChangeForLyrics('lyrics')}
-                            margin="normal"
-                        >
-                        </TextField>
-                    
-                        <Button variant="contained" color="primary" onClick={this.handleDelete}>Delete</Button>
-                        <Button variant="contained" color="primary" onClick={this.handleSave}>Save</Button>
-                    </form>
-                </Paper>
-            )
-        }
-    }
-
     render() {
         const { classes } = this.props;
 
         return (
             <div>
-                {this.renderCards()}
+                {this.state.editLyrics === false ? 
+                    <Grid item xs={12}>
+                    <Paper className={classes.paper}>
+                        <Typography variant="h6">{this.state.updatedLyrics.label_name}</Typography>
+                        <Typography  variant="body1">{this.state.updatedLyrics.lyrics}</Typography>
+                        <Button variant="contained" color="primary" onClick={this.handleEdit}>Edit</Button>
+                    </Paper>
+                    </Grid>
+                    :
+                    <Paper className={classes.paper}>
+                        <form noValidate autoComplete="off">
+                            <TextField
+                                select
+                                autoFocus
+                                margin="dense"
+                                label="Change Song Part"
+                                className={classes.textField}
+                                value={this.state.updatedLyrics.song_label_id}
+                                onChange={this.handleChangeForLyrics('song_label_id')}
+                                SelectProps={{
+                                    MenuProps: {
+                                        className: classes.menu,
+                                    },
+                                }}
+                                margin="normal"
+                            >
+                                {this.props.reduxState.songPartList.map(option => (
+                                    <MenuItem key={option.id} value={option.id}>
+                                        {option.label_name}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                            <TextField
+                                label="Edit Lyrics"
+                                multiline
+                                fullWidth
+                                rows="4"
+                                className={classes.textFieldMultiline}
+                                value={this.state.updatedLyrics.lyrics}
+                                onChange={this.handleChangeForLyrics('lyrics')}
+                                margin="normal"
+                            >
+                            </TextField>
+                        
+                            <Button variant="contained" color="primary" onClick={this.handleDelete}>Delete</Button>
+                            <Button variant="contained" color="primary" onClick={this.handleSave}>Save</Button>
+                        </form>
+                    </Paper>
+                }
             </div>
         );
     }

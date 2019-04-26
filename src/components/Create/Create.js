@@ -9,7 +9,7 @@ import moment from 'moment'
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-// import Grid from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid';
 import CreateLyricCards from '../CreateLyricCards/CreateLyricCards';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -140,7 +140,8 @@ class Create extends Component {
         console.log('moment time', moment(this.props.reduxState.lyricInfo.date_created).format("MMM Do YY"));
         
         return (
-            <div className={classes.root}>
+            <div >
+                <Grid item xs={12}>
                 <Typography variant="h2" align="center">Lyrics</Typography>
                 <Paper className={classes.paper}>  
                     <Typography inline={true} variant="h5">Title: </Typography>
@@ -151,6 +152,7 @@ class Create extends Component {
                     <Button className={classes.button} variant="contained" onClick={this.handleClickOpen} color="primary">Add Lyric Card</Button>
                     <Button className={classes.button} variant="contained" onClick={this.saveLyrics} color="primary">Save & Exit</Button>
                 </Paper>
+                </Grid>
                 {/* {JSON.stringify(this.props.lyricInfo)} */}
                 {/* {JSON.stringify(this.state)} */}
                 
@@ -193,13 +195,16 @@ class Create extends Component {
                     </DialogActions>
                 </Dialog>
                 <br />
-                <div>
+                <Grid item xs={12}>
                     {this.props.reduxState.lyrics.map(lyricData => {
                         return (
+                            <Grid item xs={12}>
                             <CreateLyricCards key={lyricData.lyrics_id} className="lyricCards" lyricData={lyricData} songId={this.state.songId} />
+                            </Grid>
                         )
                     })}
-                </div>
+                </Grid>
+              
             </div>
         );
     }

@@ -17,8 +17,8 @@ const Home = (props) => (
     <Grid 
       container
       direction="row"
-      justify="center"
-      alignItems="center"
+      justify="flex-start"
+      alignItems="flex-start"
       spacing={24}
     >
       <Grid item xs={6}>

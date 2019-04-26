@@ -30,6 +30,9 @@ const styles = theme => ({
     table: {
         minWidth: 700,
     },
+    button: {
+        display: "inline"
+    }
 })
 
 class UserLyrics extends Component {
@@ -76,8 +79,8 @@ class UserLyrics extends Component {
         return (
             <div>
                 <Paper className={classes.root}>
-                    <Typography variant="h3">Your Lyrics</Typography>
-                    <Button variant="contained" color="primary" onClick={this.handleOpen}>Create New Song</Button>
+                    <Typography align="center" variant="h3">Your Lyrics</Typography>
+                    <Button align="center" variant="contained" color="primary" onClick={this.handleOpen}>Create New Song</Button>
                     {/* {JSON.stringify(this.props.user.id)} */}
                     {/* {JSON.stringify(this.props.reduxState.userLyrics)} */}
                     <Table className={classes.table}>
