@@ -4,6 +4,8 @@ import Header from '../Header/Header';
 import Assistant from '../Assistant/Assistant';
 import AssistantResults from '../AssistantResults/AssistantResults';
 import Create from '../Create/Create';
+import Grid from '@material-ui/core/Grid';
+
 
 // this could also be written with destructuring parameters as:
 // const UserPage = ({ user }) => (
@@ -12,8 +14,20 @@ const Home = (props) => (
   <div>
     <Header/>
     <Assistant />
-    <AssistantResults />
-    <Create lyricInfo={props.reduxState.lyricInfo}/>
+    <Grid 
+      container
+      direction="row"
+      justify="center"
+      alignItems="center"
+      spacing={24}
+    >
+      <Grid item xs={6}>
+        <AssistantResults />
+      </Grid>
+      <Grid item xs={6}>
+        <Create lyricInfo={props.reduxState.lyricInfo}/>
+      </Grid>
+    </Grid>
   </div>
 );
 

@@ -11,18 +11,23 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     textAlign: "center",
-
   },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
   },
   paper: {
-    marginRight: '4%',
-    marginLeft: '4%',
+    margin: "auto",
+    maxWidth: 700,
     padding: theme.spacing.unit * 2,
     textAlign: "center",
-  }
+  },
+  button: {
+    marginTop: 30,
+    marginBottom: 15,
+    paddingLeft: "5%",
+    paddingRight: "5%",
+  },
 })
 
 class RegisterPage extends Component {
@@ -68,116 +73,115 @@ class RegisterPage extends Component {
 
     return (
       <div className={classes.root}>
-        <Grid
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-          spacing={24}
-        >
-          <Paper className={classes.paper}>
-            {this.props.errors.registrationMessage && (
-             <Typography
-                variant="h2"
-                className="alert"
-                role="alert"
-              >
-                {this.props.errors.registrationMessage}
-              </Typography>
-            )}
-
-            <form className={classes.container} noValidate autoComplete="off" onSubmit={this.registerUser}>
-              <Typography variant="h2">Register User</Typography>
-              <Grid item xs={12}>
+        <Paper className={classes.paper}>
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="center"
+            spacing={24}
+          >
+              {this.props.errors.registrationMessage && (
+                <Typography
+                  variant="h2"
+                  className="alert"
+                  role="alert"
+                >
+                  {this.props.errors.registrationMessage}
+                </Typography>
+              )}
+            <Grid item xs={12}>
+              <form className={classes.container} noValidate autoComplete="off" onSubmit={this.registerUser}>
+                <Typography variant="h2">Register User</Typography>
+                  <TextField
+                    required
+                    label="Username"
+                    value={this.state.username}
+                    className={classes.textField}
+                    onChange={this.handleInputChangeFor('username')}
+                    margin="normal"
+                  />
+                  <TextField
+                    required
+                    type="password"
+                    label="Password"
+                    value={this.state.password}
+                    className={classes.textField}
+                    onChange={this.handleInputChangeFor('password')}
+                    margin="normal"
+                  />
+                  <TextField
+                    required
+                    type="password"
+                    label="Confrim Password"
+                    className={classes.textField}
+                    value={this.state.confirmPassword}
+                    onChange={this.handleInputChangeFor('confirmPassword')}
+                    margin="normal"
+                  />
+                  <TextField
+                    required
+                    label="Email Address"
+                    type="email"
+                    className={classes.textField}
+                    value={this.state.email}
+                    onChange={this.handleInputChangeFor('email')}
+                    margin="normal"
+                  />
+                  <TextField
+                    label="First Name"
+                    type="text"
+                    className={classes.textField}
+                    value={this.state.firstName}
+                    onChange={this.handleInputChangeFor('firstName')}
+                    margin="normal"
+                  />
+                  <TextField
+                    label="Last Name"
+                    type="text"
+                    className={classes.textField}
+                    value={this.state.lastName}
+                    onChange={this.handleInputChangeFor('lastName')}
+                    margin="normal"
+                  />
                 <TextField
-                  required
-                  label="Username"
-                  value={this.state.username}
+                  label="Description"
+                  multiline
+                  rows="5"
+                  value={this.state.description}
+                  onChange={this.handleInputChangeFor('description')}
                   className={classes.textField}
-                  onChange={this.handleInputChangeFor('username')}
                   margin="normal"
+                  fullWidth
                 />
-                <TextField
-                  required
-                  type="password"
-                  label="Password"
-                  value={this.state.password}
-                  className={classes.textField}
-                  onChange={this.handleInputChangeFor('password')}
-                  margin="normal"
-                />
-                <TextField
-                  required  
-                  type="password"
-                  label="Confrim Password"
-                  className={classes.textField}
-                  value={this.state.confirmPassword}
-                  onChange={this.handleInputChangeFor('confirmPassword')}
-                  margin="normal"
-                />
+                <Button
+                  type="submit"
+                  name="submit"
+                  className={classes.button}
+                  variant="contained"
+                  color="primary"
+                >
+                  Register
+              </Button>
+              </form>
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  label="Email Address"
-                  type="email"
-                  className={classes.textField}
-                  value={this.state.email}
-                  onChange={this.handleInputChangeFor('email')}
-                  margin="normal"
-                />
-                <TextField
-                  label="First Name"
-                  type="text"
-                  className={classes.textField}
-                  value={this.state.firstName}
-                  onChange={this.handleInputChangeFor('firstName')}
-                  margin="normal"
-                />
-                <TextField
-                  label="Last Name"
-                  type="text"
-                  className={classes.textField}
-                  value={this.state.lastName}
-                  onChange={this.handleInputChangeFor('lastName')}
-                  margin="normal"
-                />
+                <Typography variant="h2" >Already Registered?</Typography>
+                <Button
+                  type="button"
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  onClick={() => {
+                    this.props.dispatch({ type: 'SET_TO_LOGIN_MODE' });
+                    this.props.history.push('/login');
+                  }}
+                >
+                  Login
+              </Button>
               </Grid>
-              <TextField
-                label="Description"
-                multiline
-                rows="5"
-                value={this.state.description}
-                onChange={this.handleInputChangeFor('description')}
-                className={classes.textField}
-                margin="normal"
-                fullWidth
-              />
-              <Button
-                type="submit"
-                name="submit"
-                variant="contained"
-                color="primary"
-              >
-                Register
-              </Button>
-            </form>
-          </Paper>
-          <Grid item xs={12}>
-              <Typography variant="h2" >Already Registered?</Typography>
-              <Button
-                type="button"
-                variant="contained"
-                color="primary"
-                onClick={() => { 
-                  this.props.dispatch({type: 'SET_TO_LOGIN_MODE'}); 
-                  this.props.history.push('/login'); 
-                }}
-              >
-                Login
-              </Button>
-            </Grid>
-        </Grid>
+          </Grid>
+        </Paper>
       </div>
     );
   }

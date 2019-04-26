@@ -22,7 +22,8 @@ import { format } from 'path';
 
 const styles = theme => ({
     root: {
-        textAlign: "center",
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
     },
     textField: {
         marginLeft: theme.spacing.unit,
@@ -31,6 +32,17 @@ const styles = theme => ({
     },
     menu: {
         width: 200,
+    },
+    paper: {
+        margin: "auto",
+        maxWidth: 700,
+        padding: theme.spacing.unit * 2,
+        textAlign: "center",
+    },
+    button: {
+        width: 200,
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
     },
 })
 
@@ -128,16 +140,20 @@ class Create extends Component {
         console.log('moment time', moment(this.props.reduxState.lyricInfo.date_created).format("MMM Do YY"));
         
         return (
-            <div>
-                <Paper className={classes.root}>
-                    <Typography variant="h2">Lyrics</Typography>
-                    <Typography variant="h5">{this.props.reduxState.lyricInfo.title}</Typography>
-                    <Typography variant="h5">{this.props.reduxState.lyricInfo.author}</Typography>
-                    <Typography variant="h5">{moment(this.props.reduxState.lyricInfo.date_created).format("MMM Do YY")}</Typography>
+            <div className={classes.root}>
+                <Typography variant="h2" align="center">Lyrics</Typography>
+                <Paper className={classes.paper}>  
+                    <Typography inline={true} variant="h5">Title: </Typography>
+                    <Typography inline={true} variant="h6">{this.props.reduxState.lyricInfo.title}&nbsp;&nbsp;&nbsp;&nbsp;</Typography>
+                    <Typography inline={true} variant="h5">Author: </Typography>
+                    <Typography inline={true} variant="h6">{this.props.reduxState.lyricInfo.author}</Typography>
+                    <br/>
+                    <Button className={classes.button} variant="contained" onClick={this.handleClickOpen} color="primary">Add Lyric Card</Button>
+                    <Button className={classes.button} variant="contained" onClick={this.saveLyrics} color="primary">Save & Exit</Button>
                 </Paper>
                 {/* {JSON.stringify(this.props.lyricInfo)} */}
                 {/* {JSON.stringify(this.state)} */}
-                <Button variant="contained" onClick={this.handleClickOpen} color="primary">Add Lyric Card</Button>
+                
                 <Dialog
                     open={this.state.open}
                     onClose={this.handleClose}
@@ -176,7 +192,6 @@ class Create extends Component {
                             </Button>
                     </DialogActions>
                 </Dialog>
-                <Button variant="contained" onClick={this.saveLyrics} color="primary">Save & Exit</Button>
                 <br />
                 <div>
                     {this.props.reduxState.lyrics.map(lyricData => {
