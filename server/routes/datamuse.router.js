@@ -7,7 +7,7 @@ router.get('/:query', (req, res) => {
     // console.log('In Datamuse GET. Req.params:', req.params.query);
     
     const query = req.params.query;
-    let endpoint = `https://api.datamuse.com/words?${query}&max=10`;
+    let endpoint = `https://api.datamuse.com/words?${query}&max=30`;
 
     axios.get(endpoint)
     .then((response) => {

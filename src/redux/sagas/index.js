@@ -3,12 +3,16 @@ import loginSaga from './loginSaga';
 import registrationSaga from './registrationSaga';
 import userSaga from './userSaga';
 import getDatamuseAPI from './datamuseAPI';
-import getQueryList from './searchQuerySaga';
+import getQueryList from './queryList';
 import getLyricInfo from './lyricInfoSaga';
 import getLyrics from './lyricsSaga';
 import getUserLyrics from './userLyricsSaga';
 import deleteLyrics from './deleteLyricsSaga';
-
+import getSongPartList from './songPartList';
+import deleteLyricCard from './deleteLyricCardSaga';
+import updateLyricCard from './updateLyricCardSaga';
+import addLyricCard from './addLyricCardSaga';
+import addNewSong from './addNewSongSaga';
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
 // This is imported in index.js as rootSaga
@@ -23,9 +27,14 @@ export default function* rootSaga() {
     userSaga(),
     getDatamuseAPI(),
     getQueryList(),
+    getSongPartList(),
     getLyricInfo(),
     getLyrics(),
     getUserLyrics(),
     deleteLyrics(),
+    deleteLyricCard(),
+    updateLyricCard(),
+    addLyricCard(),
+    addNewSong(),
   ]);
 }

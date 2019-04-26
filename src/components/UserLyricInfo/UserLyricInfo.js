@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router";
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
 import TableCell from '@material-ui/core/TableCell';
@@ -24,14 +25,18 @@ const styles = theme => ({
 
 class UserLyrics extends Component {
 
-    handleClickDelete = () => {
+    handleClickDelete = (event) => {
+        event.preventDefault();
         this.props.dispatch({ type: 'DELETE_LYRICS', payload: this.props.info.id })
     }
 
-    handleClickEdit = () => {
+    handleClickEdit = (event) => {
+        event.preventDefault();
         this.props.dispatch({ type: 'GET_LYRICS', payload: this.props.info.id });
-        this.props.history.push('/home');
+        this.props.dispatch({ type: 'GET_LYRIC_INFO', payload: this.props.info.id });
+        this.props.history.push(`/home?songId=${this.props.info.id}`);
     }
+
 
 
     render() {
@@ -42,8 +47,8 @@ class UserLyrics extends Component {
             <TableRow>
                 <TableCell>{this.props.info.title}</TableCell>
                 <TableCell align="right">{this.props.info.author}</TableCell>
-                <TableCell align="right">{this.props.info.date_created}</TableCell>
-                <TableCell align="right">{this.props.info.date_edited}</TableCell>
+                <TableCell align="right">{moment(this.props.info.date_created).format("MMM Do YYYY")}</TableCell>
+                <TableCell align="right">{moment(this.props.info.date_edited).format("MMM Do YYYY")}</TableCell>
                 <TableCell align="right">
                     <Button
                         variant="contained"

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core';
+import { withStyles, Typography } from '@material-ui/core';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -15,7 +15,7 @@ import Paper from '@material-ui/core/Paper';
 const styles = theme => ({
     root: {
       width: '100%',
-      marginTop: theme.spacing.unit * 3,
+      // marginTop: theme.spacing.unit * 3,
       overflowX: 'auto',
     },
     table: {
@@ -31,8 +31,9 @@ class AssistantResults extends Component {
     render() {
         const { classes } = this.props;
         return (
+            <div >
+            <Typography variant="h2" align="center">Results</Typography>
             <Paper className={classes.root}>
-            {JSON.stringify(this.props.reduxState.datamuseData)}
             <Table className={classes.table}>
               <TableHead>
                 <TableRow>
@@ -54,6 +55,7 @@ class AssistantResults extends Component {
               </TableBody>
             </Table>
           </Paper>
+          </div>
         );
     }
 }

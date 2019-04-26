@@ -32,7 +32,6 @@ class App extends Component {
           <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/login" component={LoginPage}/>
           <ProtectedRoute
-            exact
             path="/home"
             component={Home}
           />
