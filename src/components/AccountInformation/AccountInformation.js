@@ -21,6 +21,10 @@ const styles = theme => ({
         padding: theme.spacing.unit * 3,
         // textAlign: "left",
     },
+    button: {
+        width: 200,
+        marginRight: theme.spacing.unit,
+    }
 });
 
 const AccountInformation = (props) => {
@@ -48,7 +52,13 @@ const AccountInformation = (props) => {
                         <Typography variant="h6">Email:</Typography>
                         <Typography variant="body1">{props.user.email}</Typography>
                         <Typography variant="h6">Password:</Typography>
-                        <Button disabled variant="contained" color="primary">Change Password</Button>
+                        <Button 
+                            disabled 
+                            className={classes.button}
+                            variant="contained" 
+                            color="primary"
+                        >Change Password
+                        </Button>
                     </Grid>
                 </Grid>
                 </Grid>

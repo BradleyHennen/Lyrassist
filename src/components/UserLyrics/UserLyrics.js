@@ -31,7 +31,11 @@ const styles = theme => ({
         minWidth: 700,
     },
     button: {
-        display: "inline"
+        width: "50%",
+        height: 40,
+        marginLeft: "auto",
+        marginRight: "auto",
+        display: "block",
     }
 })
 
@@ -77,12 +81,17 @@ class UserLyrics extends Component {
 
 
         return (
-            <div>
+            <div >
+                <Button 
+                    variant="contained" 
+                    color="primary" 
+                    className={classes.button}
+                    onClick={this.handleOpen}
+                    >Create New Song
+                </Button>
                 <Paper className={classes.root}>
                     <Typography align="center" variant="h3">Your Lyrics</Typography>
-                    <Button align="center" variant="contained" color="primary" onClick={this.handleOpen}>Create New Song</Button>
-                    {/* {JSON.stringify(this.props.user.id)} */}
-                    {/* {JSON.stringify(this.props.reduxState.userLyrics)} */}
+                    
                     <Table className={classes.table}>
                         <TableHead>
                             <TableRow>

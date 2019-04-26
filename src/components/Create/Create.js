@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import qs from 'query-string';
 import { withRouter } from "react-router";
 import { withStyles } from '@material-ui/core';
-import moment from 'moment'
+import moment from 'moment';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';

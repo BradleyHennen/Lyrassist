@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import { withRouter } from "react-router";
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
 import TableCell from '@material-ui/core/TableCell';
@@ -47,8 +47,8 @@ class UserLyrics extends Component {
             <TableRow>
                 <TableCell>{this.props.info.title}</TableCell>
                 <TableCell align="right">{this.props.info.author}</TableCell>
-                <TableCell align="right">{this.props.info.date_created}</TableCell>
-                <TableCell align="right">{this.props.info.date_edited}</TableCell>
+                <TableCell align="right">{moment(this.props.info.date_created).format("MMM Do YYYY")}</TableCell>
+                <TableCell align="right">{moment(this.props.info.date_edited).format("MMM Do YYYY")}</TableCell>
                 <TableCell align="right">
                     <Button
                         variant="contained"
