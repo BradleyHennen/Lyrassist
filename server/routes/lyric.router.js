@@ -1,4 +1,5 @@
 const express = require('express');
+var moment = require('moment');
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
@@ -69,16 +70,16 @@ router.post('/newSong', (req, res) => {
     let newSong = req.body;
     let userId = req.user.id;
     let date = moment().format();
-    console.log('new song info:', newCard);
+    console.log('new song info:', newSong);
 
-    let sqlText = `INSERT INTO "lyric_info" ("user_id", "title", "date_created", "date_edited", "author")
-                   VALUES ($1, $2, 'Add lyrics');`;
-    pool.query(sqlText, [userId, newSong.title, date, date, newSong.author])
+    let sqlText = `INSERT INTO "lyric_info" ("user_id", "title", "date_created", "date_edited", "author", "lyric_order")
+                   VALUES ($1, $2, $3, $4, $5, $6);`;
+    pool.query(sqlText, [userId, newSong.title, date, date, newSong.author, [1,2,3]])
         .then((result) => {
             res.sendStatus(200);
         })
         .catch((error) => {
-            console.log('Error adding new lyric card', error);
+            console.log('Error adding new song', error);
             res.sendStatus(500);
         })
 });

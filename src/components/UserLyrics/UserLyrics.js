@@ -10,6 +10,12 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 // import Grid from '@material-ui/core/Grid';
 import CreateLyricCards from '../CreateLyricCards/CreateLyricCards';
 import UserLyricInfo from '../UserLyricInfo/UserLyricInfo';
@@ -28,13 +34,39 @@ const styles = theme => ({
 
 class UserLyrics extends Component {
 
+    state = {
+        open: false,
+        newSong: {
+            title: '',
+            author: '',
+        }
+    }
+
+    handleOpen = () => {
+        this.setState({ open: true });
+    };
+
+    handleClose = () => {
+        this.setState({ open: false });
+    };
+
+    onChange = propertyName => (event) => {
+        this.setState({
+            newSong: {
+                ...this.state.newSong,
+                [propertyName]: event.target.value,
+            }
+        })
+    }
+
     componentDidMount = () => {
-        this.props.dispatch({type: 'GET_USER_LYRICS'})
-        
+        this.props.dispatch({ type: 'GET_USER_LYRICS' })
+
     }
 
     createNewSong = () => {
-        
+        this.props.dispatch({type: 'ADD_NEW_SONG', payload: this.state.newSong})
+        this.handleClose();
     }
 
     render() {
@@ -42,30 +74,75 @@ class UserLyrics extends Component {
 
 
         return (
-            <Paper className={classes.root}>
-                <Typography variant="h3">Your Lyrics</Typography>
-                <Button variant="contained" color="primary" onClick={this.createNewSong}>Create New Song</Button>
-                {/* {JSON.stringify(this.props.user.id)} */}
-                {/* {JSON.stringify(this.props.reduxState.userLyrics)} */}
-                <Table className={classes.table}>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Title</TableCell>
-                            <TableCell align="right">Author</TableCell>
-                            <TableCell align="right">Date Created</TableCell>
-                            <TableCell align="right">Last Edited</TableCell>
-                            <TableCell align="right">Edit</TableCell>
-                            <TableCell align="right">Delete</TableCell>
-                            <TableCell align="right">Print</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {this.props.reduxState.userLyrics.map(info => {
-                            return <UserLyricInfo info={info}/>
-                        })}
-                    </TableBody>
-                </Table>
-            </Paper>
+            <div>
+                <Paper className={classes.root}>
+                    <Typography variant="h3">Your Lyrics</Typography>
+                    <Button variant="contained" color="primary" onClick={this.handleOpen}>Create New Song</Button>
+                    {/* {JSON.stringify(this.props.user.id)} */}
+                    {/* {JSON.stringify(this.props.reduxState.userLyrics)} */}
+                    <Table className={classes.table}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Title</TableCell>
+                                <TableCell align="right">Author</TableCell>
+                                <TableCell align="right">Date Created</TableCell>
+                                <TableCell align="right">Last Edited</TableCell>
+                                <TableCell align="right">Edit</TableCell>
+                                <TableCell align="right">Delete</TableCell>
+                                <TableCell align="right">Print</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {this.props.reduxState.userLyrics.map(info => {
+                                return <UserLyricInfo key={info.id} info={info} />
+                            })}
+                        </TableBody>
+                    </Table>
+                </Paper>
+
+                <Dialog
+                    open={this.state.open}
+                    onClose={this.handleClose}
+                    aria-labelledby="form-dialog-title"
+                >
+                    <DialogTitle id="form-dialog-title">Create New Song</DialogTitle>
+                    <DialogContent>
+                        {/* <DialogContentText>
+                            Create New Song
+                        </DialogContentText> */}
+                        <TextField
+                            autoFocus
+                            required
+                            margin="dense"
+                            id="title"
+                            label="Song Title"
+                            type="text"
+                            onChange={this.onChange('title')}
+                            value={this.state.newSong.title}
+                            fullWidth
+                        />
+                        <TextField
+                            autoFocus
+                            required
+                            margin="dense"
+                            id="author"
+                            label="Song Author"
+                            type="text"
+                            onChange={this.onChange('author')}
+                            value={this.state.newSong.author}
+                            fullWidth
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleClose} color="primary">
+                            Cancel
+                        </Button>
+                        <Button onClick={this.createNewSong} color="primary">
+                            Create
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
         );
     }
 }

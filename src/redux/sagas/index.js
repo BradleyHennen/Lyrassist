@@ -12,6 +12,7 @@ import getSongPartList from './songPartList';
 import deleteLyricCard from './deleteLyricCardSaga';
 import updateLyricCard from './updateLyricCardSaga';
 import addLyricCard from './addLyricCardSaga';
+import addNewSong from './addNewSongSaga';
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
 // This is imported in index.js as rootSaga
@@ -34,5 +35,6 @@ export default function* rootSaga() {
     deleteLyricCard(),
     updateLyricCard(),
     addLyricCard(),
+    addNewSong(),
   ]);
 }
