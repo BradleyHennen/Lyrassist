@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 // import Grid from '@material-ui/core/Grid';
 
@@ -40,7 +40,7 @@ class UserLyrics extends Component {
 
 
     render() {
-        const { classes } = this.props;
+        // const { classes } = this.props;
 
 
         return (

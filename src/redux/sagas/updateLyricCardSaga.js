@@ -3,7 +3,7 @@ import axios from 'axios';
 
 function* updateLyricCard(action) {
     console.log('update lyric card: ', action.payload);
-    let songId = Number(action.payload.songId);
+    let songId = action.payload.songId;
     console.log('update lyric card songId: ', songId);
 
     try {

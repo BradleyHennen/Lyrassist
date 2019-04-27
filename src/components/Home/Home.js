@@ -25,7 +25,7 @@ const Home = (props) => (
         <AssistantResults />
       </Grid>
       <Grid item xs={6}>
-        <Create lyricInfo={props.reduxState.lyricInfo}/>
+        <Create lyricData={props.reduxState.lyrics} lyricInfo={props.reduxState.lyricInfo}/>
       </Grid>
     </Grid>
   </div>

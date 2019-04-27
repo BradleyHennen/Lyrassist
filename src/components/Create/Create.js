@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import qs from 'query-string';
 import { withRouter } from "react-router";
 import { withStyles } from '@material-ui/core';
-import moment from 'moment';
+// import moment from 'moment';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -17,7 +17,17 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { DragDropContext } from 'react-beautiful-dnd';
+import CreateLyrics from '../CreateLyrics/CreateLyrics';
 
+
+const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+
+    return result;
+};
 
 const styles = theme => ({
     root: {
@@ -51,18 +61,53 @@ class Create extends Component {
         open: false,
         songPartId: 1,
         songId: 0,
-        title: this.props.lyricInfo.title,
+        lyrics: [],
+    }
+
+    onDragEnd = (result) => {
+        // reorder results
+        const reorderedTasks = reorder(
+            this.state.lyrics, // starting array data
+            result.source.index,         // starting array index
+            result.destination.index     // ending array index
+        );
+
+        // update our state
+        this.setState({
+            lyrics: reorderedTasks,
+        });
+    }
+
+    finishReorder = () => {
+        // this function could dispatch to a saga for your PUT/update
+
+        // prove our order is correct in state
+        console.log('final order: ', this.state.tasks);
+    }
+
+    componentDidUpdate(prevProps) {
+        // Typical usage (don't forget to compare props):
+        console.log('prevProps', prevProps);
+        
+        if (this.props.reduxState.lyrics !== prevProps.reduxState.lyrics) {
+            this.setState({
+                lyrics: this.props.reduxState.lyrics
+            })
+        }
     }
 
     componentDidMount = () => {
         this.props.dispatch({ type: 'GET_SONG_PART_LIST' });
+
+
         const searchObject = qs.parse(this.props.location.search);
         console.log('search Object', searchObject.songId);
         this.setState({
             songId: searchObject.songId,
         })
+
         this.props.dispatch({ type: 'GET_LYRICS', payload: searchObject.songId });
-        this.props.dispatch({type: 'GET_LYRIC_INFO', payload: searchObject.songId});
+        this.props.dispatch({ type: 'GET_LYRIC_INFO', payload: searchObject.songId });
 
     };
 
@@ -95,26 +140,28 @@ class Create extends Component {
 
     render() {
         const { classes } = this.props;
-        // const tasks = this.state.column.taskIds.map(taskId => this.state.tasks[taskId]);
-        console.log('moment time', moment(this.props.reduxState.lyricInfo.date_created).format("MMM Do YY"));
-        
+
+        console.log('State with new info', this.state);
+
+
         return (
             <div >
+                {/* {JSON.stringify(this.props.reduxState.lyrics)} */}
                 <Grid item xs={12}>
-                <Typography variant="h2" align="center">Lyrics</Typography>
-                <Paper className={classes.paper}>  
-                    <Typography inline={true} variant="h6" color="primary">Title: </Typography>
-                    <Typography inline={true} variant="h6">{this.props.reduxState.lyricInfo.title}&nbsp;&nbsp;&nbsp;&nbsp;</Typography>
-                    <Typography inline={true} variant="h6" color="primary">Author: </Typography>
-                    <Typography inline={true} variant="h6">{this.props.reduxState.lyricInfo.author}</Typography>
-                    <br/>
-                    <Button className={classes.button} variant="contained" onClick={this.handleClickOpen} color="primary">Add Lyric Card</Button>
-                    <Button className={classes.button} variant="contained" onClick={this.saveLyrics} color="primary">Save & Exit</Button>
-                </Paper>
+                    <Typography variant="h2" align="center">Lyrics</Typography>
+                    <Paper className={classes.paper}>
+                        <Typography inline={true} variant="h6" color="primary">Title: </Typography>
+                        <Typography inline={true} variant="h6">{this.props.reduxState.lyricInfo.title}&nbsp;&nbsp;&nbsp;&nbsp;</Typography>
+                        <Typography inline={true} variant="h6" color="primary">Author: </Typography>
+                        <Typography inline={true} variant="h6">{this.props.reduxState.lyricInfo.author}</Typography>
+                        <br />
+                        <Button className={classes.button} variant="contained" onClick={this.handleClickOpen} color="primary">Add Lyric Card</Button>
+                        <Button className={classes.button} variant="contained" onClick={this.saveLyrics} color="primary">Save & Exit</Button>
+                    </Paper>
                 </Grid>
                 {/* {JSON.stringify(this.props.lyricInfo)} */}
                 {/* {JSON.stringify(this.state)} */}
-                
+
                 <Dialog
                     open={this.state.open}
                     onClose={this.handleClose}
@@ -138,7 +185,6 @@ class Create extends Component {
                                     className: classes.menu,
                                 },
                             }}
-                            margin="normal"
                         >
                             {this.props.reduxState.songPartList.map(option => (
                                 <MenuItem key={option.id} value={option.id}>
@@ -155,15 +201,19 @@ class Create extends Component {
                 </Dialog>
                 <br />
                 <Grid item xs={12}>
-                    {this.props.reduxState.lyrics.map(lyricData => {
+                    {/* {this.props.reduxState.lyrics.map(lyricData => {
                         return (
                             <Grid item xs={12}>
-                            <CreateLyricCards key={lyricData.lyrics_id} className="lyricCards" lyricData={lyricData} songId={this.state.songId} />
+                                <CreateLyricCards key={lyricData.lyrics_id} className="lyricCards" lyricData={lyricData} songId={this.state.songId} />
                             </Grid>
                         )
-                    })}
+                    })} */}
+                    <DragDropContext onDragEnd={this.onDragEnd}>
+                        {/* tasks must be the current tasks from state, not initialData */}
+                        <CreateLyrics tasks={this.state.lyrics} finishReorder={this.finishReorder} songId={this.state.songId} />
+                    </DragDropContext>
                 </Grid>
-              
+
             </div>
         );
     }
