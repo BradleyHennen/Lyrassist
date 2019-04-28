@@ -18,18 +18,19 @@ const styles = theme => ({
         marginRight: theme.spacing.unit,
     },
     paper: {
-        padding: theme.spacing.unit,
+        padding: theme.spacing.unit * 1.5,
         marginTop: 10,
     },
     menu: {
         width: 200,
     },
     container: {
-        // border: "1px solid black",
         borderRadius: "10px",
+        flexGrow: 1,
         padding: 1,
-        // marginBottom: "8px",
-        // backgroundColor: "white",
+    },
+    button: {
+        margin: theme.spacing.unit,
     }
 });
 
@@ -103,13 +104,19 @@ class CreateLyricCards extends Component {
                        {this.state.editLyrics === false ? 
                         
                         <Paper className={classes.paper}>
-                            <Typography variant="h6">{this.state.updatedLyrics.label_name}</Typography>
-                            <Typography style={{whiteSpace: 'pre-line'}} variant="body1">{this.state.updatedLyrics.lyrics}</Typography>
-                            <Button variant="contained" color="primary" onClick={this.handleEdit}>Edit</Button>
+                        <Grid container spacing={16}>
+                            <Grid item xs={9}>
+                                <Typography variant="h6">{this.state.updatedLyrics.label_name}</Typography>
+                                <Typography style={{whiteSpace: 'pre-line'}} variant="body1">{this.state.updatedLyrics.lyrics}</Typography>
+                            </Grid>
+                            <Grid item xs='auto'>
+                                <Button variant="contained" color="primary" className={classes.button} onClick={this.handleEdit}>Edit</Button>
+                            </Grid>
+                        </Grid>
                         </Paper>
-                     
+                        
                         :
-                        <div className={classes.paper}>
+                        <Paper className={classes.paper}>
                             <form noValidate autoComplete="off">
                                 <TextField
                                     select
@@ -142,11 +149,10 @@ class CreateLyricCards extends Component {
                                     margin="normal"
                                 >
                                 </TextField>
-                            
-                                <Button variant="contained" color="primary" onClick={this.handleDelete}>Delete</Button>
-                                <Button variant="contained" color="primary" onClick={this.handleSave}>Save</Button>
+                                <Button variant="contained" color="primary" className={classes.button} onClick={this.handleDelete}>Delete</Button>
+                                <Button variant="contained" color="primary" className={classes.button} onClick={this.handleSave}>Save</Button>                            
                             </form>
-                        </div>
+                        </Paper>
                     }
                     </div>
                 )}

@@ -11,12 +11,13 @@ import IconButton from '@material-ui/core/IconButton';
 // import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
 
-const styles = {
+const styles = theme => ({
     root: {
         flexGrow: 1,
     },
     grow: {
         flexGrow: 1,
+        marginLeft: 30,
     },
     menuButton: {
         marginLeft: -12,
@@ -24,11 +25,15 @@ const styles = {
     },
     images: {
         width: 100,
-        marginTop: 10,
-        marginBottom: 10,
-        marginRight: 20,
+        // marginTop: 10,
+        // marginBottom: 10,
+        // marginRight: 20,
+        margin: theme.spacing.unit,
     },
-};
+    button: {
+        margin: theme.spacing.unit,
+    }
+});
 
 const Header = (props) => {
 
@@ -37,15 +42,15 @@ const Header = (props) => {
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+                    {/* <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
                         <MenuIcon />
-                    </IconButton>
+                    </IconButton> */}
                     <img className={classes.images} src="/images/LyrAssist_logo.svg" alt="lyrAssist Logo" />
 
                     <Typography variant="h6" color="inherit" className={classes.grow}>
                         Welcome, {props.user.first_name} {props.user.last_name}!
                     </Typography>
-                    <ProfileButton />
+                    <ProfileButton className={classes.button}/>
                     <LogOutButton />
                 </Toolbar>
             </AppBar>

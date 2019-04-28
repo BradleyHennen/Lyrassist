@@ -48,7 +48,7 @@ const styles = theme => ({
         textAlign: "center",
     },
     button: {
-        width: 200,
+        // width: 200,
         margin: theme.spacing.unit,
     },
 });
@@ -164,13 +164,30 @@ class Create extends Component {
                 <Grid item xs={12}>
                     <Typography variant="h2" align="center">Lyrics</Typography>
                     <Paper className={classes.paper}>
-                        <Typography inline={true} variant="h6" color="primary">Title: </Typography>
-                        <Typography inline={true} variant="h6">{this.props.reduxState.lyricInfo.title}&nbsp;&nbsp;&nbsp;&nbsp;</Typography>
-                        <Typography inline={true} variant="h6" color="primary">Author: </Typography>
-                        <Typography inline={true} variant="h6">{this.props.reduxState.lyricInfo.author}</Typography>
-                        <br />
-                        <Button className={classes.button} variant="contained" onClick={this.handleClickOpen} color="primary">Add Lyric Card</Button>
-                        <Button className={classes.button} variant="contained" onClick={this.saveLyrics} color="primary">Save & Exit</Button>
+                    <Grid container direction="row" alignItems="flex-start" justify="center">
+
+                    <Grid container direction="column">
+                        <Grid item >
+                            <Grid item>
+                                <Typography inline={true} variant="h6" color="primary">Title: </Typography>
+                                <Typography inline={true} variant="h6">{this.props.reduxState.lyricInfo.title}&nbsp;&nbsp;&nbsp;&nbsp;</Typography>
+                            </Grid>
+                            <Grid item>
+                                <Typography inline={true} variant="h6" color="primary">Author: </Typography>
+                                <Typography inline={true} variant="h6">{this.props.reduxState.lyricInfo.author}</Typography>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+                    <Grid container direction="column">
+                        <Grid item >
+                            <Grid item>
+                                <Button className={classes.button} variant="contained" onClick={this.handleClickOpen} color="primary">Add Lyric Card</Button>
+                                <Button className={classes.button} variant="contained" onClick={this.saveLyrics} color="primary">Save & Exit</Button>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    </Grid>
                     </Paper>
                 </Grid>
                 {/* {JSON.stringify(this.props.lyricInfo)} */}

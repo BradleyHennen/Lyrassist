@@ -21,6 +21,9 @@ const styles = theme => ({
     table: {
         minWidth: 700,
     },
+    hide: {
+        display: "none",
+    }
 })
 
 class UserLyrics extends Component {
@@ -37,6 +40,10 @@ class UserLyrics extends Component {
         this.props.history.push(`/home?songId=${this.props.info.id}`);
     }
 
+    handlePrint = () => {
+        window.print("adfasdf");
+    }
+
 
 
     render() {
@@ -44,33 +51,37 @@ class UserLyrics extends Component {
 
 
         return (
-            <TableRow>
-                <TableCell>{this.props.info.title}</TableCell>
-                <TableCell align="right">{this.props.info.author}</TableCell>
-                <TableCell align="right">{moment(this.props.info.date_created).format("MMM Do YYYY")}</TableCell>
-                <TableCell align="right">{moment(this.props.info.date_edited).format("MMM Do YYYY")}</TableCell>
-                <TableCell align="right">
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={this.handleClickEdit}
-                    >
-                        Edit
-                    </Button>
-                </TableCell>
-                <TableCell align="right">
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={this.handleClickDelete}
-                    >
-                        Delete
-                    </Button>
-                </TableCell>
-                <TableCell align="right">
-                    <Button>Print</Button>
-                </TableCell>
-            </TableRow>
+           
+                <TableRow>
+                    <TableCell>{this.props.info.title}</TableCell>
+                    <TableCell align="right">{this.props.info.author}</TableCell>
+                    <TableCell align="right">{moment(this.props.info.date_created).format("MMM Do YYYY")}</TableCell>
+                    <TableCell align="right">{moment(this.props.info.date_edited).format("MMM Do YYYY")}</TableCell>
+                    <TableCell align="right">
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={this.handleClickEdit}
+                        >
+                            Edit
+                        </Button>
+                    </TableCell>
+                    <TableCell align="right">
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={this.handleClickDelete}
+                        >
+                            Delete
+                        </Button>
+                    </TableCell>
+                    <TableCell align="right">
+                        <Button onClick={this.handlePrint}>Print</Button>
+                    </TableCell>
+                </TableRow>
+
+     
+            
         );
     }
 }

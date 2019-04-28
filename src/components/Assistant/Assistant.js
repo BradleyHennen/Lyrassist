@@ -27,6 +27,7 @@ const styles = theme => ({
         marginTop: 20,
         flexGrow: 1,
         textAlign: "center",
+        marginBottom: 15,
     },
     button: {
         marginTop: 20,
@@ -78,6 +79,12 @@ class Assistant extends Component {
         }
         else if (this.state.queryId === 5) {
             updatedQuery = `rel_hom=${this.state.word}`;
+        }
+        else if (this.state.queryId === 6) {
+            updatedQuery = `rel_syn=${this.state.word}&md=ds`;
+        }
+        else if (this.state.queryId === 7) {
+            updatedQuery = `rel_jjb=${this.state.word}&md=ds`;
         }
         this.props.dispatch({ type: 'GET_DATAMUSE', payload: updatedQuery })
     }
