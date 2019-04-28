@@ -58,7 +58,10 @@ const styles = theme => ({
 class Create extends Component {
 
     state = {
-        open: false,
+        openCard: false,
+        openTitle: false,
+        title: '',
+        author: '',
         songPartId: 1,
         songId: 0,
         lyrics: [],
@@ -109,7 +112,13 @@ class Create extends Component {
             this.setState({
                 lyrics: this.props.reduxState.lyrics
             })
-        }
+        };
+        if (this.props.reduxState.lyricInfo !== prevProps.reduxState.lyricInfo) {
+            this.setState({
+                title: this.props.reduxState.lyricInfo.title,
+                author: this.props.reduxState.lyricInfo.author,
+            })
+        };
     }
 
     componentDidMount = () => {
@@ -123,7 +132,7 @@ class Create extends Component {
         })
 
         this.props.dispatch({ type: 'GET_LYRICS', payload: searchObject.songId });
-        this.props.dispatch({ type: 'GET_LYRIC_INFO', payload: searchObject.songId });
+        this.props.dispatch({ type: 'GET_LYRIC_INFO', payload: {songId: searchObject.songId} });
 
     };
 
@@ -133,19 +142,26 @@ class Create extends Component {
         });
     }
 
-    handleClickOpen = (event) => {
-        event.preventDefault();
-        this.setState({ open: true });
+    handleClickOpenCard = (event) => {
+        this.setState({ openCard: true });
     };
 
-    handleClose = () => {
-        this.setState({ open: false });
+    handleClickOpenTitle = (event) => {
+        this.setState({ openTitle: true });
+    };
+
+    handleCloseCard = () => {
+        this.setState({ openCard: false });
+    }
+
+    handleCloseTitle = () => {
+        this.setState({ openTitle: false });
     }
 
     handleAddLyricCard = (event) => {
         event.preventDefault();
         this.setState({
-            open: false
+            openCard: false
         });
         const newCard = {
             songLabelId: this.state.songPartId,
@@ -154,9 +170,26 @@ class Create extends Component {
         this.props.dispatch({ type: 'ADD_LYRIC_CARD', payload: newCard });
     };
 
+    handleUpdateLyricInfo = (event) => {
+        event.preventDefault();
+        this.setState({
+            openTitle: false
+        });
+        const newLyricInfo = {
+            title: this.state.title,
+            author: this.state.author,
+            songId: this.state.songId,
+        }
+        console.log('newLyricInfo', newLyricInfo);
+        
+        this.props.dispatch({ type: 'UPDATE_LYRIC_INFO', payload: newLyricInfo });
+    }
+
     saveLyrics = () => {
         this.props.history.push('/userprofile')
     }
+
+
 
     render() {
         const { classes } = this.props;
@@ -174,7 +207,7 @@ class Create extends Component {
                                     <Grid item >
                                         <Grid item>
                                             <Typography inline={true} variant="h6" color="primary">Title: </Typography>
-                                            <Typography inline={true} variant="h6">{this.props.reduxState.lyricInfo.title}&nbsp;&nbsp;&nbsp;&nbsp;</Typography>
+                                            <Typography inline={true} variant="h6">{this.props.reduxState.lyricInfo.title}</Typography>
                                         </Grid>
                                         <Grid item>
                                             <Typography inline={true} variant="h6" color="primary">Author: </Typography>
@@ -186,8 +219,9 @@ class Create extends Component {
                                 <Grid container direction="column">
                                     <Grid item >
                                         <Grid item>
-                                            <Button className={classes.button} variant="contained" onClick={this.handleClickOpen} color="primary">Add Lyric Card</Button>
+                                            <Button className={classes.button} variant="contained" onClick={this.handleClickOpenCard} color="primary">Add Lyric Card</Button>
                                             <Button className={classes.button} variant="contained" onClick={this.finishReorder} color="primary">Save Card Order</Button>
+                                            <Button className={classes.button} variant="contained" onClick={this.handleClickOpenTitle} color="primary">Edit Title / Author</Button>
                                             <Button className={classes.button} variant="contained" onClick={this.saveLyrics} color="primary">Save & Exit</Button>
                                         </Grid>
                                     </Grid>
@@ -197,11 +231,11 @@ class Create extends Component {
                     </div>
                 </Grid>
                 {/* {JSON.stringify(this.props.lyricInfo)} */}
-                {/* {JSON.stringify(this.state.lyrics)} */}
+                {/* {JSON.stringify(this.state.title)} */}
 
                 <Dialog
-                    open={this.state.open}
-                    onClose={this.handleClose}
+                    open={this.state.openCard}
+                    onClose={this.handleCloseCard}
                 >
                     <DialogTitle id="form-dialog-title">Add Lyric Card</DialogTitle>
                     <DialogContent>
@@ -231,11 +265,45 @@ class Create extends Component {
                         </TextField>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleClose} color="primary">
+                        <Button onClick={this.handleCloseCard} color="primary">
                             Close
                         </Button>
                         <Button onClick={this.handleAddLyricCard} color="primary">
                             Add
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+                <Dialog
+                    open={this.state.openTitle}
+                    onClose={this.handleCloseTitle}
+                >
+                    <DialogTitle id="form-dialog-title">Edit Lyric Info</DialogTitle>
+                    <DialogContent>
+                        <TextField
+                            label="Edit Title"
+                            fullWidth
+                            className={classes.textFieldMultiline}
+                            value={this.state.title}
+                            onChange={this.handleInputChangeFor('title')}
+                            margin="normal"
+                        >
+                        </TextField>
+                        <TextField
+                            label="Edit Author"
+                            fullWidth
+                            className={classes.textFieldMultiline}
+                            value={this.state.author}
+                            onChange={this.handleInputChangeFor('author')}
+                            margin="normal"
+                        >
+                        </TextField>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleCloseTitle} color="primary">
+                            Close
+                        </Button>
+                        <Button onClick={this.handleUpdateLyricInfo} color="primary">
+                            Save
                         </Button>
                     </DialogActions>
                 </Dialog>

@@ -3,13 +3,14 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
+var moment = require('moment');
 
 const router = express.Router();
 
 // Handles Ajax request for user information if user is authenticated
 router.get('/', rejectUnauthenticated, (req, res) => {
   // Send back user object from the session (previously queried from the database)
-  
+
   res.send(req.user);
 });
 
@@ -55,30 +56,48 @@ router.get('/lyrics', (req, res) => {
       console.log('Something went wrong getting users lyrics', error);
       res.sendStatus(500);
     })
-})
+});
+
+router.put('/lyrics', (req, res) => {
+  let update = req.body;
+  let date = moment().format();
+  console.log('In lyric info update router: ', update);
+
+  let sqlText = `UPDATE "lyric_info" 
+                 SET "title" = $1, "date_edited" = $2, "author" = $3 
+                 WHERE "id" = $4;`;
+  pool.query(sqlText, [update.title, date, update.author, update.songId])
+    .then((result) => {
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.log('Error updated lyric info', error);
+      res.sendStatus(500);
+    })
+});
 
 router.delete('/lyrics/delete/:id', rejectUnauthenticated, async (req, res) => {
   const client = await pool.connect();
   let id = req.params.id;
   console.log('Delete params.id', id);
-  
+
   try {
-      lyricQuery = `DELETE FROM "lyrics" WHERE "lyric_id" = $1;`;
-      lyricInfoQuery = `DELETE FROM "lyric_info" WHERE "id" = $1;`; 
+    lyricQuery = `DELETE FROM "lyrics" WHERE "lyric_id" = $1;`;
+    lyricInfoQuery = `DELETE FROM "lyric_info" WHERE "id" = $1;`;
 
 
     await client.query('BEGIN')
-      await client.query(lyricQuery,[id] );
-      await client.query(lyricInfoQuery, [id]);
+    await client.query(lyricQuery, [id]);
+    await client.query(lyricInfoQuery, [id]);
 
-      await client.query('COMMIT')
-      res.sendStatus(201);
+    await client.query('COMMIT')
+    res.sendStatus(201);
   } catch (error) {
-      await client.query('ROLLBACK')
-      console.log('Error deleting lyrics', error);
-      res.sendStatus(500);
+    await client.query('ROLLBACK')
+    console.log('Error deleting lyrics', error);
+    res.sendStatus(500);
   } finally {
-      client.release()
+    client.release()
   }
 });
 

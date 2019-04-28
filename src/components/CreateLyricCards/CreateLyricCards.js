@@ -50,10 +50,9 @@ class CreateLyricCards extends Component {
 
     componentDidMount = () => {
         this.props.dispatch({ type: 'GET_SONG_PART_LIST' });
-    }
+    };
 
-    handleDelete = (event) => {
-        event.preventDefault();
+    handleDelete = () => {
         this.setState({
             editLyrics: false,
         });
@@ -65,8 +64,7 @@ class CreateLyricCards extends Component {
         this.props.dispatch({ type: 'DELETE_LYRIC_CARD', payload: deleteCard })
     }
 
-    handleEdit = (event) => {
-        event.preventDefault();        
+    handleEdit = () => {       
         this.setState({
             editLyrics: true,
         })
@@ -106,7 +104,7 @@ class CreateLyricCards extends Component {
                         <Paper className={classes.paper}>
                         <Grid container spacing={16}>
                             <Grid item xs={9}>
-                                <Typography variant="h6">{this.state.updatedLyrics.label_name}</Typography>
+                                <Typography variant="h6">{this.props.task.label_name}</Typography>
                                 <Typography style={{whiteSpace: 'pre-line'}} variant="body1">{this.state.updatedLyrics.lyrics}</Typography>
                             </Grid>
                             <Grid item xs='auto'>

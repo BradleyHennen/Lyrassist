@@ -2,8 +2,9 @@ import { takeLatest, put } from 'redux-saga/effects';
 import axios from 'axios';
 
 function* getLyricInfo(action) {
-    const songId = action.payload;
-    console.log('getLyricInfo id', songId);
+    const songId = action.payload.songId;
+    console.log('songId getLyricInfoSaga: actionpayload', action.payload);
+    
     
     try {
         const response = yield axios.get(`/api/lyric/info/${songId}`);
