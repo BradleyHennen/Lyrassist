@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import qs from 'query-string';
 import { withRouter } from "react-router";
 import { withStyles } from '@material-ui/core';
-// import moment from 'moment';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -51,6 +50,9 @@ const styles = theme => ({
         // width: 200,
         margin: theme.spacing.unit,
     },
+    header: {
+        marginTop: theme.spacing.unit,
+    }
 });
 
 class Create extends Component {
@@ -88,7 +90,7 @@ class Create extends Component {
                 index: index
             };
             index = index + 1;
-            this.props.dispatch({ type: 'UPDATE_LYRIC_CARD_ORDER', payload: lyricArray[i]});
+            this.props.dispatch({ type: 'UPDATE_LYRIC_CARD_ORDER', payload: lyricArray[i] });
             console.log('LyricArray updated', lyricArray[i]);
         }
         // this function could dispatch to a saga for your PUT/update
@@ -102,7 +104,7 @@ class Create extends Component {
     componentDidUpdate(prevProps) {
         // Typical usage (don't forget to compare props):
         // console.log('prevProps', prevProps);
-        
+
         if (this.props.reduxState.lyrics !== prevProps.reduxState.lyrics) {
             this.setState({
                 lyrics: this.props.reduxState.lyrics
@@ -162,35 +164,37 @@ class Create extends Component {
         return (
             <div >
                 {/* {JSON.stringify(this.props.reduxState.lyrics)} */}
-                <Grid item xs={12}>
+                <Grid item xs={12} >
                     <Typography variant="h2" align="center">Lyrics</Typography>
-                    <Paper className={classes.paper}>
-                    <Grid container direction="row" alignItems="flex-start" justify="center">
+                    <div className={classes.header}>
+                        <Paper className={classes.paper} >
+                            <Grid container direction="row" alignItems="flex-start" justify="center">
 
-                    <Grid container direction="column">
-                        <Grid item >
-                            <Grid item>
-                                <Typography inline={true} variant="h6" color="primary">Title: </Typography>
-                                <Typography inline={true} variant="h6">{this.props.reduxState.lyricInfo.title}&nbsp;&nbsp;&nbsp;&nbsp;</Typography>
-                            </Grid>
-                            <Grid item>
-                                <Typography inline={true} variant="h6" color="primary">Author: </Typography>
-                                <Typography inline={true} variant="h6">{this.props.reduxState.lyricInfo.author}</Typography>
-                            </Grid>
-                        </Grid>
-                    </Grid>
+                                <Grid container direction="column">
+                                    <Grid item >
+                                        <Grid item>
+                                            <Typography inline={true} variant="h6" color="primary">Title: </Typography>
+                                            <Typography inline={true} variant="h6">{this.props.reduxState.lyricInfo.title}&nbsp;&nbsp;&nbsp;&nbsp;</Typography>
+                                        </Grid>
+                                        <Grid item>
+                                            <Typography inline={true} variant="h6" color="primary">Author: </Typography>
+                                            <Typography inline={true} variant="h6">{this.props.reduxState.lyricInfo.author}</Typography>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
 
-                    <Grid container direction="column">
-                        <Grid item >
-                            <Grid item>
-                                <Button className={classes.button} variant="contained" onClick={this.handleClickOpen} color="primary">Add Lyric Card</Button>
-                                <Button className={classes.button} variant="contained" onClick={this.finishReorder} color="primary">Save Card Order</Button>
-                                <Button className={classes.button} variant="contained" onClick={this.saveLyrics} color="primary">Save & Exit</Button>
+                                <Grid container direction="column">
+                                    <Grid item >
+                                        <Grid item>
+                                            <Button className={classes.button} variant="contained" onClick={this.handleClickOpen} color="primary">Add Lyric Card</Button>
+                                            <Button className={classes.button} variant="contained" onClick={this.finishReorder} color="primary">Save Card Order</Button>
+                                            <Button className={classes.button} variant="contained" onClick={this.saveLyrics} color="primary">Save & Exit</Button>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </Grid>
-                    </Grid>
-                    </Paper>
+                        </Paper>
+                    </div>
                 </Grid>
                 {/* {JSON.stringify(this.props.lyricInfo)} */}
                 {/* {JSON.stringify(this.state.lyrics)} */}
