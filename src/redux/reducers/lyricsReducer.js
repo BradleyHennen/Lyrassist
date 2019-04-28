@@ -1,4 +1,4 @@
-const lyrics = (state = [], action) => {
+const lyrics = (state = {}, action) => {
     if (action.type === 'SET_LYRICS') {
         return action.payload;
     }
