@@ -10,83 +10,21 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
-import IconButton from '@material-ui/core/IconButton';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
-import FilterListIcon from '@material-ui/icons/FilterList';
-import { lighten } from '@material-ui/core/styles/colorManipulator';
+import TablePaginationActions from './TablePagination';
+import TableSorting from './TableSorting';
+
+TableSorting.propTypes = {
+  numSelected: PropTypes.number.isRequired,
+  onRequestSort: PropTypes.func.isRequired,
+  onSelectAllClick: PropTypes.func.isRequired,
+  order: PropTypes.string.isRequired,
+  orderBy: PropTypes.string.isRequired,
+  rowCount: PropTypes.number.isRequired,
+};
 
 
-const actionsStyles = theme => ({
-  root: {
-    flexShrink: 0,
-    color: theme.palette.text.secondary,
-    marginLeft: theme.spacing.unit * 2.5,
-  },
-});
-
-class TablePaginationActions extends Component {
-  handleFirstPageButtonClick = event => {
-    this.props.onChangePage(event, 0);
-  };
-
-  handleBackButtonClick = event => {
-    this.props.onChangePage(event, this.props.page - 1);
-  };
-
-  handleNextButtonClick = event => {
-    this.props.onChangePage(event, this.props.page + 1);
-  };
-
-  handleLastPageButtonClick = event => {
-    this.props.onChangePage(
-      event,
-      Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1),
-    );
-  };
-
-  render() {
-    const { classes, count, page, rowsPerPage, theme } = this.props;
-
-    return (
-      <div className={classes.root}>
-        <IconButton
-          onClick={this.handleFirstPageButtonClick}
-          disabled={page === 0}
-          aria-label="First Page"
-        >
-          {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
-        </IconButton>
-        <IconButton
-          onClick={this.handleBackButtonClick}
-          disabled={page === 0}
-          aria-label="Previous Page"
-        >
-          {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-        </IconButton>
-        <IconButton
-          onClick={this.handleNextButtonClick}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-          aria-label="Next Page"
-        >
-          {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-        </IconButton>
-        <IconButton
-          onClick={this.handleLastPageButtonClick}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-          aria-label="Last Page"
-        >
-          {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
-        </IconButton>
-      </div>
-    );
-  }
-}
 
 TablePaginationActions.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -97,34 +35,20 @@ TablePaginationActions.propTypes = {
   theme: PropTypes.object.isRequired,
 };
 
-const TablePaginationActionsWrapped = withStyles(actionsStyles, { withTheme: true })(
-  TablePaginationActions,
-);
-
-let counter = 0;
-function createData(name, calories, fat) {
-  counter += 1;
-  return { id: counter, name, calories, fat };
-}
-
 const styles = theme => ({
   root: {
     width: '100%',
-    // marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
-  },
-  table: {
-    // minWidth: 700,
+    marginTop: theme.spacing.unit,
   },
 });
-
-
-
 
 class AssistantResults extends Component {
 
   state = {
-    rows: [],
+    order: 'asc',
+    orderBy: 'ranking',
+    data: [],
     page: 0,
     rowsPerPage: 8,
   }
@@ -133,13 +57,69 @@ class AssistantResults extends Component {
     this.props.dispatch({ type: 'GET_DATAMUSE' })
   }
 
-  componentDidUpdate(prevProps) {   
+  componentDidUpdate(prevProps) {
     if (this.props.reduxState.datamuseData !== prevProps.reduxState.datamuseData) {
-        this.setState({
-            rows: this.props.reduxState.datamuseData,
-        })
+      this.setState({
+        data: this.props.reduxState.datamuseData,
+      })
     }
-}
+  }
+
+  handleRequestSort = (event, property) => {
+    const orderBy = property;
+    let order = 'desc';
+
+    if (this.state.orderBy === property && this.state.order === 'desc') {
+      order = 'asc';
+    }
+
+    this.setState({ order, orderBy });
+  };
+
+  handleClick = (event, id) => {
+    const { selected } = this.state;
+    const selectedIndex = selected.indexOf(id);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1),
+      );
+    }
+
+    this.setState({ selected: newSelected });
+  };
+
+  desc = (a, b, orderBy) => {
+    if (b[orderBy] < a[orderBy]) {
+      return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+      return 1;
+    }
+    return 0;
+  }
+
+  stableSort = (array, cmp) => {
+    const stabilizedThis = array.map((el, index) => [el, index]);
+    stabilizedThis.sort((a, b) => {
+      const order = cmp(a[0], b[0]);
+      if (order !== 0) return order;
+      return a[1] - b[1];
+    });
+    return stabilizedThis.map(el => el[0]);
+  }
+
+  getSorting = (order, orderBy) => {
+    return order === 'desc' ? (a, b) => this.desc(a, b, orderBy) : (a, b) => -this.desc(a, b, orderBy);
+  }
 
   handleChangePage = (event, page) => {
     this.setState({ page });
@@ -152,8 +132,7 @@ class AssistantResults extends Component {
 
   render() {
     const { classes } = this.props;
-    const { rows, rowsPerPage, page } = this.state;
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+    const { data, order, orderBy, rowsPerPage, page } = this.state;
 
 
     return (
@@ -161,35 +140,38 @@ class AssistantResults extends Component {
         <Typography variant="h2" align="center">Results</Typography>
         <Paper className={classes.root}>
           <Table className={classes.table}>
-            <TableHead>
-              <TableRow>
-                <TableCell>Word/Phrase</TableCell>
-                <TableCell align="right">Ranking</TableCell>
-                <TableCell align="right">Syllables</TableCell>
-              </TableRow>
-            </TableHead>
+            <TableSorting
+              order={order}
+              orderBy={orderBy}
+              onRequestSort={this.handleRequestSort}
+              rowCount={data.length} />
             <TableBody>
-              {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, i) => (
-                <TableRow key={i}>
-                  <TableCell component="th" scope="row">
-                    {row.word}
-                  </TableCell>
-                  <TableCell align="right">{row.score}</TableCell>
-                  <TableCell align="right">{row.numSyllables}</TableCell>
-                </TableRow>
-              ))}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 48 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
+              {this.stableSort(data, this.getSorting(order, orderBy))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((n, index) => {
+                  return (
+                    <TableRow
+                      hover
+                      onClick={event => this.handleClick(event, index)}
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={index}
+                    >
+                      <TableCell component="th" scope="row" >
+                        {n.word}
+                      </TableCell>
+                      <TableCell align="right">{n.score}</TableCell>
+                      <TableCell align="right">{n.numSyllables}</TableCell>
+                    </TableRow>
+                  );
+                })}
             </TableBody>
             <TableFooter>
               <TableRow>
                 <TablePagination
-                  rowsPerPageOptions={[8, 10, 25]}
+                  rowsPerPageOptions={[10, 15, 20, 25, 30]}
                   colSpan={3}
-                  count={rows.length}
+                  count={data.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   SelectProps={{
@@ -197,7 +179,7 @@ class AssistantResults extends Component {
                   }}
                   onChangePage={this.handleChangePage}
                   onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                  ActionsComponent={TablePaginationActionsWrapped}
+                  ActionsComponent={TablePaginationActions}
                 />
               </TableRow>
             </TableFooter>
