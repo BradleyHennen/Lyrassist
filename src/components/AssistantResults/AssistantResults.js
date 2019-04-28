@@ -28,6 +28,7 @@ class AssistantResults extends Component {
     componentDidMount = () => {
         this.props.dispatch({type: 'GET_DATAMUSE'})
     }
+    
     render() {
         const { classes } = this.props;
         return (
