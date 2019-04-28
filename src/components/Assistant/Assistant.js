@@ -66,10 +66,18 @@ class Assistant extends Component {
         }
         else if (this.state.queryId === 1) {
             updatedQuery = `rel_rhy=${this.state.word}`;
-            console.log('updatedQuery', updatedQuery);
         }
         else if (this.state.queryId === 2) {
-            updatedQuery = `rel_ant=${this.state.word}`;
+            updatedQuery = `rel_ant=${this.state.word}&md=ds`;
+        }
+        else if (this.state.queryId === 3) {
+            updatedQuery = `ml=${this.state.word}&md=ds`;
+        }
+        else if (this.state.queryId === 4) {
+            updatedQuery = `rel_nry=${this.state.word}&md=ds`;
+        }
+        else if (this.state.queryId === 5) {
+            updatedQuery = `rel_hom=${this.state.word}`;
         }
         this.props.dispatch({ type: 'GET_DATAMUSE', payload: updatedQuery })
     }
@@ -110,15 +118,12 @@ class Assistant extends Component {
                                 ))}
                             </TextField>
                             <TextField
-                                required
-                                label="Word"
+                                label="Word or Phrase"
                                 className={classes.textField}
                                 value={this.state.word}
                                 onChange={this.handleChangeForQuery}
                                 margin="normal"
                             />
-                            {/* {this.searchConditional()} */}
-
                             <Button
                                 type="submit"
                                 name="submit"

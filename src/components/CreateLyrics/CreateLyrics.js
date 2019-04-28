@@ -21,7 +21,7 @@ const styles = theme => ({
     //     backgroundColor: "white",
     // },
     task: {
-        padding: 8,
+        padding: 1,
     }
 })
 

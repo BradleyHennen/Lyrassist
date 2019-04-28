@@ -9,7 +9,6 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import CreateLyricCards from '../CreateLyricCards/CreateLyricCards';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Dialog from '@material-ui/core/Dialog';
@@ -172,7 +171,7 @@ class Create extends Component {
                     </Paper>
                 </Grid>
                 {/* {JSON.stringify(this.props.lyricInfo)} */}
-                {JSON.stringify(this.state.lyrics)}
+                {/* {JSON.stringify(this.state.lyrics)} */}
 
                 <Dialog
                     open={this.state.open}
