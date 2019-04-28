@@ -146,7 +146,7 @@ class AssistantResults extends Component {
   };
 
   handleChangeRowsPerPage = event => {
-    this.setState({ page: 0, rowsPerPage: event.target.value });
+    this.setState({ page: 0, rowsPerPage: Number(event.target.value) });
   };
 
 
@@ -169,8 +169,8 @@ class AssistantResults extends Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
-                <TableRow key={row.id}>
+              {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, i) => (
+                <TableRow key={i}>
                   <TableCell component="th" scope="row">
                     {row.word}
                   </TableCell>
