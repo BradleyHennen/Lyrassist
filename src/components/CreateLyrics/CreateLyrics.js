@@ -13,13 +13,6 @@ import CreateLyricCards from '../CreateLyricCards/CreateLyricCards';
 
 
 const styles = theme => ({
-    // container: {
-    //     border: "1px solid black",
-    //     borderRadius: "10px",
-    //     padding: "8px",
-    //     marginBottom: "8px",
-    //     backgroundColor: "white",
-    // },
     task: {
         padding: 1,
     }
@@ -48,7 +41,6 @@ class CreateLyrics extends Component {
                             </div>
                         )}
                     </Droppable>
-                    <button onClick={this.props.finishReorder}>Done</button>
                 </div>
         );
     }
