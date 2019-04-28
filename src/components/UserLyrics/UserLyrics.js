@@ -115,13 +115,11 @@ class UserLyrics extends Component {
                 <Dialog
                     open={this.state.open}
                     onClose={this.handleClose}
-                    aria-labelledby="form-dialog-title"
                 >
-                    <DialogTitle id="form-dialog-title">Create New Song</DialogTitle>
+                <form  autoComplete="off" onSubmit={this.createNewSong}>
+                    <DialogTitle>Create New Song</DialogTitle>
                     <DialogContent>
-                        {/* <DialogContentText>
-                            Create New Song
-                        </DialogContentText> */}
+                        
                         <TextField
                             autoFocus
                             required
@@ -144,15 +142,17 @@ class UserLyrics extends Component {
                             value={this.state.newSong.author}
                             fullWidth
                         />
+                        
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleClose} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={this.createNewSong} color="primary">
+                        <Button type="submit" color="primary">
                             Create
                         </Button>
                     </DialogActions>
+                    </form>
                 </Dialog>
             </div>
         );

@@ -35,7 +35,7 @@ class RegisterPage extends Component {
     username: '',
     password: '',
     confirmPassword: '',
-    email: '',
+    email: null,
     firstName: '',
     lastName: '',
     description: '',
@@ -91,7 +91,7 @@ class RegisterPage extends Component {
                 </Typography>
               )}
             <Grid item xs={12}>
-              <form className={classes.container} noValidate autoComplete="off" onSubmit={this.registerUser}>
+              <form className={classes.container}  autoComplete="off" onSubmit={this.registerUser}>
                 <Typography variant="h2">Register User</Typography>
                   <TextField
                     required
