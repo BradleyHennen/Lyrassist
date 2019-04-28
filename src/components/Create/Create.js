@@ -74,6 +74,7 @@ class Create extends Component {
         this.setState({
             lyrics: reorderedTasks,
         });
+        // this.finishReorder();
     }
 
     finishReorder = () => {
@@ -183,6 +184,7 @@ class Create extends Component {
                         <Grid item >
                             <Grid item>
                                 <Button className={classes.button} variant="contained" onClick={this.handleClickOpen} color="primary">Add Lyric Card</Button>
+                                <Button className={classes.button} variant="contained" onClick={this.finishReorder} color="primary">Save Card Order</Button>
                                 <Button className={classes.button} variant="contained" onClick={this.saveLyrics} color="primary">Save & Exit</Button>
                             </Grid>
                         </Grid>
@@ -234,10 +236,10 @@ class Create extends Component {
                     </DialogActions>
                 </Dialog>
                 <br />
-                <Grid item xs={12}>
+                <Grid item xs={12} >
                     <DragDropContext onDragEnd={this.onDragEnd}>
                         {/* tasks must be the current tasks from state, not initialData */}
-                        <CreateLyrics tasks={this.state.lyrics} finishReorder={this.finishReorder} songId={this.state.songId} />
+                        <CreateLyrics tasks={this.state.lyrics} songId={this.state.songId} />
                     </DragDropContext>
                 </Grid>
 
