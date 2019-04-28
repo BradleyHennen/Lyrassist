@@ -78,10 +78,16 @@ class Create extends Component {
     onDragEnd = (result) => {
         // reorder results
 
-        if(result.destination === null){
-            return
+        if(!result.destination) {
+            return;
         }
-        
+        if(
+            result.destination.draggableId === result.source.droppableId &&
+            result.destination.index === result.source.index
+        ) {
+            return;
+        }
+
         const reorderedTasks = reorder(
             this.state.lyrics, // starting array data
             result.source.index,         // starting array index
