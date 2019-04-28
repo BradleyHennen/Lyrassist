@@ -10,90 +10,12 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
-import IconButton from '@material-ui/core/IconButton';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
-import FilterListIcon from '@material-ui/icons/FilterList';
-import { lighten } from '@material-ui/core/styles/colorManipulator';
 import TablePaginationActions from './TablePagination';
+import TableSorting from './TableSorting';
 
-function desc(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-function stableSort(array, cmp) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = cmp(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map(el => el[0]);
-}
-
-function getSorting(order, orderBy) {
-  return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
-}
-
-const rows = [
-  { id: 'word', numeric: false, disablePadding: true, label: 'Word/Phrase' },
-  { id: 'score', numeric: true, disablePadding: false, label: 'Ranking' },
-  { id: 'numSyllables', numeric: true, disablePadding: false, label: 'Syllables' },
-];
-
-class EnhancedTableHead extends React.Component {
-  createSortHandler = property => event => {
-    this.props.onRequestSort(event, property);
-  };
-
-  render() {
-    const { order, orderBy } = this.props;
-
-    return (
-      <TableHead>
-        <TableRow>
-          {rows.map(
-            row => (
-              <TableCell
-                key={row.id}
-                align={row.numeric ? 'right' : 'left'}
-                sortDirection={orderBy === row.id ? order : false}
-              >
-                <Tooltip
-                  title="Sort"
-                  placement={row.numeric ? 'bottom-end' : 'bottom-start'}
-                  enterDelay={300}
-                >
-                  <TableSortLabel
-                    active={orderBy === row.id}
-                    direction={order}
-                    onClick={this.createSortHandler(row.id)}
-                  >
-                    {row.label}
-                  </TableSortLabel>
-                </Tooltip>
-              </TableCell>
-            ),
-            this,
-          )}
-        </TableRow>
-      </TableHead>
-    );
-  }
-}
-
-EnhancedTableHead.propTypes = {
+TableSorting.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
@@ -175,6 +97,30 @@ class AssistantResults extends Component {
     this.setState({ selected: newSelected });
   };
 
+  desc = (a, b, orderBy) => {
+    if (b[orderBy] < a[orderBy]) {
+      return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+      return 1;
+    }
+    return 0;
+  }
+
+  stableSort = (array, cmp) => {
+    const stabilizedThis = array.map((el, index) => [el, index]);
+    stabilizedThis.sort((a, b) => {
+      const order = cmp(a[0], b[0]);
+      if (order !== 0) return order;
+      return a[1] - b[1];
+    });
+    return stabilizedThis.map(el => el[0]);
+  }
+
+  getSorting = (order, orderBy) => {
+    return order === 'desc' ? (a, b) => this.desc(a, b, orderBy) : (a, b) => -this.desc(a, b, orderBy);
+  }
+
   handleChangePage = (event, page) => {
     this.setState({ page });
   };
@@ -186,8 +132,7 @@ class AssistantResults extends Component {
 
   render() {
     const { classes } = this.props;
-    const {  data, order, orderBy, rowsPerPage, page } = this.state;
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+    const { data, order, orderBy, rowsPerPage, page } = this.state;
 
 
     return (
@@ -195,13 +140,13 @@ class AssistantResults extends Component {
         <Typography variant="h2" align="center">Results</Typography>
         <Paper className={classes.root}>
           <Table className={classes.table}>
-            <EnhancedTableHead
+            <TableSorting
               order={order}
               orderBy={orderBy}
               onRequestSort={this.handleRequestSort}
-              rowCount={data.length}/>
+              rowCount={data.length} />
             <TableBody>
-              {stableSort(data, getSorting(order, orderBy))
+              {this.stableSort(data, this.getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((n, index) => {
                   return (
