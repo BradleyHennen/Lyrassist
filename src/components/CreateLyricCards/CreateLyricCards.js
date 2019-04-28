@@ -104,7 +104,7 @@ class CreateLyricCards extends Component {
                         
                         <Paper className={classes.paper}>
                             <Typography variant="h6">{this.state.updatedLyrics.label_name}</Typography>
-                            <Typography  variant="body1">{this.state.updatedLyrics.lyrics}</Typography>
+                            <Typography style={{whiteSpace: 'pre-line'}} variant="body1">{this.state.updatedLyrics.lyrics}</Typography>
                             <Button variant="contained" color="primary" onClick={this.handleEdit}>Edit</Button>
                         </Paper>
                      

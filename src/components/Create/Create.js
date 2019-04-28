@@ -49,8 +49,7 @@ const styles = theme => ({
     },
     button: {
         width: 200,
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
+        margin: theme.spacing.unit,
     },
 });
 
@@ -136,6 +135,10 @@ class Create extends Component {
         this.setState({ open: true });
     };
 
+    handleClose = () => {
+        this.setState({ open: false });
+    }
+
     handleAddLyricCard = (event) => {
         event.preventDefault();
         this.setState({
@@ -177,7 +180,7 @@ class Create extends Component {
                     open={this.state.open}
                     onClose={this.handleClose}
                 >
-                    <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+                    <DialogTitle id="form-dialog-title">Add Lyric Card</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
                             Select A Song Part You Want To Add
@@ -205,9 +208,12 @@ class Create extends Component {
                         </TextField>
                     </DialogContent>
                     <DialogActions>
+                        <Button onClick={this.handleClose} color="primary">
+                            Close
+                        </Button>
                         <Button onClick={this.handleAddLyricCard} color="primary">
                             Add
-                            </Button>
+                        </Button>
                     </DialogActions>
                 </Dialog>
                 <br />
