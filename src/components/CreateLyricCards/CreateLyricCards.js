@@ -42,7 +42,8 @@ class CreateLyricCards extends Component {
             song_label_id: this.props.task.song_label_id,
             label_name: this.props.task.label_name,
             lyrics: this.props.task.lyrics,
-            songId: this.props.songId,
+            song_id: this.props.task.song_id,
+            index: this.props.task.index,
         }
     }
 
@@ -57,8 +58,8 @@ class CreateLyricCards extends Component {
         });
 
         const deleteCard = {
-            songId: this.props.songId,
-            lyricId: this.props.lyricData.lyrics_id,
+            songId: this.state.updatedLyrics.song_id,
+            lyricId: this.state.updatedLyrics.lyric_id,
         }
         this.props.dispatch({ type: 'DELETE_LYRIC_CARD', payload: deleteCard })
     }
@@ -162,53 +163,4 @@ CreateLyricCards.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps)(withStyles(styles)(CreateLyricCards));
-
-// {this.state.editLyrics === false ? 
-//     <Grid item xs={12}>
-//     <Paper className={classes.paper}>
-//         <Typography variant="h6">{this.state.updatedLyrics.label_name}</Typography>
-//         <Typography  variant="body1">{this.state.updatedLyrics.lyrics}</Typography>
-//         <Button variant="contained" color="primary" onClick={this.handleEdit}>Edit</Button>
-//     </Paper>
-//     </Grid>
-//     :
-//     <Paper className={classes.paper}>
-//         <form noValidate autoComplete="off">
-//             <TextField
-//                 select
-//                 autoFocus
-//                 margin="dense"
-//                 label="Change Song Part"
-//                 className={classes.textField}
-//                 value={this.state.updatedLyrics.song_label_id}
-//                 onChange={this.handleChangeForLyrics('song_label_id')}
-//                 SelectProps={{
-//                     MenuProps: {
-//                         className: classes.menu,
-//                     },
-//                 }}
-//             >
-//                 {this.props.reduxState.songPartList.map(option => (
-//                     <MenuItem key={option.id} value={option.id}>
-//                         {option.label_name}
-//                     </MenuItem>
-//                 ))}
-//             </TextField>
-//             <TextField
-//                 label="Edit Lyrics"
-//                 multiline
-//                 fullWidth
-//                 rows="4"
-//                 className={classes.textFieldMultiline}
-//                 value={this.state.updatedLyrics.lyrics}
-//                 onChange={this.handleChangeForLyrics('lyrics')}
-//                 margin="normal"
-//             >
-//             </TextField>
-        
-//             <Button variant="contained" color="primary" onClick={this.handleDelete}>Delete</Button>
-//             <Button variant="contained" color="primary" onClick={this.handleSave}>Save</Button>
-//         </form>
-//     </Paper>
-// }
+export default connect(mapStateToProps)(withStyles(styles)(CreateLyricCards))

@@ -8,7 +8,7 @@ function* updateLyricCard(action) {
 
     try {
         yield axios.put(`/api/lyric`, action.payload);
-        yield put({ type: 'GET_LYRICS', payload: songId});
+        yield put({ type: 'GET_LYRICS', payload: action.payload.song_id});
     }
     catch (error) {
         console.log(`Couldn't update lyric card`);

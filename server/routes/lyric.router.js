@@ -39,8 +39,12 @@ router.delete('/:id', (req, res) => {
 
 router.put('/', (req, res) => {
     let update = req.body;
-    let sqlText = 'UPDATE "lyrics" SET "lyrics" = $1, "song_label_id" = $2 WHERE "id" = $3;';
-    pool.query(sqlText, [update.lyrics, update.song_label_id, update.lyric_id])
+    console.log('In card update router: ', update);
+    
+    let sqlText = `UPDATE "lyrics" 
+                   SET "lyrics" = $1, "song_label_id" = $2, "index" = $3 
+                   WHERE "id" = $4;`;
+    pool.query(sqlText, [update.lyrics, update.song_label_id, update.index, update.lyric_id])
         .then((result) => {
             res.sendStatus(200);
         })
@@ -48,7 +52,24 @@ router.put('/', (req, res) => {
             console.log('Error updated lyric card', error);
             res.sendStatus(500);
         })
-})
+});
+
+router.put('/order', (req, res) => {
+    let update = req.body;
+    console.log('In card order update router: ', update);
+    
+    let sqlText = `UPDATE "lyrics" 
+                   SET "index" = $1 
+                   WHERE "id" = $2;`;
+    pool.query(sqlText, [update.index, update.lyrics_id])
+        .then((result) => {
+            res.sendStatus(200);
+        })
+        .catch((error) => {
+            console.log('Error updating lyric card order', error);
+            res.sendStatus(500);
+        })
+});
 
 router.post('/', (req, res) => {
     let newCard = req.body;
@@ -90,7 +111,7 @@ router.get('/:id', (req, res) => {
     console.log('req.user.id', req.user.id);
     const userId = req.user.id;
 
-    let sqlText = (`SELECT "lyrics"."id" AS "lyrics_id", "lyrics"."lyrics", "lyrics"."song_label_id", "song_label"."label_name", "lyrics"."index" AS "index"
+    let sqlText = (`SELECT "lyrics"."id" AS "lyrics_id", "lyrics"."lyrics", "lyrics"."song_label_id", "song_label"."label_name", "lyrics"."index" AS "index", "lyric_info"."id" AS "song_id"
                     FROM "lyrics"
                     JOIN "lyric_info" ON "lyric_info"."id" = "lyrics"."lyric_id"
                     JOIN "user" ON "user"."id" = "lyric_info"."user_id"

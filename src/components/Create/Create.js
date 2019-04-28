@@ -79,15 +79,30 @@ class Create extends Component {
     }
 
     finishReorder = () => {
+        console.log('Initial index order: ', this.state.lyrics);
+        let index = 1;
+        const lyricArray = this.state.lyrics
+        for (let i = 0; i < lyricArray.length; i++) {
+            console.log('LyricArray initial', lyricArray[i]);
+            lyricArray[i] = {
+                ...lyricArray[i],
+                index: index
+            };
+            index = index + 1;
+            this.props.dispatch({ type: 'UPDATE_LYRIC_CARD_ORDER', payload: lyricArray[i]});
+            console.log('LyricArray updated', lyricArray[i]);
+        }
         // this function could dispatch to a saga for your PUT/update
 
         // prove our order is correct in state
-        console.log('final order: ', this.state.tasks);
+        console.log('Updated index order: ', this.state.lyrics);
+        // this.props.dispatch({ type: 'UPDATE_LYRIC_CARD_ORDER', payload: this.state.lyrics });
+
     }
 
     componentDidUpdate(prevProps) {
         // Typical usage (don't forget to compare props):
-        console.log('prevProps', prevProps);
+        // console.log('prevProps', prevProps);
         
         if (this.props.reduxState.lyrics !== prevProps.reduxState.lyrics) {
             this.setState({
@@ -141,9 +156,6 @@ class Create extends Component {
     render() {
         const { classes } = this.props;
 
-        console.log('State with new info', this.state);
-
-
         return (
             <div >
                 {/* {JSON.stringify(this.props.reduxState.lyrics)} */}
@@ -160,7 +172,7 @@ class Create extends Component {
                     </Paper>
                 </Grid>
                 {/* {JSON.stringify(this.props.lyricInfo)} */}
-                {/* {JSON.stringify(this.state)} */}
+                {JSON.stringify(this.state.lyrics)}
 
                 <Dialog
                     open={this.state.open}
@@ -201,13 +213,6 @@ class Create extends Component {
                 </Dialog>
                 <br />
                 <Grid item xs={12}>
-                    {/* {this.props.reduxState.lyrics.map(lyricData => {
-                        return (
-                            <Grid item xs={12}>
-                                <CreateLyricCards key={lyricData.lyrics_id} className="lyricCards" lyricData={lyricData} songId={this.state.songId} />
-                            </Grid>
-                        )
-                    })} */}
                     <DragDropContext onDragEnd={this.onDragEnd}>
                         {/* tasks must be the current tasks from state, not initialData */}
                         <CreateLyrics tasks={this.state.lyrics} finishReorder={this.finishReorder} songId={this.state.songId} />

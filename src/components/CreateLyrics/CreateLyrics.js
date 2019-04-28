@@ -63,17 +63,3 @@ CreateLyrics.propTypes = {
 };
 
 export default connect(mapStateToProps)(withStyles(styles)(CreateLyrics));
-
-// {/* <Draggable draggableId={this.props.task.id} index={this.props.index}>
-//                 {provided => (
-//                     <div
-//                         {...provided.draggableProps}
-//                         {...provided.dragHandleProps}
-//                         ref={provided.innerRef}
-//                         className={classes.container}
-//                     >
-//                         <div><strong>{this.props.task.header}</strong></div>
-//                         {this.props.task.content}
-//                     </div>
-//                 )}
-// </Draggable> */}
