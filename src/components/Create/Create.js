@@ -20,6 +20,9 @@ import CreateLyrics from '../CreateLyrics/CreateLyrics';
 
 
 const reorder = (list, startIndex, endIndex) => {
+    console.log('startIndex: ', startIndex);
+    console.log('endIndex: ', endIndex);
+    
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
@@ -56,7 +59,7 @@ const styles = theme => ({
     h1: {
         fontWeight: "bold",
         letterSpacing: 5,
-        textShadow: '1px 1px 0 #FFF'
+        textShadow: '.5px .5px 0 #FFF'
     },
 });
 
@@ -74,6 +77,11 @@ class Create extends Component {
 
     onDragEnd = (result) => {
         // reorder results
+
+        if(result.destination === null){
+            return
+        }
+        
         const reorderedTasks = reorder(
             this.state.lyrics, // starting array data
             result.source.index,         // starting array index

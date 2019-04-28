@@ -66,7 +66,7 @@ class Assistant extends Component {
             return
         }
         else if (this.state.queryId === 1) {
-            updatedQuery = `rel_rhy=${this.state.word}`;
+            updatedQuery = `rel_rhy=${this.state.word}&md=d`;
         }
         else if (this.state.queryId === 2) {
             updatedQuery = `rel_ant=${this.state.word}&md=ds`;

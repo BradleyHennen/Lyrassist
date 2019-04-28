@@ -84,7 +84,7 @@ class UserLyrics extends Component {
             <div >
                 <Button 
                     variant="contained" 
-                    color="secondary" 
+                    color="primary" 
                     className={classes.button}
                     onClick={this.handleOpen}
                     >Create New Song

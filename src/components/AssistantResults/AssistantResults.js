@@ -12,6 +12,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TablePaginationActions from './TablePagination';
 import TableSorting from './TableSorting';
 
+
 TableSorting.propTypes = {
   onRequestSort: PropTypes.func.isRequired,
   order: PropTypes.string.isRequired,
@@ -35,7 +36,10 @@ const styles = theme => ({
   h1: {
     fontWeight: "bold",
     letterSpacing: 5,
-    textShadow: '1px 1px 0 #FFF'
+    textShadow: '.5px .5px 0 #FFF'
+  },
+  typography: {
+    padding: theme.spacing.unit * 2,
   },
 });
 
@@ -71,6 +75,7 @@ class AssistantResults extends Component {
 
     this.setState({ order, orderBy });
   };
+
 
   handleClick = (event, id) => {
     const { selected } = this.state;
@@ -148,13 +153,12 @@ class AssistantResults extends Component {
                   return (
                     <TableRow
                       hover
-                      onClick={event => this.handleClick(event, index)}
                       role="checkbox"
                       tabIndex={-1}
                       key={index}
                     >
                       <TableCell component="th" scope="row" >
-                        {n.word}
+                         {n.word}
                       </TableCell>
                       <TableCell align="right">{n.score}</TableCell>
                       <TableCell align="right">{n.numSyllables}</TableCell>
