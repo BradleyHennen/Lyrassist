@@ -52,7 +52,12 @@ const styles = theme => ({
     },
     header: {
         marginTop: theme.spacing.unit,
-    }
+    },
+    h1: {
+        fontWeight: "bold",
+        letterSpacing: 5,
+        textShadow: '1px 1px 0 #FFF'
+    },
 });
 
 class Create extends Component {
@@ -185,8 +190,10 @@ class Create extends Component {
         this.props.dispatch({ type: 'UPDATE_LYRIC_INFO', payload: newLyricInfo });
     }
 
-    saveLyrics = () => {
+    saveLyrics = (event) => {
+        this.handleUpdateLyricInfo(event);
         this.props.history.push('/userprofile')
+
     }
 
 
@@ -198,7 +205,7 @@ class Create extends Component {
             <div >
                 {/* {JSON.stringify(this.props.reduxState.lyrics)} */}
                 <Grid item xs={12} >
-                    <Typography variant="h2" align="center">Lyrics</Typography>
+                    <Typography variant="h2" align="center" color="primary" className={classes.h1}>Lyrics</Typography>
                     <div className={classes.header}>
                         <Paper className={classes.paper} >
                             <Grid container direction="row" alignItems="flex-start" justify="center">

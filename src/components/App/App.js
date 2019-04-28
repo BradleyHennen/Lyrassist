@@ -17,6 +17,8 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import LoginPage from '../LoginPage/LoginPage';
 
 import './App.css';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import theme from './theme';
 
 class App extends Component {
   componentDidMount () {
@@ -25,6 +27,7 @@ class App extends Component {
 
   render() {
     return (
+      <MuiThemeProvider theme={theme}>
       <Router>
         <Switch>
           <Redirect exact from="/" to="/welcome" />
@@ -42,6 +45,7 @@ class App extends Component {
           />
         </Switch>
       </Router>
+      </MuiThemeProvider>
   )}
 }
 
