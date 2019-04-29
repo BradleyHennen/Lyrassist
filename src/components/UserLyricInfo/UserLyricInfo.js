@@ -75,9 +75,6 @@ class UserLyrics extends Component {
                             Delete
                         </Button>
                     </TableCell>
-                    <TableCell align="right">
-                        <Button onClick={this.handlePrint}>Print</Button>
-                    </TableCell>
                 </TableRow>
 
      

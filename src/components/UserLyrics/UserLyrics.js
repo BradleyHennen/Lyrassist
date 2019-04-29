@@ -100,7 +100,6 @@ class UserLyrics extends Component {
                                 <TableCell align="right">Last Edited</TableCell>
                                 <TableCell align="right">Edit</TableCell>
                                 <TableCell align="right">Delete</TableCell>
-                                <TableCell align="right">Print</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>

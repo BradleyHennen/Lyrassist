@@ -31,7 +31,7 @@ const styles = theme => ({
     },
     button: {
         margin: theme.spacing.unit,
-    }
+    },
 });
 
 class CreateLyricCards extends Component {
@@ -103,11 +103,11 @@ class CreateLyricCards extends Component {
                         
                         <Paper className={classes.paper}>
                         <Grid container spacing={16}>
-                            <Grid item xs={9}>
+                            <Grid item xs={10}>
                                 <Typography variant="h6">{this.props.task.label_name}</Typography>
                                 <Typography style={{whiteSpace: 'pre-line'}} variant="body1">{this.state.updatedLyrics.lyrics}</Typography>
                             </Grid>
-                            <Grid item xs='auto'>
+                            <Grid item md={2}>
                                 <Button variant="contained" color="primary" className={classes.button} onClick={this.handleEdit}>Edit</Button>
                             </Grid>
                         </Grid>
@@ -140,7 +140,7 @@ class CreateLyricCards extends Component {
                                     label="Edit Lyrics"
                                     multiline
                                     fullWidth
-                                    rows="4"
+                                    rowsMax="50"
                                     className={classes.textFieldMultiline}
                                     value={this.state.updatedLyrics.lyrics}
                                     onChange={this.handleChangeForLyrics('lyrics')}

@@ -36,7 +36,7 @@ const styles = theme => ({
   h1: {
     fontWeight: "bold",
     letterSpacing: 5,
-    textShadow: '.5px .5px 0 #FFF'
+    textShadow: '1px 1px 0 #FFF'
   },
   typography: {
     padding: theme.spacing.unit * 2,

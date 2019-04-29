@@ -59,7 +59,7 @@ const styles = theme => ({
     h1: {
         fontWeight: "bold",
         letterSpacing: 5,
-        textShadow: '.6px .6px 0 #FFF'
+        textShadow: '1px 1px 0 #FFF'
     },
   
 });
@@ -217,7 +217,7 @@ class Create extends Component {
         const { classes } = this.props;
 
         return (
-            <div className="test">
+            <div className="test" id="section-to-print">
                 {/* {JSON.stringify(this.props.reduxState.lyrics)} */}
                 <Grid item xs={12} >
                     <Typography variant="h2" align="center" color="primary" className={classes.h1}>Lyrics</Typography>
@@ -241,10 +241,11 @@ class Create extends Component {
 
                                 <Grid container direction="column">
                                     <Grid item >
-                                        <Grid item>
+                                        <Grid>
                                             <Button className={classes.button} variant="contained" onClick={this.handleClickOpenCard} color="primary">Add Lyric Card</Button>
                                             <Button className={classes.button} variant="contained" onClick={this.finishReorder} color="primary">Save Card Order</Button>
                                             <Button className={classes.button} variant="contained" onClick={this.handleClickOpenTitle} color="primary">Edit Title / Author</Button>
+                                            <Button className={classes.button} variant="contained" onClick={() => window.print()} color="primary">Print</Button>
                                             <Button className={classes.button} variant="contained" onClick={this.saveLyrics} color="primary">Save & Exit</Button>
                                         </Grid>
                                     </Grid>
