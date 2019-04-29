@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { withStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -16,6 +17,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import UserLyricInfo from '../UserLyricInfo/UserLyricInfo';
+import AddIcon from '@material-ui/icons/Add';
 
 
 const styles = theme => ({
@@ -29,14 +31,20 @@ const styles = theme => ({
     },
     button: {
         width: "50%",
-        height: 40,
         marginLeft: "auto",
         marginRight: "auto",
         display: "block",
     },
     typography: {
         margin: theme.spacing.unit * 3,
-    }
+    },
+    leftIcon: {
+        marginRight: theme.spacing.unit,
+        marginBottom: -5
+    },
+    iconSmall: {
+        fontSize: 20,
+    },
 })
 
 class UserLyrics extends Component {
@@ -87,7 +95,9 @@ class UserLyrics extends Component {
                     color="primary" 
                     className={classes.button}
                     onClick={this.handleOpen}
-                    >Create New Song
+                >
+                    <AddIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+                    Create New Song
                 </Button>
                 <Paper className={classes.root}>
                     <Typography className={classes.typography} align="center" variant="h3">Your Lyrics</Typography>

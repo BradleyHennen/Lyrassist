@@ -27,17 +27,19 @@ const styles = theme => ({
 
 const Header = (props) => {
     const { classes } = props;
-
+    console.log('Props header: ', props);
+    
     return (
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
                     <img className={classes.images} src="/images/LyrAssist_logo.svg" alt="lyrAssist Logo" />
-
                     <Typography variant="h6" color="inherit" className={classes.grow}>
                         Welcome, {props.user.first_name} {props.user.last_name}!
                     </Typography>
+                    {window.location.hash !== '#/userprofile' ?
                     <ProfileButton className={classes.button}/>
+                    : <span></span>}
                     <LogOutButton className={classes.button}/>
                 </Toolbar>
             </AppBar>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import qs from 'query-string';
 import { withRouter } from "react-router";
 import { withStyles } from '@material-ui/core';
@@ -17,6 +18,11 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { DragDropContext } from 'react-beautiful-dnd';
 import CreateLyrics from '../CreateLyrics/CreateLyrics';
+import SaveIcon from '@material-ui/icons/Save';
+import PrintIcon from '@material-ui/icons/Print';
+import EditIcon from '@material-ui/icons/Create';
+import AddIcon from '@material-ui/icons/Add';
+import ListIcon from '@material-ui/icons/List';
 
 
 const reorder = (list, startIndex, endIndex) => {
@@ -61,7 +67,12 @@ const styles = theme => ({
         letterSpacing: 5,
         textShadow: '1px 1px 0 #FFF'
     },
-  
+    leftIcon: {
+        marginRight: theme.spacing.unit,
+    },
+    iconSmall: {
+        fontSize: 20,
+    },
 });
 
 class Create extends Component {
@@ -221,7 +232,6 @@ class Create extends Component {
                 {/* {JSON.stringify(this.props.reduxState.lyrics)} */}
                 <Grid item xs={12} >
                     <Typography variant="h2" align="center" color="primary" className={classes.h1}>Lyrics</Typography>
-                <div></div>
                     <div className={classes.header}>
                         <Paper className={classes.paper} >
                             <Grid container direction="row" alignItems="flex-start" justify="center">
@@ -242,11 +252,51 @@ class Create extends Component {
                                 <Grid container direction="column">
                                     <Grid item >
                                         <Grid>
-                                            <Button className={classes.button} variant="contained" onClick={this.handleClickOpenCard} color="primary">Add Lyric Card</Button>
-                                            <Button className={classes.button} variant="contained" onClick={this.finishReorder} color="primary">Save Card Order</Button>
-                                            <Button className={classes.button} variant="contained" onClick={this.handleClickOpenTitle} color="primary">Edit Title / Author</Button>
-                                            <Button className={classes.button} variant="contained" onClick={() => window.print()} color="primary">Print</Button>
-                                            <Button className={classes.button} variant="contained" onClick={this.saveLyrics} color="primary">Save & Exit</Button>
+                                            <Button 
+                                                className={classes.button} 
+                                                variant="contained" 
+                                                onClick={this.handleClickOpenCard} 
+                                                color="primary"
+                                            >
+                                                <AddIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+                                                Add Lyric Card
+                                            </Button>
+                                            <Button 
+                                                className={classes.button} 
+                                                variant="contained" 
+                                                onClick={this.finishReorder} 
+                                                color="primary"
+                                            >
+                                                <ListIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+                                                Save Card Order
+                                            </Button>
+                                            <Button 
+                                                className={classes.button} 
+                                                variant="contained" 
+                                                onClick={this.handleClickOpenTitle} 
+                                                color="primary"
+                                            >
+                                                <EditIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+                                                Edit Title / Author
+                                            </Button>
+                                            <Button 
+                                                className={classes.button} 
+                                                variant="contained" 
+                                                onClick={() => window.print()} 
+                                                color="primary"
+                                            >
+                                                <PrintIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+                                                Print
+                                            </Button>
+                                            <Button 
+                                                className={classes.button} 
+                                                variant="contained" 
+                                                onClick={this.saveLyrics} 
+                                                color="primary"
+                                            >
+                                                <SaveIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+                                                Save & Exit
+                                            </Button>
                                         </Grid>
                                     </Grid>
                                 </Grid>

@@ -8,6 +8,7 @@ import lyricInfo from './lyricInfoReducer';
 import lyrics from './lyricsReducer';
 import userLyrics from './userLyricsReducer';
 import songPartList from './songPartListReducer';
+import websterData from './websterReducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   lyrics,
   userLyrics,
   songPartList,
+  websterData,
 });
 
 export default rootReducer;

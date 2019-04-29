@@ -11,6 +11,8 @@ import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 import TablePaginationActions from './TablePagination';
 import TableSorting from './TableSorting';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
 
 
 TableSorting.propTypes = {
@@ -41,6 +43,24 @@ const styles = theme => ({
   typography: {
     padding: theme.spacing.unit * 2,
   },
+  button: {
+    // width: 200,
+    margin: theme.spacing.unit,
+  }, 
+  dialogTitle: {
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    margin: 0,
+    padding: theme.spacing.unit * 2,
+  },
+  dialogContent: {
+    margin: 0,
+    padding: theme.spacing.unit * 2,
+  },
+  dialogActions: {
+    borderTop: `1px solid ${theme.palette.divider}`,
+    margin: 0,
+    padding: theme.spacing.unit,
+  },
 });
 
 class AssistantResults extends Component {
@@ -51,6 +71,8 @@ class AssistantResults extends Component {
     data: [],
     page: 0,
     rowsPerPage: 8,
+    open: false,
+    word: '',
   }
 
   componentDidMount = () => {
@@ -64,6 +86,18 @@ class AssistantResults extends Component {
       })
     }
   }
+
+  handleClickOpen = (search) => {
+    this.setState({
+      word: search,
+      open: true,
+    });
+    this.props.dispatch({type: 'GET_WEBSTER', payload: search});
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
 
   handleRequestSort = (event, property) => {
     const orderBy = property;
@@ -149,19 +183,20 @@ class AssistantResults extends Component {
             <TableBody>
               {this.stableSort(data, this.getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((n, index) => {
+                .map((data, index) => {
                   return (
                     <TableRow
                       hover
-                      role="checkbox"
                       tabIndex={-1}
                       key={index}
                     >
-                      <TableCell component="th" scope="row" >
-                         {n.word}
+                      <TableCell >
+                          <Button variant="outlined" color="secondary" onClick={()=> this.handleClickOpen(data.word)} className={classes.button}>
+                              {data.word}
+                          </Button>
                       </TableCell>
-                      <TableCell align="right">{n.score}</TableCell>
-                      <TableCell align="right">{n.numSyllables}</TableCell>
+                      <TableCell align="right">{data.score}</TableCell>
+                      <TableCell align="right">{data.numSyllables}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -185,6 +220,28 @@ class AssistantResults extends Component {
             </TableFooter>
           </Table>
         </Paper>
+
+      
+        <Dialog
+          onClose={this.handleClose}
+          open={this.state.open}
+        >
+          <div className={classes.dialogTitle}>
+            <Typography variant="h5">{this.state.word}</Typography>
+          </div>
+          <div className={classes.dialogContent}>
+            {this.props.reduxState.websterData.map((data, i) => {
+              return data.shortdef.map((data, i) => {
+                return <Typography variant="body1" key={i}>{data}</Typography>
+              })
+            })}
+          </div>
+          <div className={classes.dialogActions}>
+            <Button onClick={this.handleClose} color="primary">
+              Close
+            </Button>
+          </div>
+        </Dialog>
       </div>
     );
   }

@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { withStyles, TextField } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-// import CreateLyrics from '../CreateLyrics/CreateLyrics';
 import { Draggable } from 'react-beautiful-dnd';
-
-
+import EditIcon from '@material-ui/icons/Create';
+import SaveIcon from '@material-ui/icons/Save';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const styles = theme => ({
     textField: {
@@ -31,6 +32,12 @@ const styles = theme => ({
     },
     button: {
         margin: theme.spacing.unit,
+    },
+    leftIcon: {
+        marginRight: theme.spacing.unit,
+    },
+    iconSmall: {
+        fontSize: 20,
     },
 });
 
@@ -108,7 +115,15 @@ class CreateLyricCards extends Component {
                                 <Typography style={{whiteSpace: 'pre-line'}} variant="body1">{this.state.updatedLyrics.lyrics}</Typography>
                             </Grid>
                             <Grid item md={2}>
-                                <Button variant="contained" color="primary" className={classes.button} onClick={this.handleEdit}>Edit</Button>
+                                <Button 
+                                    variant="contained" 
+                                    color="primary" 
+                                    className={classes.button} 
+                                    onClick={this.handleEdit}
+                                >
+                                    <EditIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+                                    Edit
+                                </Button>
                             </Grid>
                         </Grid>
                         </Paper>
@@ -147,8 +162,24 @@ class CreateLyricCards extends Component {
                                     margin="normal"
                                 >
                                 </TextField>
-                                <Button variant="contained" color="primary" className={classes.button} onClick={this.handleDelete}>Delete</Button>
-                                <Button variant="contained" color="primary" className={classes.button} onClick={this.handleSave}>Save</Button>                            
+                                <Button 
+                                    variant="contained" 
+                                    color="primary" 
+                                    className={classes.button} 
+                                    onClick={this.handleDelete}
+                                >
+                                    <DeleteIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+                                    Delete
+                                </Button>
+                                <Button 
+                                    variant="contained" 
+                                    color="primary" 
+                                    className={classes.button} 
+                                    onClick={this.handleSave}
+                                >
+                                    <SaveIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+                                    Save
+                                </Button>                            
                             </form>
                         </Paper>
                     }

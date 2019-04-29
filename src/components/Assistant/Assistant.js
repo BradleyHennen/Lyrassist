@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles, TextField } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -7,6 +8,7 @@ import Paper from '@material-ui/core/Paper';
 // import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import SearchIcon from '@material-ui/icons/Search';
 
 const styles = theme => ({
     textField: {
@@ -35,6 +37,12 @@ const styles = theme => ({
         paddingLeft: "5%",
         paddingRight: "5%",
       },
+    leftIcon: {
+        marginRight: theme.spacing.unit,
+    },
+    iconSmall: {
+        fontSize: 20,
+    },
 })
 
 class Assistant extends Component {
@@ -138,7 +146,8 @@ class Assistant extends Component {
                                 className={classes.button}
                                 color="primary"
                             >
-                            Search
+                                <SearchIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+                                Search
                             </Button>
                         </form>
                         </Grid>
