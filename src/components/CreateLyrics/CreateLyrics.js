@@ -9,8 +9,8 @@ import CreateLyricCards from '../CreateLyricCards/CreateLyricCards';
 
 const styles = theme => ({
     task: {
-        padding: 1,
-    }
+        padding: 2,
+    },
 })
 
 class CreateLyrics extends Component {
@@ -20,7 +20,7 @@ class CreateLyrics extends Component {
         const { classes } = this.props;
         
         return (
-                <div >
+                <div className={classes.test}>
                 {/* {JSON.stringify(this.props.tasks)} */}
                     <Droppable droppableId="this-id">
                         {provided => (

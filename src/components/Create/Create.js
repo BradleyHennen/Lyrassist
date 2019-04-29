@@ -22,7 +22,7 @@ import CreateLyrics from '../CreateLyrics/CreateLyrics';
 const reorder = (list, startIndex, endIndex) => {
     console.log('startIndex: ', startIndex);
     console.log('endIndex: ', endIndex);
-    
+
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
@@ -59,8 +59,9 @@ const styles = theme => ({
     h1: {
         fontWeight: "bold",
         letterSpacing: 5,
-        textShadow: '.5px .5px 0 #FFF'
+        textShadow: '.6px .6px 0 #FFF'
     },
+  
 });
 
 class Create extends Component {
@@ -78,10 +79,10 @@ class Create extends Component {
     onDragEnd = (result) => {
         // reorder results
 
-        if(!result.destination) {
+        if (!result.destination) {
             return;
         }
-        if(
+        if (
             result.destination.draggableId === result.source.droppableId &&
             result.destination.index === result.source.index
         ) {
@@ -151,7 +152,7 @@ class Create extends Component {
         })
 
         this.props.dispatch({ type: 'GET_LYRICS', payload: searchObject.songId });
-        this.props.dispatch({ type: 'GET_LYRIC_INFO', payload: {songId: searchObject.songId} });
+        this.props.dispatch({ type: 'GET_LYRIC_INFO', payload: { songId: searchObject.songId } });
 
     };
 
@@ -200,7 +201,7 @@ class Create extends Component {
             songId: this.state.songId,
         }
         console.log('newLyricInfo', newLyricInfo);
-        
+
         this.props.dispatch({ type: 'UPDATE_LYRIC_INFO', payload: newLyricInfo });
     }
 
@@ -216,10 +217,11 @@ class Create extends Component {
         const { classes } = this.props;
 
         return (
-            <div >
+            <div className="test">
                 {/* {JSON.stringify(this.props.reduxState.lyrics)} */}
                 <Grid item xs={12} >
                     <Typography variant="h2" align="center" color="primary" className={classes.h1}>Lyrics</Typography>
+                <div></div>
                     <div className={classes.header}>
                         <Paper className={classes.paper} >
                             <Grid container direction="row" alignItems="flex-start" justify="center">
@@ -329,13 +331,14 @@ class Create extends Component {
                     </DialogActions>
                 </Dialog>
                 <br />
+                <div className={classes.test}>
                 <Grid item xs={12} >
                     <DragDropContext onDragEnd={this.onDragEnd}>
                         {/* tasks must be the current tasks from state, not initialData */}
                         <CreateLyrics tasks={this.state.lyrics} songId={this.state.songId} />
                     </DragDropContext>
                 </Grid>
-
+                </div>
             </div>
         );
     }

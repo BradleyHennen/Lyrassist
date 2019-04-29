@@ -35,7 +35,7 @@ class RegisterPage extends Component {
     username: '',
     password: '',
     confirmPassword: '',
-    email: null,
+    email: '',
     firstName: '',
     lastName: '',
     description: '',

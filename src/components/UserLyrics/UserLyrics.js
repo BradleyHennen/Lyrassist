@@ -14,17 +14,14 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-// import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-// import Grid from '@material-ui/core/Grid';
-// import CreateLyricCards from '../CreateLyricCards/CreateLyricCards';
 import UserLyricInfo from '../UserLyricInfo/UserLyricInfo';
 
 
 const styles = theme => ({
     root: {
         width: '100%',
-        marginTop: theme.spacing.unit * 3,
+        marginTop: theme.spacing.unit * 2,
         overflowX: 'auto',
     },
     table: {
@@ -36,6 +33,9 @@ const styles = theme => ({
         marginLeft: "auto",
         marginRight: "auto",
         display: "block",
+    },
+    typography: {
+        margin: theme.spacing.unit * 3,
     }
 })
 
@@ -90,8 +90,7 @@ class UserLyrics extends Component {
                     >Create New Song
                 </Button>
                 <Paper className={classes.root}>
-                    <Typography align="center" variant="h3">Your Lyrics</Typography>
-                    
+                    <Typography className={classes.typography} align="center" variant="h3">Your Lyrics</Typography>
                     <Table className={classes.table}>
                         <TableHead>
                             <TableRow>

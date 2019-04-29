@@ -12,6 +12,8 @@ const styles = theme => ({
         paddingBottom: theme.spacing.unit * 2,
         marginRight: '4%',
         marginLeft: '4%',
+        marginTop: '4%',
+        background: "rgba(255,255,255,0.8)",
     },
     description: {
         textAlign: "center",
@@ -23,8 +25,7 @@ const styles = theme => ({
         display: "block",
     },
     images: {
-        width: "40%",
-        height: "40%",
+        width: "40vw",
         marginLeft: "auto",
         marginRight: "auto",
         display: "block",
@@ -54,7 +55,7 @@ class Welcome extends Component {
                 </Paper> */}
                 <Paper className={classes.root}>
                     <img className={classes.images} src="/images/LyrAssist_logo.svg" alt="lyrAssist Logo"/>
-                    <Typography variant="h3" className={classes.description}>WELCOME</Typography>
+                    <Typography variant="h3" className={classes.description}>Welcome To LyrAssist</Typography>
                     <Typography variant="body1" className={classes.description}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tristique lectus nulla, vitae accumsan neque luctus quis. Ut rhoncus, libero id tristique ornare, odio sapien tincidunt enim, ac mattis elit ligula eget nulla. Suspendisse tempus arcu magna, non aliquet ex molestie sed. Aliquam vel dolor eget lorem sollicitudin ultricies vel et nisl. Proin ac enim tincidunt, pellentesque lectus nec, laoreet nisl. Donec eros leo, fringilla et odio sed, ultrices placerat eros. Cras tincidunt risus lectus, quis placerat risus sagittis sit amet. Suspendisse finibus diam eget augue gravida placerat. Mgula vel, vestibulum ultrices felis. Nulla semper maximus consequat. Nunc in malesuada risus. Nullam viverra ornare nulla, non cursus felis convallis sit amet. Nullam consequat ligula ante.
                     </Typography>
                     <Button variant="contained" color="primary" className={classes.button} onClick={this.register}>

@@ -137,7 +137,7 @@ class AssistantResults extends Component {
 
 
     return (
-      <div >
+      <div className="test">
         <Typography variant="h2" align="center" className={classes.h1} color="primary">Results</Typography>
         <Paper className={classes.root}>
           <Table className={classes.table}>
