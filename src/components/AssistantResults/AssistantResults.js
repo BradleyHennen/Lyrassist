@@ -13,6 +13,7 @@ import TablePaginationActions from './TablePagination';
 import TableSorting from './TableSorting';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
+import Assistant from '../Assistant/Assistant';
 
 
 TableSorting.propTypes = {
@@ -36,6 +37,7 @@ const styles = theme => ({
     marginTop: theme.spacing.unit,
   },
   h1: {
+    marginTop: theme.spacing.unit,
     fontWeight: "bold",
     letterSpacing: 5,
     textShadow: '1px 1px 0 #FFF'
@@ -49,6 +51,7 @@ const styles = theme => ({
   }, 
   dialogTitle: {
     borderBottom: `1px solid ${theme.palette.divider}`,
+    textTransform: 'capitalize',
     margin: 0,
     padding: theme.spacing.unit * 2,
   },
@@ -57,10 +60,12 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
   },
   dialogActions: {
-    borderTop: `1px solid ${theme.palette.divider}`,
-    margin: 0,
-    padding: theme.spacing.unit,
+    marginLeft: "auto",
+    padding: theme.spacing.unit * 2,
   },
+  def: {
+    minWidth: 400,
+  }
 });
 
 class AssistantResults extends Component {
@@ -164,6 +169,12 @@ class AssistantResults extends Component {
     this.setState({ page: 0, rowsPerPage: Number(event.target.value) });
   };
 
+  audio = () => {
+    if (this.props.reduxState.websterData) {
+      return
+    }
+  }
+
 
   render() {
     const { classes } = this.props;
@@ -171,8 +182,11 @@ class AssistantResults extends Component {
 
 
     return (
-      <div className="test">
+      <div className="scroll">
         <Typography variant="h2" align="center" className={classes.h1} color="primary">Results</Typography>
+        <Paper className={classes.paper} >
+            <Assistant />         
+        </Paper>
         <Paper className={classes.root}>
           <Table className={classes.table}>
             <TableSorting
@@ -226,20 +240,32 @@ class AssistantResults extends Component {
           onClose={this.handleClose}
           open={this.state.open}
         >
-          <div className={classes.dialogTitle}>
-            <Typography variant="h5">{this.state.word}</Typography>
-          </div>
-          <div className={classes.dialogContent}>
-            {this.props.reduxState.websterData.map((data, i) => {
-              return data.shortdef.map((data, i) => {
-                return <Typography variant="body1" key={i}>{data}</Typography>
-              })
-            })}
-          </div>
-          <div className={classes.dialogActions}>
-            <Button onClick={this.handleClose} color="primary">
-              Close
-            </Button>
+          <div className={classes.def}>
+            <div className={classes.dialogTitle}>
+              <Typography variant="h4">{this.state.word}</Typography>
+              <audio
+                  controls
+                  src={this.audio()}
+              >
+                      Your browser does not support the
+                      <code>audio</code> element.
+              </audio>
+            </div>
+            <div className={classes.dialogContent}>
+              <Typography variant="h6">Definition: </Typography>
+              <ul>
+              {this.props.reduxState.websterData.slice(0, 1).map((data) => {
+                return data.shortdef.map((data, i) => {
+                  return <li key={i} className={classes.def}><Typography variant="body1">{data}</Typography></li>
+                })
+              })}
+              </ul>
+            </div>
+            <div className={classes.dialogActions}>
+              <Button onClick={this.handleClose} variant="contained" color="primary">
+                Close
+              </Button>
+            </div>
           </div>
         </Dialog>
       </div>

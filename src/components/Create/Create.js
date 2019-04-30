@@ -63,6 +63,7 @@ const styles = theme => ({
         marginTop: theme.spacing.unit,
     },
     h1: {
+        marginTop: theme.spacing.unit,
         fontWeight: "bold",
         letterSpacing: 5,
         textShadow: '1px 1px 0 #FFF'
@@ -228,7 +229,7 @@ class Create extends Component {
         const { classes } = this.props;
 
         return (
-            <div className="test" id="section-to-print">
+            <div className="scroll" id="section-to-print">
                 {/* {JSON.stringify(this.props.reduxState.lyrics)} */}
                 <Grid item xs={12} >
                     <Typography variant="h2" align="center" color="primary" className={classes.h1}>Lyrics</Typography>

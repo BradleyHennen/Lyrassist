@@ -26,7 +26,7 @@ const styles = theme => ({
         textAlign: "center",
     },
     root: {
-        marginTop: 20,
+        marginTop: 8.6,
         flexGrow: 1,
         textAlign: "center",
         marginBottom: 15,

@@ -9,9 +9,12 @@ const router = express.Router();
 
 
 router.get('/info/:id', (req, res) => {
-    let songId = req.params.id
-    let sqlText = ('SELECT * FROM "lyric_info" WHERE "id" = $1;')
-    pool.query(sqlText, [songId])
+    let songId = req.params.id;
+    let userId = req.user.id;
+
+    let sqlText = (`SELECT * FROM "lyric_info" 
+                    WHERE "id" = $1 AND "user_id" = $2;`)
+    pool.query(sqlText, [songId, userId])
         .then((results) => {
             res.send(results.rows[0]);
         })

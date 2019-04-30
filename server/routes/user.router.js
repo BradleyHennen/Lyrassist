@@ -46,7 +46,8 @@ router.post('/logout', (req, res) => {
 
 router.get('/lyrics', (req, res) => {
   const userId = req.user.id;
-  const sqlText = `SELECT * FROM "lyric_info" WHERE "user_id" = $1;`;
+  const sqlText = `SELECT * FROM "lyric_info" 
+                   WHERE "user_id" = $1;`;
 
   pool.query(sqlText, [userId])
     .then((results) => {
@@ -60,13 +61,14 @@ router.get('/lyrics', (req, res) => {
 
 router.put('/lyrics', (req, res) => {
   let update = req.body;
+  let userId = req.user.id;
   let date = moment().format();
   console.log('In lyric info update router: ', update);
 
   let sqlText = `UPDATE "lyric_info" 
                  SET "title" = $1, "date_edited" = $2, "author" = $3 
-                 WHERE "id" = $4;`;
-  pool.query(sqlText, [update.title, date, update.author, update.songId])
+                 WHERE "id" = $4; AND "user_id" = $5`;
+  pool.query(sqlText, [update.title, date, update.author, update.songId, userId])
     .then((result) => {
       res.sendStatus(200);
     })

@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Header from '../Header/Header';
-import Assistant from '../Assistant/Assistant';
 import AssistantResults from '../AssistantResults/AssistantResults';
 import Create from '../Create/Create';
 import Grid from '@material-ui/core/Grid';
@@ -13,7 +12,6 @@ import Grid from '@material-ui/core/Grid';
 const Home = (props) => (
   <div>
     <Header/>
-    <Assistant />
     <Grid 
       container
       direction="row"
