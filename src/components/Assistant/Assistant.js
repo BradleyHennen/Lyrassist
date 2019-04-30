@@ -46,7 +46,8 @@ const styles = theme => ({
         fontSize: 20,
     },
     info: {
-        marginTop: 30,
+        marginTop: 32,
+        marginRight: 15,
     },
     typography: {
         margin: theme.spacing.unit * 2,
@@ -119,6 +120,9 @@ class Assistant extends Component {
         else if (this.state.queryId === 10) {
             updatedQuery = `rel_bgb=${this.state.word}&md=s`;
         }
+        else if (this.state.queryId === 11) {
+            updatedQuery = `rel_jja=${this.state.word}&md=s`;
+        }
         
         this.props.dispatch({ type: 'GET_DATAMUSE', payload: updatedQuery })
     }
@@ -129,37 +133,37 @@ class Assistant extends Component {
   
         if (this.state.queryId === 1) {
             this.setState({
-                help: 'rhyme',
+                help: 'Use "Rhymes (Perfect)" to search for words that perfectly rhyme with one another (e.g. prime and time).',
             });
         }
         else if (this.state.queryId === 2) {
             this.setState({
-                help: 'rhyme',
+                help: 'Use "Antonyms" to search for words opposite in meaning (e.g. bad and good ).',
             });
         }
         else if (this.state.queryId === 3) {
             this.setState({
-                help: 'rhyme',
+                help: 'Use "Meaning Similar To..." to find words that have similar meaning (e.g. crime and law-breaking ).',
             });
         }
         else if (this.state.queryId === 4) {
             this.setState({
-                help: 'rhyme',
+                help: 'Use "Rhymes (Approximate)" to search for words that closely rhyme with one another (e.g. mind and primed ).',
             });
         }
         else if (this.state.queryId === 5) {
             this.setState({
-                help: 'rhyme',
+                help: 'Use "Homophones" to find for words that sound alike (e.g. course and coarse ).',
             });
         }
         else if (this.state.queryId === 6) {
             this.setState({
-                help: 'rhyme',
+                help: 'Use "Synonyms" to search for words that means exactly or nearly the same as one another (e.g. ocean and sea ).',
             });
         }
         else if (this.state.queryId === 7) {
             this.setState({
-                help: 'rhyme',
+                help: 'Use "Words to Describe..." to find adjectives that are often used to a given noun (e.g. beach and sandy ).',
             });
         }
         else if (this.state.queryId === 8) {
@@ -169,18 +173,23 @@ class Assistant extends Component {
         }
         else if (this.state.queryId === 9) {
             this.setState({
-                help: 'rhyme',
+                help: 'Use "Frequent Followers" to search for words that often follow one another (e.g. havoc follows wreak).',
             });
         }
         else if (this.state.queryId === 10) {
             this.setState({
-                help: 'rhyme',
+                help: 'Use "Frequent Predecessors" to search for words that often proceed one another (e.g. wreak proceeds havoc ).',
             });            
         }
+        else if (this.state.queryId === 11) {
+            this.setState({
+                help: 'Use "Described By..." to find nouns that are often modified by the given adjective (e.g. gradual and increase ).',
+            });            
+        }
+
         this.setState({
             anchorEl: event.currentTarget,
         })
-
     };
 
     render() {
