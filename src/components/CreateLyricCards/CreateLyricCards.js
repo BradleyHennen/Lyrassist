@@ -39,6 +39,9 @@ const styles = theme => ({
     iconSmall: {
         fontSize: 20,
     },
+    buttonEdit: {
+        float: "left"
+    }
 });
 
 class CreateLyricCards extends Component {
@@ -114,11 +117,11 @@ class CreateLyricCards extends Component {
                                 <Typography variant="h6">{this.props.task.label_name}</Typography>
                                 <Typography style={{whiteSpace: 'pre-line'}} variant="body1">{this.state.updatedLyrics.lyrics}</Typography>
                             </Grid>
-                            <Grid item md={2}>
+                            <Grid item lg={2}>
                                 <Button 
                                     variant="contained" 
                                     color="primary" 
-                                    className={classes.button} 
+                                    className={classes.buttonEdit} 
                                     onClick={this.handleEdit}
                                 >
                                     <EditIcon className={classNames(classes.leftIcon, classes.iconSmall)} />

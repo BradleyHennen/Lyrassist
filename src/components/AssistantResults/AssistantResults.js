@@ -64,7 +64,7 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
   },
   def: {
-    minWidth: 400,
+    minWidth: 300,
   }
 });
 
@@ -165,16 +165,9 @@ class AssistantResults extends Component {
     this.setState({ page });
   };
 
-  handleChangeRowsPerPage = event => {
+  handleChangeRowsPerPage = (event) => {
     this.setState({ page: 0, rowsPerPage: Number(event.target.value) });
   };
-
-  audio = () => {
-    if (this.props.reduxState.websterData) {
-      return
-    }
-  }
-
 
   render() {
     const { classes } = this.props;
@@ -243,13 +236,6 @@ class AssistantResults extends Component {
           <div className={classes.def}>
             <div className={classes.dialogTitle}>
               <Typography variant="h4">{this.state.word}</Typography>
-              <audio
-                  controls
-                  src={this.audio()}
-              >
-                      Your browser does not support the
-                      <code>audio</code> element.
-              </audio>
             </div>
             <div className={classes.dialogContent}>
               <Typography variant="h6">Definition: </Typography>

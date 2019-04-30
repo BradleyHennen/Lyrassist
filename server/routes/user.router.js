@@ -67,13 +67,13 @@ router.put('/lyrics', (req, res) => {
 
   let sqlText = `UPDATE "lyric_info" 
                  SET "title" = $1, "date_edited" = $2, "author" = $3 
-                 WHERE "id" = $4; AND "user_id" = $5`;
+                 WHERE "id" = $4 AND "user_id" = $5;`;
   pool.query(sqlText, [update.title, date, update.author, update.songId, userId])
     .then((result) => {
       res.sendStatus(200);
     })
     .catch((error) => {
-      console.log('Error updated lyric info', error);
+      console.log('Error updating lyric info', error);
       res.sendStatus(500);
     })
 });
