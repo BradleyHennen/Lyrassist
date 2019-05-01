@@ -12,7 +12,7 @@ const styles = theme => ({
         paddingBottom: theme.spacing.unit * 2,
         marginRight: '4%',
         marginLeft: '4%',
-        marginTop: '4%',
+        marginTop: '1%',
         background: "rgba(255,255,255,0.8)",
     },
     description: {

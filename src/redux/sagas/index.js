@@ -16,6 +16,7 @@ import addNewSong from './addNewSongSaga';
 import updateLyricCardOrder from './updateLyricCardOrderSaga';
 import updateLyricInfo from './updateLyricInfoSaga';
 import getWebsterAPI from './websterAPI';
+import updateUserInfo from './updateUserInfoSaga';
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
 // This is imported in index.js as rootSaga
@@ -39,6 +40,7 @@ export default function* rootSaga() {
     deleteLyricCard(),
     updateLyricCard(),
     updateLyricInfo(),
+    updateUserInfo(),
     updateLyricCardOrder(),
     addLyricCard(),
     addNewSong(),

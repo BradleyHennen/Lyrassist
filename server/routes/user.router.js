@@ -103,4 +103,22 @@ router.delete('/lyrics/delete/:id', rejectUnauthenticated, async (req, res) => {
   }
 });
 
+router.put('/', (req, res) => {
+  let update = req.body;
+  let userId = req.user.id;
+  console.log('In user info update router: ', update);
+
+  let sqlText = `UPDATE "user" 
+                 SET "username" = $1, "first_name" = $2, "last_name" = $3, "email" = $4, "description" = $5
+                 WHERE "id" = $6;`;
+  pool.query(sqlText, [update.username, update.first_name, update.last_name, update.email, update.description, userId])
+    .then((result) => {
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.log('Error updating user info', error);
+      res.sendStatus(500);
+    })
+});
+
 module.exports = router;
