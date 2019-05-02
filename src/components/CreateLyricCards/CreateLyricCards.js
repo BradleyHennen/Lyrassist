@@ -83,10 +83,10 @@ class CreateLyricCards extends Component {
 
     handleSave = (event) => {
         event.preventDefault();
+        // this.props.finishReorder();
         this.setState({
             editLyrics: false,
         });
-        this.props.finishReorder(event);
         this.props.dispatch({ type: 'UPDATE_LYRIC_CARD', payload: this.state.updatedLyrics });
     }
 
@@ -101,6 +101,18 @@ class CreateLyricCards extends Component {
 
     handleDuplicate = () => {
         this.props.dispatch({ type: 'ADD_LYRIC_CARD', payload: this.state.updatedLyrics });
+    }
+
+
+    displaySongPart = () => {
+        let names = this.props.reduxState.songPartList;
+     
+        for (const name of names) {  
+            if (name.id === this.state.updatedLyrics.song_label_id) {
+                return name.label_name;
+            }
+        }
+        
     }
 
     render() {
@@ -120,7 +132,9 @@ class CreateLyricCards extends Component {
                         <Paper className={classes.paper}>
                         <Grid container spacing={16}>
                             <Grid item xs={10}>
-                                <Typography variant="h6">{this.props.task.label_name}</Typography>
+                                <Typography variant="h6">
+                                    {this.displaySongPart()} 
+                                </Typography>
                                 <Typography style={{whiteSpace: 'pre-line'}} variant="body1">{this.state.updatedLyrics.lyrics}</Typography>
                             </Grid>
                             <Grid item lg={2}>

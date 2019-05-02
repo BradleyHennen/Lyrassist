@@ -23,6 +23,7 @@ import PrintIcon from '@material-ui/icons/Print';
 import EditIcon from '@material-ui/icons/Create';
 import AddIcon from '@material-ui/icons/Add';
 import ListIcon from '@material-ui/icons/List';
+import sort from 'fast-sort';
 
 
 const reorder = (list, startIndex, endIndex) => {
@@ -114,9 +115,10 @@ class Create extends Component {
         // this.finishReorder();
     }
 
-    finishReorder = (event) => {
+    finishReorder = () => {
         console.log('Initial index order: ', this.state.lyrics);
         let index = 1;
+        index = 1;
         const lyricArray = this.state.lyrics
         for (let i = 0; i < lyricArray.length; i++) {
             console.log('LyricArray initial', lyricArray[i]);
@@ -128,12 +130,15 @@ class Create extends Component {
             this.props.dispatch({ type: 'UPDATE_LYRIC_CARD_ORDER', payload: lyricArray[i] });
             console.log('LyricArray updated', lyricArray[i]);
         }
+        console.log('finish reOrder state: ', lyricArray);
+        // sort(lyricArray).asc(u => u.index)
+        // this.setState({
+        //     lyrics: lyricArray,
+        // })
+        this.props.dispatch({ type: 'GET_LYRICS', payload: this.state.songId});
         // this function could dispatch to a saga for your PUT/update
-        this.handleUpdateLyricInfo(event);
         // prove our order is correct in state
         console.log('Updated index order: ', this.state.lyrics);
-        // this.props.dispatch({ type: 'UPDATE_LYRIC_CARD_ORDER', payload: this.state.lyrics });
-
     }
 
     componentDidUpdate(prevProps) {
@@ -174,11 +179,11 @@ class Create extends Component {
         });
     }
 
-    handleClickOpenCard = (event) => {
+    handleClickOpenCard = () => {
         this.setState({ openCard: true });
     };
 
-    handleClickOpenTitle = (event) => {
+    handleClickOpenTitle = () => {
         this.setState({ openTitle: true });
     };
 
@@ -219,6 +224,7 @@ class Create extends Component {
 
     saveLyrics = (event) => {
         this.handleUpdateLyricInfo(event);
+        this.finishReorder();
         this.props.history.push('/userprofile')
 
     }
@@ -228,7 +234,7 @@ class Create extends Component {
 
         return (
             <div className="scroll" id="section-to-print">
-                {/* {JSON.stringify(this.props.reduxState.lyrics)} */}
+                {/* {JSON.stringify(this.state.lyrics)} */}
                 <Grid item xs={12} >
                     <div className="section-to-hide">
                         <Typography variant="h2" align="center" color="primary" className={classes.h1}>Lyrics</Typography>

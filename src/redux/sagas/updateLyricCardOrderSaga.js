@@ -5,7 +5,7 @@ function* updateLyricCardOrder(action) {
     console.log('update lyric card ORDER: ', action.payload);
     try {
         yield axios.put(`/api/lyric/order`, action.payload);
-        yield put({ type: 'GET_LYRICS', payload: action.payload.song_id});
+        // yield put({ type: 'GET_LYRICS', payload: action.payload.song_id});
 
     }
     catch (error) {
