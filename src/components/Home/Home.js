@@ -1,18 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
+//----Component Imports
 import Header from '../Header/Header';
 import AssistantResults from '../AssistantResults/AssistantResults';
+
+//----Material UI----
 import Create from '../Create/Create';
 import Grid from '@material-ui/core/Grid';
 
-
-// this could also be written with destructuring parameters as:
-// const UserPage = ({ user }) => (
-// and then instead of `props.user.username` you could use `user.username`
 const Home = (props) => (
   <div>
-    <Header/>
-    <Grid 
+    <Header />
+    <Grid
       container
       direction="row"
       justify="flex-start"

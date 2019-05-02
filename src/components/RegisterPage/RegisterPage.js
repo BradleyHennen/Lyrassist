@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
+//----Material UI----
 import PropTypes from 'prop-types';
 import { withStyles, TextField } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
@@ -81,69 +83,69 @@ class RegisterPage extends Component {
             alignItems="center"
             spacing={24}
           >
-              {this.props.errors.registrationMessage && (
-                <Typography
-                  variant="h2"
-                  className="alert"
-                  role="alert"
-                >
-                  {this.props.errors.registrationMessage}
-                </Typography>
-              )}
+            {this.props.errors.registrationMessage && (
+              <Typography
+                variant="h2"
+                className="alert"
+                role="alert"
+              >
+                {this.props.errors.registrationMessage}
+              </Typography>
+            )}
             <Grid item xs={12}>
-              <form className={classes.container}  autoComplete="off" onSubmit={this.registerUser}>
+              <form className={classes.container} autoComplete="off" onSubmit={this.registerUser}>
                 <Typography variant="h2">Register User</Typography>
-                  <TextField
-                    required
-                    label="Username"
-                    value={this.state.username}
-                    className={classes.textField}
-                    onChange={this.handleInputChangeFor('username')}
-                    margin="normal"
-                  />
-                  <TextField
-                    required
-                    type="password"
-                    label="Password"
-                    value={this.state.password}
-                    className={classes.textField}
-                    onChange={this.handleInputChangeFor('password')}
-                    margin="normal"
-                  />
-                  <TextField
-                    required
-                    type="password"
-                    label="Confrim Password"
-                    className={classes.textField}
-                    value={this.state.confirmPassword}
-                    onChange={this.handleInputChangeFor('confirmPassword')}
-                    margin="normal"
-                  />
-                  <TextField
-                    required
-                    label="Email Address"
-                    type="email"
-                    className={classes.textField}
-                    value={this.state.email}
-                    onChange={this.handleInputChangeFor('email')}
-                    margin="normal"
-                  />
-                  <TextField
-                    label="First Name"
-                    type="text"
-                    className={classes.textField}
-                    value={this.state.firstName}
-                    onChange={this.handleInputChangeFor('firstName')}
-                    margin="normal"
-                  />
-                  <TextField
-                    label="Last Name"
-                    type="text"
-                    className={classes.textField}
-                    value={this.state.lastName}
-                    onChange={this.handleInputChangeFor('lastName')}
-                    margin="normal"
-                  />
+                <TextField
+                  required
+                  label="Username"
+                  value={this.state.username}
+                  className={classes.textField}
+                  onChange={this.handleInputChangeFor('username')}
+                  margin="normal"
+                />
+                <TextField
+                  required
+                  type="password"
+                  label="Password"
+                  value={this.state.password}
+                  className={classes.textField}
+                  onChange={this.handleInputChangeFor('password')}
+                  margin="normal"
+                />
+                <TextField
+                  required
+                  type="password"
+                  label="Confrim Password"
+                  className={classes.textField}
+                  value={this.state.confirmPassword}
+                  onChange={this.handleInputChangeFor('confirmPassword')}
+                  margin="normal"
+                />
+                <TextField
+                  required
+                  label="Email Address"
+                  type="email"
+                  className={classes.textField}
+                  value={this.state.email}
+                  onChange={this.handleInputChangeFor('email')}
+                  margin="normal"
+                />
+                <TextField
+                  label="First Name"
+                  type="text"
+                  className={classes.textField}
+                  value={this.state.firstName}
+                  onChange={this.handleInputChangeFor('firstName')}
+                  margin="normal"
+                />
+                <TextField
+                  label="Last Name"
+                  type="text"
+                  className={classes.textField}
+                  value={this.state.lastName}
+                  onChange={this.handleInputChangeFor('lastName')}
+                  margin="normal"
+                />
                 <TextField
                   label="Description"
                   multiline
@@ -164,22 +166,22 @@ class RegisterPage extends Component {
                   Register
               </Button>
               </form>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="h2" >Already Registered?</Typography>
-                <Button
-                  type="button"
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
-                  onClick={() => {
-                    this.props.dispatch({ type: 'SET_TO_LOGIN_MODE' });
-                    this.props.history.push('/login');
-                  }}
-                >
-                  Login
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h2" >Already Registered?</Typography>
+              <Button
+                type="button"
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                onClick={() => {
+                  this.props.dispatch({ type: 'SET_TO_LOGIN_MODE' });
+                  this.props.history.push('/login');
+                }}
+              >
+                Login
               </Button>
-              </Grid>
+            </Grid>
           </Grid>
         </Paper>
       </div>
@@ -187,9 +189,6 @@ class RegisterPage extends Component {
   }
 }
 
-// Instead of taking everything from state, we just want the error messages.
-// if you wanted you could write this code like this:
-// const mapStateToProps = ({errors}) => ({ errors });
 const mapStateToProps = state => ({
   errors: state.errors,
 });

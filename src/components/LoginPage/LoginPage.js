@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
+//----Material UI----
 import PropTypes from 'prop-types';
 import { withStyles, TextField } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
@@ -11,7 +13,6 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     textAlign: "center",
-
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -29,7 +30,6 @@ const styles = theme => ({
     paddingLeft: "5%",
     paddingRight: "5%",
   },
-  
 })
 
 class LoginPage extends Component {
@@ -84,50 +84,50 @@ class LoginPage extends Component {
               </Typography>
             )}
             <Grid item xs={12}>
-            <form onSubmit={this.login}>
-              <Typography variant="h1">Login</Typography>
-              <TextField
-                required
-                label="Username"
-                value={this.state.username}
-                className={classes.textField}
-                onChange={this.handleInputChangeFor('username')}
-                margin="normal"
-              />
-              <TextField
-                required
-                type="password"
-                label="Password"
-                value={this.state.password}
-                className={classes.textField}
-                onChange={this.handleInputChangeFor('password')}
-                margin="normal"
-              />
-              <br/>
-              <Button
-                type="submit"
-                name="submit"
-                className={classes.button}
-                variant="contained"
-                color="primary"
-              >
-                Log In
+              <form onSubmit={this.login}>
+                <Typography variant="h1">Login</Typography>
+                <TextField
+                  required
+                  label="Username"
+                  value={this.state.username}
+                  className={classes.textField}
+                  onChange={this.handleInputChangeFor('username')}
+                  margin="normal"
+                />
+                <TextField
+                  required
+                  type="password"
+                  label="Password"
+                  value={this.state.password}
+                  className={classes.textField}
+                  onChange={this.handleInputChangeFor('password')}
+                  margin="normal"
+                />
+                <br />
+                <Button
+                  type="submit"
+                  name="submit"
+                  className={classes.button}
+                  variant="contained"
+                  color="primary"
+                >
+                  Log In
             </Button>
-            </form>
+              </form>
             </Grid>
             <Grid item xs={12}>
-            <Typography variant="h5">Need An Account?</Typography>
-            <Button
-              type="button"
-              variant="contained"
-              color="primary"
-              className={classes.button}
-              onClick={() => {
-                this.props.dispatch({ type: 'SET_TO_REGISTER_MODE' });
-                this.props.history.push('./register');
-              }}
-            >
-              Register
+              <Typography variant="h5">Need An Account?</Typography>
+              <Button
+                type="button"
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                onClick={() => {
+                  this.props.dispatch({ type: 'SET_TO_REGISTER_MODE' });
+                  this.props.history.push('./register');
+                }}
+              >
+                Register
             </Button>
             </Grid>
           </Grid>

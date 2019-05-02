@@ -153,42 +153,50 @@ class Create extends Component {
         };
     }
 
-    //
     componentDidMount = () => {
+        //Gets song part list from the database to be used in drop down
         this.props.dispatch({ type: 'GET_SONG_PART_LIST' });
 
+        //Takes URL search parameters and is used in the getting specific lyrics
         const searchObject = qs.parse(this.props.location.search);
         this.setState({
             songId: searchObject.songId,
         })
 
+        //Gets specific song lyrics 
         this.props.dispatch({ type: 'GET_LYRICS', payload: searchObject.songId });
+        //Gets specific song info 
         this.props.dispatch({ type: 'GET_LYRIC_INFO', payload: { songId: searchObject.songId } });
-
     };
 
+    //Handles change for inputs
     handleInputChangeFor = propertyName => (event) => {
         this.setState({
             [propertyName]: event.target.value,
         });
     }
 
+    //Opens dialog for creating a new lyric card
     handleClickOpenCard = () => {
         this.setState({ openCard: true });
     };
 
+    //Opens dialog for editing the title and author of the song
     handleClickOpenTitle = () => {
         this.setState({ openTitle: true });
     };
 
+    //Closes dialog for creating a new lyric card
     handleCloseCard = () => {
         this.setState({ openCard: false });
     }
 
+    //Closes dialog for editing the title and author of the song
     handleCloseTitle = () => {
         this.setState({ openTitle: false });
     }
 
+    //Posts new lyric card to the database and gets newly updated data
     handleAddLyricCard = (event) => {
         event.preventDefault();
         this.setState({
@@ -202,6 +210,7 @@ class Create extends Component {
         this.props.dispatch({ type: 'ADD_LYRIC_CARD', payload: newCard });
     };
 
+    //Updates new lyric info to the database and gets newly updated data
     handleUpdateLyricInfo = (event) => {
         event.preventDefault();
         this.setState({
@@ -212,15 +221,13 @@ class Create extends Component {
             author: this.state.author,
             songId: this.state.songId,
         }
-        // console.log('newLyricInfo', newLyricInfo);
         this.props.dispatch({ type: 'UPDATE_LYRIC_INFO', payload: newLyricInfo });
     }
 
+    //Saves order of cards and moves you to userprofile view
     saveLyrics = (event) => {
-        this.handleUpdateLyricInfo(event);
         this.finishReorder();
         this.props.history.push('/userprofile')
-
     }
 
     render() {
@@ -228,7 +235,6 @@ class Create extends Component {
 
         return (
             <div className="scroll" id="section-to-print">
-                {/* {JSON.stringify(this.state.lyrics)} */}
                 <Grid item xs={12} >
                     <div className="section-to-hide">
                         <Typography variant="h2" align="center" color="primary" className={classes.h1}>Lyrics</Typography>
@@ -253,8 +259,6 @@ class Create extends Component {
                                 <Grid container direction="column">
                                     <Grid item >
                                         <Grid>
-                                            {/* <div className="section-to-hide"> */}
-
                                             <Button
                                                 className={classes.button}
                                                 variant="contained"
@@ -300,8 +304,6 @@ class Create extends Component {
                                                 <SaveIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
                                                 Save & Exit
                                             </Button>
-                                            {/* </div> */}
-
                                         </Grid>
                                     </Grid>
                                 </Grid>
@@ -309,8 +311,6 @@ class Create extends Component {
                         </Paper>
                     </div>
                 </Grid>
-                {/* {JSON.stringify(this.props.lyricInfo)} */}
-                {/* {JSON.stringify(this.state.title)} */}
 
                 <Dialog
                     open={this.state.openCard}
@@ -390,7 +390,6 @@ class Create extends Component {
                 <div className={classes.test}>
                     <Grid item xs={12} >
                         <DragDropContext onDragEnd={this.onDragEnd}>
-                            {/* tasks must be the current tasks from state, not initialData */}
                             <CreateLyrics tasks={this.state.lyrics} songId={this.state.songId} finishReorder={this.finishReorder} />
                         </DragDropContext>
                     </Grid>

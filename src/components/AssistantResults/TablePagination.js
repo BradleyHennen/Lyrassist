@@ -77,12 +77,8 @@ class TablePaginationActions extends Component {
   }
 };
 
-const mapStateToProps = reduxState => ({
-  reduxState
-});
-
 TablePaginationActions.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps)(withStyles(actionsStyles, { withTheme: true })(TablePaginationActions));
+export default connect()(withStyles(actionsStyles, { withTheme: true })(TablePaginationActions));

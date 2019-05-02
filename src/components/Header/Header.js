@@ -1,12 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
+//----Material UI----
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
-import LogOutButton from '../LogOutButton/LogOutButton';
-import ProfileButton from '../ProfileButton/ProfileButton';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+
+//Component Imports
+import LogOutButton from '../LogOutButton/LogOutButton';
+import ProfileButton from '../ProfileButton/ProfileButton';
+
 
 const styles = theme => ({
     root: {
@@ -47,9 +52,6 @@ const Header = (props) => {
     )
 }
 
-// Instead of taking everything from state, we just want the error messages.
-// if you wanted you could write this code like this:
-// const mapStateToProps = ({errors}) => ({ errors });
 const mapStateToProps = state => ({
     errors: state.errors,
     user: state.user,
