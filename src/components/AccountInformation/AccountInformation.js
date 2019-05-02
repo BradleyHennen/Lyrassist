@@ -144,7 +144,12 @@ class AccountInformation extends Component {
                                         >
                                         </TextField>
                                         <Typography variant="h6">User Name:</Typography>
-                                        <Typography variant="body1">{this.props.user.username}</Typography>
+                                        <TextField
+                                            className={classes.textField}
+                                            value={this.state.userInfo.username}
+                                            onChange={this.handleChangeForLyrics('username')}
+                                        >
+                                        </TextField>
                                         <Typography variant="h6">Email:</Typography>
                                         <TextField
                                             className={classes.textField}

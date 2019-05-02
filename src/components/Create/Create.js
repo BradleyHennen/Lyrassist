@@ -22,9 +22,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import PrintIcon from '@material-ui/icons/Print';
 import EditIcon from '@material-ui/icons/Create';
 import AddIcon from '@material-ui/icons/Add';
-import ListIcon from '@material-ui/icons/List';
-import sort from 'fast-sort';
-
+import ListIcon from '@material-ui/icons/List'
 
 const reorder = (list, startIndex, endIndex) => {
     console.log('startIndex: ', startIndex);
