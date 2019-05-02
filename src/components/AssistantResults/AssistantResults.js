@@ -176,7 +176,7 @@ class AssistantResults extends Component {
 
     return (
       <div className="scroll">
-        <Typography variant="h2" align="center" className={classes.h1} color="primary">Results</Typography>
+        <Typography variant="h2" align="center" className={classes.h1} color="primary">Assistant</Typography>
         <Paper className={classes.paper} >
             <Assistant />         
         </Paper>

@@ -29,7 +29,6 @@ const styles = theme => ({
     leftIcon: {
         marginRight: theme.spacing.unit,
         fontSize: 20,
-
     },
 });
 
@@ -86,7 +85,7 @@ class AccountInformation extends Component {
                                 </Grid>
                                 <Grid item xs={6} >
                                     <Typography variant="h6">Your Story:</Typography>
-                                    <Typography variant="body1">{this.props.user.description}</Typography>
+                                    <Typography style={{whiteSpace: 'pre-line'}} variant="body1">{this.props.user.description}</Typography>
                                 </Grid>
                                 <Grid item sm xs={6} container>
                                     <Grid item xs container direction="column" spacing={16}>
@@ -145,12 +144,7 @@ class AccountInformation extends Component {
                                         >
                                         </TextField>
                                         <Typography variant="h6">User Name:</Typography>
-                                        <TextField
-                                            className={classes.textField}
-                                            value={this.state.userInfo.username}
-                                            onChange={this.handleChangeForLyrics('username')}
-                                        >
-                                        </TextField>
+                                        <Typography variant="body1">{this.props.user.username}</Typography>
                                         <Typography variant="h6">Email:</Typography>
                                         <TextField
                                             className={classes.textField}

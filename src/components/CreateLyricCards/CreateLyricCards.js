@@ -12,6 +12,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import EditIcon from '@material-ui/icons/Create';
 import SaveIcon from '@material-ui/icons/Save';
 import DeleteIcon from '@material-ui/icons/Delete';
+import PlusIcon from '@material-ui/icons/PlusOne';
 
 const styles = theme => ({
     textField: {
@@ -85,6 +86,7 @@ class CreateLyricCards extends Component {
         this.setState({
             editLyrics: false,
         });
+        this.props.finishReorder(event);
         this.props.dispatch({ type: 'UPDATE_LYRIC_CARD', payload: this.state.updatedLyrics });
     }
 
@@ -95,6 +97,10 @@ class CreateLyricCards extends Component {
                 [propertyName]: event.target.value
             }
         })
+    }
+
+    handleDuplicate = () => {
+        this.props.dispatch({ type: 'ADD_LYRIC_CARD', payload: this.state.updatedLyrics });
     }
 
     render() {
@@ -118,15 +124,17 @@ class CreateLyricCards extends Component {
                                 <Typography style={{whiteSpace: 'pre-line'}} variant="body1">{this.state.updatedLyrics.lyrics}</Typography>
                             </Grid>
                             <Grid item lg={2}>
-                                <Button 
-                                    variant="contained" 
-                                    color="primary" 
-                                    className={classes.buttonEdit} 
-                                    onClick={this.handleEdit}
-                                >
-                                    <EditIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
-                                    Edit
-                                </Button>
+                                <div className="section-to-hide">
+                                    <Button 
+                                        variant="contained" 
+                                        color="primary" 
+                                        className={classes.buttonEdit} 
+                                        onClick={this.handleEdit}
+                                    >
+                                        <EditIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+                                        Edit
+                                    </Button>
+                                </div>
                             </Grid>
                         </Grid>
                         </Paper>
@@ -165,6 +173,15 @@ class CreateLyricCards extends Component {
                                     margin="normal"
                                 >
                                 </TextField>
+                                <Button 
+                                    variant="contained" 
+                                    color="primary" 
+                                    className={classes.button} 
+                                    onClick={this.handleDuplicate}
+                                >
+                                    <PlusIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+                                    Duplicate
+                                </Button>
                                 <Button 
                                     variant="contained" 
                                     color="primary" 

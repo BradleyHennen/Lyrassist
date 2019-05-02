@@ -79,8 +79,8 @@ router.post('/', (req, res) => {
     console.log('new Lyric Card info:', newCard);
 
     let sqlText = `INSERT INTO "lyrics" ("song_label_id", "lyric_id", "lyrics")
-                   VALUES ($1, $2, 'Add lyrics');`;
-    pool.query(sqlText, [newCard.songLabelId, newCard.lyricId])
+                   VALUES ($1, $2, $3);`;
+    pool.query(sqlText, [newCard.song_label_id, newCard.song_id, newCard.lyrics])
         .then((result) => {
             res.sendStatus(200);
         })

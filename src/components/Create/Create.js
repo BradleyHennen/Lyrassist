@@ -114,7 +114,7 @@ class Create extends Component {
         // this.finishReorder();
     }
 
-    finishReorder = () => {
+    finishReorder = (event) => {
         console.log('Initial index order: ', this.state.lyrics);
         let index = 1;
         const lyricArray = this.state.lyrics
@@ -129,7 +129,7 @@ class Create extends Component {
             console.log('LyricArray updated', lyricArray[i]);
         }
         // this function could dispatch to a saga for your PUT/update
-
+        this.handleUpdateLyricInfo(event);
         // prove our order is correct in state
         console.log('Updated index order: ', this.state.lyrics);
         // this.props.dispatch({ type: 'UPDATE_LYRIC_CARD_ORDER', payload: this.state.lyrics });
@@ -196,14 +196,15 @@ class Create extends Component {
             openCard: false
         });
         const newCard = {
-            songLabelId: this.state.songPartId,
-            lyricId: this.state.songId,
+            song_label_id: this.state.songPartId,
+            song_id: this.state.songId,
+            lyrics: "Add lyrics..."
         }
         this.props.dispatch({ type: 'ADD_LYRIC_CARD', payload: newCard });
     };
 
     handleUpdateLyricInfo = (event) => {
-        event.preventDefault();
+        event.preventDefault();       
         this.setState({
             openTitle: false
         });
@@ -213,7 +214,6 @@ class Create extends Component {
             songId: this.state.songId,
         }
         console.log('newLyricInfo', newLyricInfo);
-
         this.props.dispatch({ type: 'UPDATE_LYRIC_INFO', payload: newLyricInfo });
     }
 
@@ -230,7 +230,9 @@ class Create extends Component {
             <div className="scroll" id="section-to-print">
                 {/* {JSON.stringify(this.props.reduxState.lyrics)} */}
                 <Grid item xs={12} >
-                    <Typography variant="h2" align="center" color="primary" className={classes.h1}>Lyrics</Typography>
+                    <div className="section-to-hide">
+                        <Typography variant="h2" align="center" color="primary" className={classes.h1}>Lyrics</Typography>
+                    </div>
                     <div className={classes.header}>
                         <Paper className={classes.paper} >
                             <Grid container direction="row" alignItems="flex-start" justify="center">
@@ -251,6 +253,8 @@ class Create extends Component {
                                 <Grid container direction="column">
                                     <Grid item >
                                         <Grid>
+                                        {/* <div className="section-to-hide"> */}
+
                                             <Button 
                                                 className={classes.button} 
                                                 variant="contained" 
@@ -296,6 +300,8 @@ class Create extends Component {
                                                 <SaveIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
                                                 Save & Exit
                                             </Button>
+                                        {/* </div> */}
+
                                         </Grid>
                                     </Grid>
                                 </Grid>
@@ -385,7 +391,7 @@ class Create extends Component {
                 <Grid item xs={12} >
                     <DragDropContext onDragEnd={this.onDragEnd}>
                         {/* tasks must be the current tasks from state, not initialData */}
-                        <CreateLyrics tasks={this.state.lyrics} songId={this.state.songId} />
+                        <CreateLyrics tasks={this.state.lyrics} songId={this.state.songId} finishReorder={this.finishReorder}/>
                     </DragDropContext>
                 </Grid>
                 </div>

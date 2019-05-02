@@ -30,7 +30,7 @@ class CreateLyrics extends Component {
                                 {...provided.droppableProps}
                             >
                                 {this.props.tasks.map((task, index) => 
-                                    <CreateLyricCards key={task.lyrics_id} task={task} index={index} songId={this.props.songId}/>
+                                    <CreateLyricCards key={task.lyrics_id} task={task} index={index} songId={this.props.songId} finishReorder={this.props.finishReorder}/>
                                 )}
                                 {provided.placeholder}
                             </div>

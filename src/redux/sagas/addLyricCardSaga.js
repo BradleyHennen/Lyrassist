@@ -4,7 +4,7 @@ import axios from 'axios';
 function* addLyricCard(action) {    
     try {
         yield axios.post(`/api/lyric`, action.payload);
-        yield put({ type: 'GET_LYRICS', payload: action.payload.lyricId});
+        yield put({ type: 'GET_LYRICS', payload: action.payload.song_id});
     }
     catch (error) {
         console.log(`Couldn't add lyric card`);
