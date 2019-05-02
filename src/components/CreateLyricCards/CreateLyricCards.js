@@ -83,7 +83,7 @@ class CreateLyricCards extends Component {
 
     handleSave = (event) => {
         event.preventDefault();
-        // this.props.finishReorder();
+        this.props.finishReorder();
         this.setState({
             editLyrics: false,
         });

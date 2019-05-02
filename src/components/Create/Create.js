@@ -116,7 +116,7 @@ class Create extends Component {
     }
 
     finishReorder = () => {
-        console.log('Initial index order: ', this.state.lyrics);
+        // console.log('Initial index order: ', this.state.lyrics);
         let index = 1;
         index = 1;
         const lyricArray = this.state.lyrics
@@ -130,7 +130,7 @@ class Create extends Component {
             this.props.dispatch({ type: 'UPDATE_LYRIC_CARD_ORDER', payload: lyricArray[i] });
             console.log('LyricArray updated', lyricArray[i]);
         }
-        console.log('finish reOrder state: ', lyricArray);
+        // console.log('finish reOrder state: ', lyricArray);
         // sort(lyricArray).asc(u => u.index)
         // this.setState({
         //     lyrics: lyricArray,
@@ -138,7 +138,7 @@ class Create extends Component {
         this.props.dispatch({ type: 'GET_LYRICS', payload: this.state.songId});
         // this function could dispatch to a saga for your PUT/update
         // prove our order is correct in state
-        console.log('Updated index order: ', this.state.lyrics);
+        // console.log('Updated index order: ', this.state.lyrics);
     }
 
     componentDidUpdate(prevProps) {
@@ -163,7 +163,7 @@ class Create extends Component {
 
 
         const searchObject = qs.parse(this.props.location.search);
-        console.log('search Object', searchObject.songId);
+        // console.log('search Object', searchObject.songId);
         this.setState({
             songId: searchObject.songId,
         })
@@ -218,7 +218,7 @@ class Create extends Component {
             author: this.state.author,
             songId: this.state.songId,
         }
-        console.log('newLyricInfo', newLyricInfo);
+        // console.log('newLyricInfo', newLyricInfo);
         this.props.dispatch({ type: 'UPDATE_LYRIC_INFO', payload: newLyricInfo });
     }
 
