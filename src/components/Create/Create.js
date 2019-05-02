@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from "react-router";
+import qs from 'query-string';
+
+//----Drag and Drop----
+import { DragDropContext } from 'react-beautiful-dnd';
+
+//----Material UI----
+import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import qs from 'query-string';
-import { withRouter } from "react-router";
-import { withStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -16,7 +21,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { DragDropContext } from 'react-beautiful-dnd';
 import CreateLyrics from '../CreateLyrics/CreateLyrics';
 import SaveIcon from '@material-ui/icons/Save';
 import PrintIcon from '@material-ui/icons/Print';
@@ -24,6 +28,7 @@ import EditIcon from '@material-ui/icons/Create';
 import AddIcon from '@material-ui/icons/Add';
 import ListIcon from '@material-ui/icons/List'
 
+//(Drag and Drop) Reorders the array objects based on their dropped location
 const reorder = (list, startIndex, endIndex) => {
     console.log('startIndex: ', startIndex);
     console.log('endIndex: ', endIndex);
@@ -55,7 +60,6 @@ const styles = theme => ({
         textAlign: "center",
     },
     button: {
-        // width: 200,
         margin: theme.spacing.unit,
     },
     header: {
@@ -87,9 +91,11 @@ class Create extends Component {
         lyrics: [],
     }
 
+    //updated the index and id numbers of the draggable items based on their drop location
     onDragEnd = (result) => {
-        // reorder results
 
+        //Checks to see if ids are undefined or equal to each other. (Drag out of Drop Area would render undefined 
+        //this allows the item to return to it's original postiton)
         if (!result.destination) {
             return;
         }
@@ -100,21 +106,20 @@ class Create extends Component {
             return;
         }
 
+        //updates ids/indexs
         const reorderedTasks = reorder(
-            this.state.lyrics, // starting array data
+            this.state.lyrics,           // starting array data
             result.source.index,         // starting array index
             result.destination.index     // ending array index
         );
 
-        // update our state
         this.setState({
             lyrics: reorderedTasks,
         });
-        // this.finishReorder();
     }
 
+    //Updates the the index number on each object and posts to the database
     finishReorder = () => {
-        // console.log('Initial index order: ', this.state.lyrics);
         let index = 1;
         index = 1;
         const lyricArray = this.state.lyrics
@@ -128,20 +133,12 @@ class Create extends Component {
             this.props.dispatch({ type: 'UPDATE_LYRIC_CARD_ORDER', payload: lyricArray[i] });
             console.log('LyricArray updated', lyricArray[i]);
         }
-        // console.log('finish reOrder state: ', lyricArray);
-        // sort(lyricArray).asc(u => u.index)
-        // this.setState({
-        //     lyrics: lyricArray,
-        // })
-        this.props.dispatch({ type: 'GET_LYRICS', payload: this.state.songId});
-        // this function could dispatch to a saga for your PUT/update
-        // prove our order is correct in state
-        // console.log('Updated index order: ', this.state.lyrics);
+
+        this.props.dispatch({ type: 'GET_LYRICS', payload: this.state.songId });
     }
 
+    //Updates local state with both lyrics and lyric info reducers 
     componentDidUpdate(prevProps) {
-        // Typical usage (don't forget to compare props):
-        // console.log('prevProps', prevProps);
 
         if (this.props.reduxState.lyrics !== prevProps.reduxState.lyrics) {
             this.setState({
@@ -156,12 +153,11 @@ class Create extends Component {
         };
     }
 
+    //
     componentDidMount = () => {
         this.props.dispatch({ type: 'GET_SONG_PART_LIST' });
 
-
         const searchObject = qs.parse(this.props.location.search);
-        // console.log('search Object', searchObject.songId);
         this.setState({
             songId: searchObject.songId,
         })
@@ -207,7 +203,7 @@ class Create extends Component {
     };
 
     handleUpdateLyricInfo = (event) => {
-        event.preventDefault();       
+        event.preventDefault();
         this.setState({
             openTitle: false
         });
@@ -257,54 +253,54 @@ class Create extends Component {
                                 <Grid container direction="column">
                                     <Grid item >
                                         <Grid>
-                                        {/* <div className="section-to-hide"> */}
+                                            {/* <div className="section-to-hide"> */}
 
-                                            <Button 
-                                                className={classes.button} 
-                                                variant="contained" 
-                                                onClick={this.handleClickOpenCard} 
+                                            <Button
+                                                className={classes.button}
+                                                variant="contained"
+                                                onClick={this.handleClickOpenCard}
                                                 color="primary"
                                             >
                                                 <AddIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
                                                 Add Lyric Card
                                             </Button>
-                                            <Button 
-                                                className={classes.button} 
-                                                variant="contained" 
-                                                onClick={this.finishReorder} 
+                                            <Button
+                                                className={classes.button}
+                                                variant="contained"
+                                                onClick={this.finishReorder}
                                                 color="primary"
                                             >
                                                 <ListIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
                                                 Save Card Order
                                             </Button>
-                                            <Button 
-                                                className={classes.button} 
-                                                variant="contained" 
-                                                onClick={this.handleClickOpenTitle} 
+                                            <Button
+                                                className={classes.button}
+                                                variant="contained"
+                                                onClick={this.handleClickOpenTitle}
                                                 color="primary"
                                             >
                                                 <EditIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
                                                 Edit Title / Author
                                             </Button>
-                                            <Button 
-                                                className={classes.button} 
-                                                variant="contained" 
-                                                onClick={() => window.print()} 
+                                            <Button
+                                                className={classes.button}
+                                                variant="contained"
+                                                onClick={() => window.print()}
                                                 color="primary"
                                             >
                                                 <PrintIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
                                                 Print
                                             </Button>
-                                            <Button 
-                                                className={classes.button} 
-                                                variant="contained" 
-                                                onClick={this.saveLyrics} 
+                                            <Button
+                                                className={classes.button}
+                                                variant="contained"
+                                                onClick={this.saveLyrics}
                                                 color="primary"
                                             >
                                                 <SaveIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
                                                 Save & Exit
                                             </Button>
-                                        {/* </div> */}
+                                            {/* </div> */}
 
                                         </Grid>
                                     </Grid>
@@ -392,12 +388,12 @@ class Create extends Component {
                 </Dialog>
                 <br />
                 <div className={classes.test}>
-                <Grid item xs={12} >
-                    <DragDropContext onDragEnd={this.onDragEnd}>
-                        {/* tasks must be the current tasks from state, not initialData */}
-                        <CreateLyrics tasks={this.state.lyrics} songId={this.state.songId} finishReorder={this.finishReorder}/>
-                    </DragDropContext>
-                </Grid>
+                    <Grid item xs={12} >
+                        <DragDropContext onDragEnd={this.onDragEnd}>
+                            {/* tasks must be the current tasks from state, not initialData */}
+                            <CreateLyrics tasks={this.state.lyrics} songId={this.state.songId} finishReorder={this.finishReorder} />
+                        </DragDropContext>
+                    </Grid>
                 </div>
             </div>
         );

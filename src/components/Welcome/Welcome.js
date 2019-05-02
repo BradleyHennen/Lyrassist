@@ -54,14 +54,14 @@ class Welcome extends Component {
                     <Typography variant="h2" className={classes.header}>LyrAssist</Typography>
                 </Paper> */}
                 <Paper className={classes.root}>
-                    <img className={classes.images} src="/images/LyrAssist_logo.svg" alt="lyrAssist Logo"/>
+                    <img className={classes.images} src="/images/LyrAssist_logo.svg" alt="lyrAssist Logo" />
                     <Typography variant="h3" className={classes.description}>Welcome To LyrAssist</Typography>
                     <Typography variant="subtitle1" className={classes.description}>
-                        LyrAssist is an application designed to help you along your lyric writing journey. With the help of the assistant you will be 
-                        able to find a plethora of words and phrases that will help you break through that writers block that has been holding you 
+                        LyrAssist is an application designed to help you along your lyric writing journey. With the help of the assistant you will be
+                        able to find a plethora of words and phrases that will help you break through that writers block that has been holding you
                         back. You will effortlessly create, edit, and manage Lyric Cards as you write. If something feels out of place just drag and drop
                         the cards to and fro until it fits the order you like best. So again, welcome to LyrAssist! Click the 'Start Writing' button to begin
-                        your journey to writing the lyrics you have always wanted.  
+                        your journey to writing the lyrics you have always wanted.
                     </Typography>
                     <Button variant="contained" color="primary" className={classes.button} onClick={this.register}>
                         Start Writing

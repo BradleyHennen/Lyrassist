@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
+//----Material UI----
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
@@ -13,6 +15,7 @@ const rows = [
 ];
 
 class EnhancedTableHead extends Component {
+    
     createSortHandler = property => event => {
         this.props.onRequestSort(event, property);
     };

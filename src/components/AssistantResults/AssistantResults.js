@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
+//----Material UI----
 import PropTypes from 'prop-types';
 import { withStyles, Typography } from '@material-ui/core';
 import Table from '@material-ui/core/Table';
@@ -9,12 +11,13 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
-import TablePaginationActions from './TablePagination';
-import TableSorting from './TableSorting';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import Assistant from '../Assistant/Assistant';
 
+//----Component Imports----
+import Assistant from '../Assistant/Assistant';
+import TableSorting from './TableSorting';
+import TablePaginationActions from './TablePagination';
 
 TableSorting.propTypes = {
   onRequestSort: PropTypes.func.isRequired,
@@ -46,9 +49,8 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
   },
   button: {
-    // width: 200,
     margin: theme.spacing.unit,
-  }, 
+  },
   dialogTitle: {
     borderBottom: `1px solid ${theme.palette.divider}`,
     textTransform: 'capitalize',
@@ -80,10 +82,7 @@ class AssistantResults extends Component {
     word: '',
   }
 
-  componentDidMount = () => {
-    this.props.dispatch({ type: 'GET_DATAMUSE' })
-  }
-
+  //Updates local state with redux state data from datamuse
   componentDidUpdate(prevProps) {
     if (this.props.reduxState.datamuseData !== prevProps.reduxState.datamuseData) {
       this.setState({
@@ -92,18 +91,21 @@ class AssistantResults extends Component {
     }
   }
 
+  //Sends word to the webster dictionary API, opens dialog box and displays the definition
   handleClickOpen = (search) => {
     this.setState({
       word: search,
       open: true,
     });
-    this.props.dispatch({type: 'GET_WEBSTER', payload: search});
+    this.props.dispatch({ type: 'GET_WEBSTER', payload: search });
   };
 
+  //Handles close of the definition dialog box
   handleClose = () => {
     this.setState({ open: false });
   };
 
+  //handles the sorting of results table column
   handleRequestSort = (event, property) => {
     const orderBy = property;
     let order = 'desc';
@@ -115,7 +117,7 @@ class AssistantResults extends Component {
     this.setState({ order, orderBy });
   };
 
-
+  //handles the click on column header names
   handleClick = (event, id) => {
     const { selected } = this.state;
     const selectedIndex = selected.indexOf(id);
@@ -137,6 +139,7 @@ class AssistantResults extends Component {
     this.setState({ selected: newSelected });
   };
 
+  //orders in descending 
   desc = (a, b, orderBy) => {
     if (b[orderBy] < a[orderBy]) {
       return -1;
@@ -178,7 +181,7 @@ class AssistantResults extends Component {
       <div className="scroll">
         <Typography variant="h2" align="center" className={classes.h1} color="primary">Assistant</Typography>
         <Paper className={classes.paper} >
-            <Assistant />         
+          <Assistant />
         </Paper>
         <Paper className={classes.root}>
           <Table className={classes.table}>
@@ -198,9 +201,9 @@ class AssistantResults extends Component {
                       key={index}
                     >
                       <TableCell >
-                          <Button variant="outlined" color="secondary" onClick={()=> this.handleClickOpen(data.word)} className={classes.button}>
-                              {data.word}
-                          </Button>
+                        <Button variant="outlined" color="secondary" onClick={() => this.handleClickOpen(data.word)} className={classes.button}>
+                          {data.word}
+                        </Button>
                       </TableCell>
                       <TableCell align="right">{data.score}</TableCell>
                       <TableCell align="right">{data.numSyllables}</TableCell>
@@ -228,7 +231,7 @@ class AssistantResults extends Component {
           </Table>
         </Paper>
 
-      
+
         <Dialog
           onClose={this.handleClose}
           open={this.state.open}
@@ -240,11 +243,11 @@ class AssistantResults extends Component {
             <div className={classes.dialogContent}>
               <Typography variant="h6">Definition: </Typography>
               <ul>
-              {this.props.reduxState.websterData.slice(0, 1).map((data) => {
-                return data.shortdef.map((data, i) => {
-                  return <li key={i} className={classes.def}><Typography variant="body1">{data}</Typography></li>
-                })
-              })}
+                {this.props.reduxState.websterData.slice(0, 1).map((data) => {
+                  return data.shortdef.map((data, i) => {
+                    return <li key={i} className={classes.def}><Typography variant="body1">{data}</Typography></li>
+                  })
+                })}
               </ul>
             </div>
             <div className={classes.dialogActions}>

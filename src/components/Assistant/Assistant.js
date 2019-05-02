@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+
+//----Material UI----
 import { withStyles, TextField } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
@@ -38,7 +40,7 @@ const styles = theme => ({
         marginBottom: 15,
         paddingLeft: "5%",
         paddingRight: "5%",
-      },
+    },
     leftIcon: {
         marginRight: theme.spacing.unit,
     },
@@ -62,28 +64,26 @@ class Assistant extends Component {
         help: '',
     };
 
+    //handles the close of the material ui Popper
     handleClose = () => {
-    this.setState({
-        anchorEl: null,
-    });
+        this.setState({
+            anchorEl: null,
+        });
     };
 
+    //Gets the list of query names for the selector
     componentDidMount = () => {
         this.props.dispatch({ type: 'GET_QUERY_LIST' });
     }
 
+    //handles change for inputs
     handleInputChangeFor = propertyName => (event) => {
         this.setState({
             [propertyName]: event.target.value,
         });
     }
 
-    handleChangeForQuery = (event) => {
-        this.setState({
-            word: event.target.value
-        })
-    }
-
+    //sends datamuse compliant query url to the API and retrieves API data to display
     searchQuery = (event) => {
         event.preventDefault();
         let updatedQuery = '';
@@ -123,14 +123,15 @@ class Assistant extends Component {
         else if (this.state.queryId === 11) {
             updatedQuery = `rel_jja=${this.state.word}&md=s`;
         }
-        
+
         this.props.dispatch({ type: 'GET_DATAMUSE', payload: updatedQuery })
     }
 
+    //Renders more info button text based on selected searchQuery
     mouseEnter = (event) => {
         console.log('click!!!!!');
         event.preventDefault();
-  
+
         if (this.state.queryId === 1) {
             this.setState({
                 help: 'Use "Rhymes (Perfect)" to search for words that perfectly rhyme with one another (e.g. prime and time).',
@@ -179,12 +180,12 @@ class Assistant extends Component {
         else if (this.state.queryId === 10) {
             this.setState({
                 help: 'Use "Frequent Predecessors" to search for words that often proceed one another (e.g. wreak proceeds havoc ).',
-            });            
+            });
         }
         else if (this.state.queryId === 11) {
             this.setState({
                 help: 'Use "Described By..." to find nouns that are often modified by the given adjective (e.g. gradual and increase ).',
-            });            
+            });
         }
 
         this.setState({
@@ -207,47 +208,47 @@ class Assistant extends Component {
                         alignItems="center"
                         spacing={24}
                     >
-                    <Grid item xs={12}>
+                        <Grid item xs={12}>
 
-                        <form onSubmit={this.searchQuery} noValidate autoComplete="off">
-                            <HelpIcon onClick={this.mouseEnter} className={classes.info}/>
-                            <TextField
-                                select
-                                label="What To Search"
-                                className={classes.textField}
-                                value={this.state.queryId}
-                                onChange={this.handleInputChangeFor('queryId')}
-                                SelectProps={{
-                                    MenuProps: {
-                                        className: classes.menu,
-                                    },
-                                }}
-                                margin="normal"
-                            >
-                                {this.props.reduxState.queryList.map(option => (
-                                    <MenuItem key={option.id} value={option.id}>
-                                        {option.query}
-                                    </MenuItem>
-                                ))}
-                            </TextField>
-                            <TextField
-                                label="Word or Phrase"
-                                className={classes.textField}
-                                value={this.state.word}
-                                onChange={this.handleChangeForQuery}
-                                margin="normal"
-                            />
-                            <Button
-                                type="submit"
-                                name="submit"
-                                variant="contained"
-                                className={classes.button}
-                                color="primary"
-                            >
-                                <SearchIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
-                                Search
+                            <form onSubmit={this.searchQuery} noValidate autoComplete="off">
+                                <HelpIcon onClick={this.mouseEnter} className={classes.info} />
+                                <TextField
+                                    select
+                                    label="What To Search"
+                                    className={classes.textField}
+                                    value={this.state.queryId}
+                                    onChange={this.handleInputChangeFor('queryId')}
+                                    SelectProps={{
+                                        MenuProps: {
+                                            className: classes.menu,
+                                        },
+                                    }}
+                                    margin="normal"
+                                >
+                                    {this.props.reduxState.queryList.map(option => (
+                                        <MenuItem key={option.id} value={option.id}>
+                                            {option.query}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                                <TextField
+                                    label="Word or Phrase"
+                                    className={classes.textField}
+                                    value={this.state.word}
+                                    onChange={this.handleInputChangeFor('word')}
+                                    margin="normal"
+                                />
+                                <Button
+                                    type="submit"
+                                    name="submit"
+                                    variant="contained"
+                                    className={classes.button}
+                                    color="primary"
+                                >
+                                    <SearchIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+                                    Search
                             </Button>
-                        </form>
+                            </form>
                         </Grid>
                     </Grid>
                 </Paper>
@@ -264,20 +265,20 @@ class Assistant extends Component {
                         vertical: 'top',
                         horizontal: 'center',
                     }}
-                    >
+                >
                     <Typography className={classes.typography}>{this.state.help}</Typography>
                 </Popover>
             </div>
-                );
-            }
-        }
-        
+        );
+    }
+}
+
 const mapStateToProps = reduxState => ({
-                    reduxState
-                });
-                
+    reduxState
+});
+
 Assistant.propTypes = {
-                    classes: PropTypes.object.isRequired,
-            };
-            
+    classes: PropTypes.object.isRequired,
+};
+
 export default connect(mapStateToProps)(withStyles(styles)(Assistant));
