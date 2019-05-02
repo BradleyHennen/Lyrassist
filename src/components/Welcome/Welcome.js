@@ -25,7 +25,7 @@ const styles = theme => ({
         display: "block",
     },
     images: {
-        width: "40vw",
+        width: "30vw",
         marginLeft: "auto",
         marginRight: "auto",
         display: "block",
@@ -56,7 +56,12 @@ class Welcome extends Component {
                 <Paper className={classes.root}>
                     <img className={classes.images} src="/images/LyrAssist_logo.svg" alt="lyrAssist Logo"/>
                     <Typography variant="h3" className={classes.description}>Welcome To LyrAssist</Typography>
-                    <Typography variant="body1" className={classes.description}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tristique lectus nulla, vitae accumsan neque luctus quis. Ut rhoncus, libero id tristique ornare, odio sapien tincidunt enim, ac mattis elit ligula eget nulla. Suspendisse tempus arcu magna, non aliquet ex molestie sed. Aliquam vel dolor eget lorem sollicitudin ultricies vel et nisl. Proin ac enim tincidunt, pellentesque lectus nec, laoreet nisl. Donec eros leo, fringilla et odio sed, ultrices placerat eros. Cras tincidunt risus lectus, quis placerat risus sagittis sit amet. Suspendisse finibus diam eget augue gravida placerat. Mgula vel, vestibulum ultrices felis. Nulla semper maximus consequat. Nunc in malesuada risus. Nullam viverra ornare nulla, non cursus felis convallis sit amet. Nullam consequat ligula ante.
+                    <Typography variant="subtitle1" className={classes.description}>
+                        LyrAssist is an application designed to help you along your lyric writing journey. With the help of the assistant you will be 
+                        able to find a plethora of words and phrases that will help you break through that writers block that has been holding you 
+                        back. You will effortlessly create, edit, and manage Lyric Cards as you write. If something feels out of place just drag and drop
+                        the cards to and fro until it fits the order you like best. So again, welcome to LyrAssist! Click the 'Start Writing' button to begin
+                        your journey to writing the lyrics you have always wanted.  
                     </Typography>
                     <Button variant="contained" color="primary" className={classes.button} onClick={this.register}>
                         Start Writing

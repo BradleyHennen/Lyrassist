@@ -1,0 +1,2 @@
+body{background-image:url(/images/microphone.jpg);background-position:50% 20%;background-repeat:no-repeat;background-attachment:fixed;padding:3px}.scroll{overflow-y:scroll;height:calc(100vh - 110px)}@media print{body *{visibility:hidden}.section-to-hide{display:none!important}#section-to-print,#section-to-print *{visibility:visible}#section-to-print{position:absolute;left:0;top:0;height:-webkit-fit-content;height:-moz-fit-content;height:fit-content}}
+/*# sourceMappingURL=main.9fbf0d75.chunk.css.map */
