@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
+//----Material UI----
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core';
@@ -57,14 +59,17 @@ class UserLyrics extends Component {
         }
     }
 
+    //Opens dialog to create new song card
     handleOpen = () => {
         this.setState({ open: true });
     };
 
+    //Closes dialog to create new song card
     handleClose = () => {
         this.setState({ open: false });
     };
 
+    //handles changes for inputs 
     onChange = propertyName => (event) => {
         this.setState({
             newSong: {
@@ -78,7 +83,7 @@ class UserLyrics extends Component {
         this.props.dispatch({ type: 'GET_USER_LYRICS' })
 
     }
-
+    //Posts new song to 
     createNewSong = () => {
         this.props.dispatch({type: 'ADD_NEW_SONG', payload: this.state.newSong})
         this.handleClose();
@@ -140,7 +145,6 @@ class UserLyrics extends Component {
                             fullWidth
                         />
                         <TextField
-                            autoFocus
                             required
                             margin="dense"
                             id="author"

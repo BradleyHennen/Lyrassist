@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router";
 import moment from 'moment';
+
+//----Material UI----
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core';
@@ -33,11 +35,13 @@ const styles = theme => ({
 
 class UserLyrics extends Component {
 
+    //Deletes complete song from database
     handleClickDelete = (event) => {
         event.preventDefault();
         this.props.dispatch({ type: 'DELETE_LYRICS', payload: this.props.info.id })
     }
 
+    //Gets song/lyric info and sends over url search params
     handleClickEdit = (event) => {
         event.preventDefault();
         this.props.dispatch({ type: 'GET_LYRICS', payload: this.props.info.id });
@@ -45,57 +49,43 @@ class UserLyrics extends Component {
         this.props.history.push(`/home?songId=${this.props.info.id}`);
     }
 
-    handlePrint = () => {
-        window.print("adfasdf");
-    }
-
-
-
     render() {
         const { classes } = this.props;
 
-
         return (
-           
-                <TableRow>
-                    <TableCell>{this.props.info.title}</TableCell>
-                    <TableCell align="right">{this.props.info.author}</TableCell>
-                    <TableCell align="right">{moment(this.props.info.date_created).format("MMM Do YYYY")}</TableCell>
-                    <TableCell align="right">{moment(this.props.info.date_edited).format("MMM Do YYYY")}</TableCell>
-                    <TableCell align="right">
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={this.handleClickEdit}
-                        >
-                            <EditIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
-                            Edit
-                        </Button>
-                    </TableCell>
-                    <TableCell align="right">
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={this.handleClickDelete}
-                        >
-                            <DeleteIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
-                            Delete
-                        </Button>
-                    </TableCell>
-                </TableRow>
 
-     
-            
+            <TableRow>
+                <TableCell>{this.props.info.title}</TableCell>
+                <TableCell align="right">{this.props.info.author}</TableCell>
+                <TableCell align="right">{moment(this.props.info.date_created).format("MMM Do YYYY")}</TableCell>
+                <TableCell align="right">{moment(this.props.info.date_edited).format("MMM Do YYYY")}</TableCell>
+                <TableCell align="right">
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={this.handleClickEdit}
+                    >
+                        <EditIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+                        Edit
+                        </Button>
+                </TableCell>
+                <TableCell align="right">
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={this.handleClickDelete}
+                    >
+                        <DeleteIcon className={classNames(classes.leftIcon, classes.iconSmall)} />
+                        Delete
+                        </Button>
+                </TableCell>
+            </TableRow>
         );
     }
 }
-
-const mapStateToProps = reduxState => ({
-    reduxState,
-});
 
 UserLyrics.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withRouter(connect(mapStateToProps)(withStyles(styles)(UserLyrics)));
+export default withRouter(connect()(withStyles(styles)(UserLyrics)));
