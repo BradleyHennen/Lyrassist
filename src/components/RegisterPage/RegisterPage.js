@@ -58,7 +58,7 @@ class RegisterPage extends Component {
           description: this.state.description,
         },
       });
-      this.props.history.push('/home');
+      this.props.history.push('/userprofile');
     } else {
       this.props.dispatch({ type: 'REGISTRATION_INPUT_ERROR' });
     }

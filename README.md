@@ -20,7 +20,6 @@ The LyrAssist application gives lyricists an easy to use interface that will ass
 - Bcrypt
 - Cookie-session
 - Dotenv
-- Express
 - Passport
 - Passport-local
 
